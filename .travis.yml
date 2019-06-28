@@ -13,8 +13,8 @@ before_script:
   - node -v
   # update npm
   - npm install npm -g
-  - git clone --depth 1 https://github.com/AKSW/aksw.org-model.git /data/aksw-model
-  - docker run -p 3030:3030 -v /data/aksw-model:/staging -d stain/jena-fuseki /jena-fuseki/fuseki-server --file=/staging/aksw.org.nt /aksw
+  - git clone --depth 1 https://github.com/AKSW/aksw.org-model.git /aksw-model
+  - docker run -p 3030:3030 -v /aksw-model:/staging -d stain/jena-fuseki /jena-fuseki/fuseki-server --file=/staging/aksw.org.nt /aksw
 
 script:
   - npm install
