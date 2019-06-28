@@ -25,7 +25,7 @@ layout: base
     {% endcapture %}
     {% assign members = page.rdf | sparql_query: member_query %}
     {% for result in members %}
-    <li><a href="{{ result.person.page_url }}">{{ result.person | rdf_property: "foaf:name" }}</a></li>
+    <li><a href="{{ result.person.page_url | prepend: site.baseurl }}">{{ result.person | rdf_property: "foaf:name" }}</a></li>
     {% endfor %}
 </ul>
 
@@ -33,7 +33,7 @@ layout: base
 {% assign former_members = page.rdf | rdf_inverse_property: "foaf:pastProject", true %}
 <ul>
     {% for person in former_members %}
-    <li><a href="{{ person.page_url }}">{{ person | rdf_property: "foaf:name" }}</a></li>
+    <li><a href="{{ person.page_url | prepend: site.baseurl }}">{{ person | rdf_property: "foaf:name" }}</a></li>
     {% endfor %}
 </ul>
 
@@ -41,6 +41,6 @@ layout: base
 {% assign partners = page.rdf | rdf_property: "aksw:partner", nil, true %}
 <ul>
     {% for partner in partners %}
-    <li><a href="{{ partner.page_url }}">{{ partner | rdf_property: "rdfs:label" }}</a></li>
+    <li><a href="{{ partner.page_url | prepend: site.baseurl }}">{{ partner | rdf_property: "rdfs:label" }}</a></li>
     {% endfor %}
 </ul>
