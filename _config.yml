@@ -6,7 +6,7 @@ plugins:
 
 # Jekyll RDF settings
 jekyll_rdf:
-    baseiri: "http://aksw.org/"
+    baseiri: "http://aksw.org"
     remote:
       endpoint: "http://localhost:3030/aksw/query"
     restriction: "SELECT ?resourceUri WHERE { ?resourceUri ?p ?o . FILTER regex(str(?resourceUri), \"http://aksw.org/\") }"
