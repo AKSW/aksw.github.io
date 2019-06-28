@@ -1,0 +1,9 @@
+---
+rdf_prefix_path: "_data/prefixes.sparql"
+---
+
+Hello {{ page.rdf }}
+
+{% assign rootResource = page.rdf | rdf_property: "void:rootResource" %}
+
+{{ rootResource | rdf_property: "rdfs:label" }}

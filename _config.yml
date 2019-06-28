@@ -1,0 +1,17 @@
+baseurl: "" # the subpath of your site, e.g. /blog
+url: "http://aksw.org" # the base hostname & protocol for your site, e.g. http://example.com
+
+plugins:
+   - jekyll-rdf
+
+# Jekyll RDF settings
+jekyll_rdf:
+    remote:
+      endpoint: "http://localhost:3030/aksw/query"
+    restriction: "SELECT ?resourceUri WHERE { ?resourceUri ?p ?o . FILTER regex(str(?resourceUri), \"http://aksw.org/\") }"
+    default_template: "default"
+    class_template_mappings:
+        "http://xmlns.com/foaf/0.1/Organization": "group"
+        "http://rdfs.org/ns/void#Dataset": "dataset"
+        "http://xmlns.com/foaf/0.1/Person": "person"
+        "http://xmlns.com/foaf/0.1/Project": "project"

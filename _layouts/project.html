@@ -1,0 +1,46 @@
+---
+rdf_prefix_path: "_data/prefixes.sparql"
+layout: base
+---
+
+<h1 class="title">{{ page.rdf | rdf_property: "rdfs:label" }}</h1>
+{{ page.rdf }}
+
+<dl>
+    <dt>Abstract:</dt>
+    <dd>{{ page.rdf | rdf_property: "dct:abstract" }}</dd>
+</dl>
+
+
+<h2>Project Members</h2>
+<ul>
+    {% capture member_query %}
+    SELECT ?person WHERE {
+        {
+            ?person foaf:currentProject ?resourceUri
+        } UNION {
+            ?resourceUri doap:maintainer ?person
+        }
+    }
+    {% endcapture %}
+    {% assign members = page.rdf | sparql_query: member_query %}
+    {% for result in members %}
+    <li><a href="{{ result.person.page_url }}">{{ result.person | rdf_property: "foaf:name" }}</a></li>
+    {% endfor %}
+</ul>
+
+<h2>Former Members</h2>
+{% assign former_members = page.rdf | rdf_inverse_property: "foaf:pastProject", true %}
+<ul>
+    {% for person in former_members %}
+    <li><a href="{{ person.page_url }}">{{ person | rdf_property: "foaf:name" }}</a></li>
+    {% endfor %}
+</ul>
+
+<h2>Partner</h2>
+{% assign partners = page.rdf | rdf_property: "aksw:partner", nil, true %}
+<ul>
+    {% for partner in partners %}
+    <li><a href="{{ partner.page_url }}">{{ partner | rdf_property: "rdfs:label" }}</a></li>
+    {% endfor %}
+</ul>

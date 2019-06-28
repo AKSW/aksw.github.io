@@ -1,0 +1,30 @@
+---
+rdf_prefix_path: "_data/prefixes.sparql"
+layout: base
+---
+
+<h1>{{ page.rdf | rdf_property: "foaf:name" }}</h1>
+{{ page.rdf }}
+
+<dl>
+    <dt>Age:</dt>
+    <dd>{{ page.rdf | rdf_property: "foaf:age" }}</dd>
+</dl>
+
+
+<h2>Projects</h2>
+<ul>
+    {% capture project_query %}
+    SELECT ?project WHERE {
+        {
+            ?resourceUri foaf:currentProject ?project
+        } UNION {
+            ?project doap:maintainer ?resourceUri
+        }
+    }
+    {% endcapture %}
+    {% assign projects = page.rdf | sparql_query: project_query %}
+    {% for result in projects %}
+    <li><a href="{{ result.project.page_url }}">{{ result.project | rdf_property: "rdfs:label" }}</a></li>
+    {% endfor %}
+</ul>

@@ -1,0 +1,14 @@
+---
+rdf_prefix_path: "_data/prefixes.sparql"
+layout: base
+---
+
+<h1>{{ page.rdf }}</h1>
+
+<h2>Group Members</h2>
+<ul>
+    {% assign members = page.rdf | rdf_property: "foaf:member", nil, true %}
+    {% for member in members %}
+    <li><a href="{{ member.page_url }}">{{ member | rdf_property: "<http://xmlns.com/foaf/0.1/name>" }}</a></li>
+    {% endfor %}
+</ul>

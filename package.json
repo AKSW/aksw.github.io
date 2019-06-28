@@ -1,0 +1,23 @@
+{
+  "name": "aksw.org",
+  "version": "1.0.0",
+  "description": "The aksw.org webpage",
+  "main": "_site/index.html",
+  "dependencies": {},
+  "devDependencies": {
+    "bulma": "^0.7.1",
+    "css-loader": "^1.0.0",
+    "extract-text-webpack-plugin": "^4.0.0-beta.0",
+    "node-sass": "^4.9.3",
+    "sass-loader": "^7.1.0",
+    "style-loader": "^0.23.0",
+    "webpack": "^4.20.2",
+    "webpack-cli": "^3.1.2"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack --mode production"
+  },
+  "author": "Natanael Arndt <arndtn@gmail.com>",
+  "license": "GPL-3.0-or-later"
+}
