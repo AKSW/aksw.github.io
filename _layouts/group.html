@@ -6,9 +6,10 @@ layout: base
 <h1>{{ page.rdf }}</h1>
 
 <h2>Group Members</h2>
-<ul>
-    {% assign members = page.rdf | rdf_property: "foaf:member", nil, true %}
-    {% for member in members %}
-    <li><a href="{{ member.page_url | prepend: site.baseurl }}">{{ member | rdf_property: "<http://xmlns.com/foaf/0.1/name>" }}</a></li>
-    {% endfor %}
-</ul>
+
+{% assign members = page.rdf | rdf_property: "foaf:member", nil, true %}
+{% for member in members %}
+<div class="is-one-third is-inline-block">
+{% include person_card.html person=member %}
+</div>
+{% endfor %}

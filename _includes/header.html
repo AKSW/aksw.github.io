@@ -1,0 +1,4 @@
+{% assign root=site.rootresource | rdf_get %}
+{% assign rootnavigation=root | rdf_property: "void:rootResource" %}
+
+<h1>{{ root | rdf_property: "rdfs:label" }}</h1>
