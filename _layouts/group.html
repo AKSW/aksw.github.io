@@ -3,13 +3,44 @@ rdf_prefix_path: "_data/prefixes.sparql"
 layout: base
 ---
 
-<h1>{{ page.rdf }}</h1>
-
-<h2>Group Members</h2>
+<section class="hero">
+  <div class="hero-body">
+    <div class="container">
+      <h2 class="title">{{ page.rdf | rdf_property: "rdfs:label" }}</h2>
+      <h2 class="subtitle">
+        {{ page.rdf.iri }}
+        Group Members
+      </h2>
+    </div>
+  </div>
+</section>
+{% assign groups = page.rdf | rdf_inverse_property: "aiiso:part_of", true %}
+{% if groups.first %}
+  <h3 class="title">Groups</h3>
+<div class="columns is-multiline">
+{% for group in groups %}
+<div class="column is-one-third">
+  <div class="card columns">
+    <div class="column card-content">
+      <div class="media">
+        <div class="media-content">
+          <p class="title is-4"><a href="{{ group.render_path | prepend: site.baseurl }}">{{ group | rdf_property: "rdfs:label" }}</a></p>
+          <p class="subtitle is-6">{{ group.iri }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endfor %}
+</div>
+{% endif %}
 
 {% assign members = page.rdf | rdf_property: "foaf:member", nil, true %}
+<h3 class="title">Members</h3>
+<div class="columns is-multiline">
 {% for member in members %}
-<div class="is-one-third is-inline-block">
+<div class="column is-one-third">
 {% include person_card.html person=member %}
 </div>
 {% endfor %}
+</div>

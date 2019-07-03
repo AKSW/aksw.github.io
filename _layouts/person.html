@@ -29,7 +29,7 @@ layout: base
     <h2>Projects</h2>
     <ul>
       {% capture project_query %}
-      SELECT ?project WHERE {
+      SELECT DISTINCT ?project WHERE {
         {
           ?resourceUri foaf:currentProject ?project
         } UNION {

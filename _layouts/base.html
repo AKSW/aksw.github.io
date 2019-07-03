@@ -11,8 +11,8 @@ rdf_prefix_path: "_data/prefixes.sparql"
     <link rel="stylesheet" href="{{ "/dist/main.css" | prepend: site.baseurl }}">
   </head>
   <body>
+    {% include header.html %}
     <section class="section">
-      {% include header.html %}
       <div class="container">
       {{ content }}
       </div>

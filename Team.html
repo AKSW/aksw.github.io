@@ -1,0 +1,7 @@
+---
+rdf_prefix_path: "_data/prefixes.sparql"
+layout: base
+---
+
+{% assign aksw = "<http://aksw.org/Groups/AKSW>" | rdf_get %}
+<a href="{{ aksw.render_path | prepend: site.baseurl }}">See AKSW</a>
