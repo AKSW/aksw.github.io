@@ -3,6 +3,11 @@ rdf_prefix_path: "_data/prefixes.sparql"
 layout: base
 ---
 
+{% assign groups = page.rdf | rdf_inverse_property: "foaf:member", true %}
+{% for group in groups %}
+<a class="button is-rounded" href="{{ group.render_path | prepend: site.baseurl }}">{{ group | rdf_property: "rdfs.label" }}</a>
+{% endfor %}
+
 <div class="columns">
   <div class="column is-one-third">
     <div class="card columns">
