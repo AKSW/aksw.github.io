@@ -2,4 +2,7 @@
 layout: base
 ---
 
-Hello {{ page.rdf }}
+<section class="section">
+  <h2 class="title is-1">{{ page.rdf | rdf_property: "rdfs:label" }}</h2>
+  {{ page.rdf | rdf_property: "site:content" | markdownify }}
+</section>
