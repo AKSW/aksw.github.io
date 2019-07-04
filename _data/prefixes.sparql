@@ -10,5 +10,6 @@ PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX aair: <http://xmlns.notu.be/aair#>
 PREFIX doap: <http://usefulinc.com/ns/doap#>
 PREFIX aksw: <http://aksw.org/schema/>
+PREFIX site: <http://ns.ontowiki.net/SysOnt/Site/>
 PREFIX dct: <http://purl.org/dc/terms/>
 PREFIX aiiso: <http://purl.org/vocab/aiiso/schema#>

@@ -3,53 +3,59 @@ rdf_prefix_path: "_data/prefixes.sparql"
 layout: base
 ---
 
-<div class="section">
-{% assign groups = page.rdf | rdf_inverse_property: "foaf:member", true %}
-{% for group in groups %}
-<a class="button is-rounded" href="{{ group.render_path | prepend: site.baseurl }}">{{ group | rdf_property: "rdfs:label" }}</a>
-{% endfor %}
-</div>
+<section class="section">
+  {% assign groups = page.rdf | rdf_inverse_property: "foaf:member", true %}
+  {% for group in groups %}
+  <a class="button is-rounded" href="{{ group.render_path | prepend: site.baseurl }}">{{ group | rdf_property: "rdfs:label" }}</a>
+  {% endfor %}
+</section>
 
-<div class="columns">
-  <div class="column is-one-third">
-    <div class="card columns">
-      <div class="column card-image is-one-third">
-        <figure class="image is-5by6">
-          <img class="image is-5by6" src="{{ page.rdf | rdf_property: "foaf:depiction" }}" alt="Personal image">
-        </figure>
-      </div>
-      <div class="column card-content">
-        <div class="media">
-          <div class="media-content">
-            <p class="title is-4">{{ page.rdf | rdf_property: "foaf:name" }}</p>
-            <p class="subtitle is-6">{{ page.rdf }}</p>
-            <p class="is-6">{{ page.rdf | rdf_property: "foaf:phone" }}</p>
-          </div>
+<section class="section">
+  <div class="columns is-multiline">
+    <div class="column is-one-third">
+      <div class="card columns">
+        <div class="column card-image is-one-third">
+          <figure class="image is-5by6">
+            <img class="image is-5by6" src="{{ page.rdf | rdf_property: "foaf:depiction" }}" alt="Personal image">
+          </figure>
         </div>
+        <div class="column card-content">
+          <div class="media">
+            <div class="media-content">
+              <p class="title is-4">{{ page.rdf | rdf_property: "foaf:name" }}</p>
+              <p class="subtitle is-6">{{ page.rdf }}</p>
+              <p class="is-6">{{ page.rdf | rdf_property: "foaf:phone" }}</p>
+            </div>
+          </div>
 
-        <div class="content">
+          <div class="content">
+          </div>
         </div>
       </div>
     </div>
-  </div>
-  <div class="column">
-    <h2>Projects</h2>
-    <ul>
-      {% capture project_query %}
-      SELECT DISTINCT ?project WHERE {
-        {
-          ?resourceUri foaf:currentProject ?project
-        } UNION {
-          ?project doap:maintainer ?resourceUri
+
+    <div class="column is-two-thirds">
+      {{ page.rdf | rdf_property: "dct:description" | markdownify }}
+      {{ page.rdf | rdf_property: "site:content" | markdownify }}
+    </div>
+
+    <div class="column is-one-third">
+      <h2>Projects</h2>
+      <ul>
+        {% capture project_query %}
+        SELECT DISTINCT ?project WHERE {
+          {
+            ?resourceUri foaf:currentProject ?project
+          } UNION {
+            ?project doap:maintainer ?resourceUri
+          }
         }
-      }
-      {% endcapture %}
-      {% assign projects = page.rdf | sparql_query: project_query %}
-      {% for result in projects %}
-      <li><a href="{{ result.project.page_url | prepend: site.baseurl }}">{{ result.project | rdf_property: "rdfs:label" }}</a></li>
-      {% endfor %}
-    </ul>
-
+        {% endcapture %}
+        {% assign projects = page.rdf | sparql_query: project_query %}
+        {% for result in projects %}
+        <li><a href="{{ result.project.page_url | prepend: site.baseurl }}">{{ result.project | rdf_property: "rdfs:label" }}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
   </div>
-
-</div>
+</section>
