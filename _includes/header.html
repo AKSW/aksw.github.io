@@ -4,10 +4,8 @@
 <section class="hero">
   <div class="hero-body">
     <div class="container">
-      <h1 class="title">{{ root | rdf_property: "rdfs:label" }}</h1>
-      <h2 class="subtitle">
-        Hero subtitle
-      </h2>
+      <h1 class="title is-3">{{ root | rdf_property: "rdfs:label" }}</h1>
+      <h2 class="subtitle">{{ page.rdf.iri }}</h2>
     </div>
   </div>
 </section>

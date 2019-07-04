@@ -3,44 +3,47 @@ rdf_prefix_path: "_data/prefixes.sparql"
 layout: base
 ---
 
-<section class="hero">
-  <div class="hero-body">
-    <div class="container">
-      <h2 class="title">{{ page.rdf | rdf_property: "rdfs:label" }}</h2>
-      <h2 class="subtitle">
-        {{ page.rdf.iri }}
-        Group Members
-      </h2>
-    </div>
+<section class="section">
+  <h2 class="title is-1">{{ page.rdf | rdf_property: "rdfs:label" }}</h2>
+  {% assign areas = page.rdf | rdf_property: "aksw:researchAreas", nil, true %}
+  <div class="tags are-medium">
+    {% for area in areas %}
+    <span class="tag">{{ area }}</span>
+    {% endfor %}
   </div>
+  <p>{{ page.rdf | rdf_property: "dct:abstract" }}</p>
 </section>
 {% assign groups = page.rdf | rdf_inverse_property: "aiiso:part_of", true %}
 {% if groups.first %}
-  <h3 class="title">Groups</h3>
-<div class="columns is-multiline">
-{% for group in groups %}
-<div class="column is-one-third">
-  <div class="card columns">
-    <div class="column card-content">
-      <div class="media">
-        <div class="media-content">
-          <p class="title is-4"><a href="{{ group.render_path | prepend: site.baseurl }}">{{ group | rdf_property: "rdfs:label" }}</a></p>
-          <p class="subtitle is-6">{{ group.iri }}</p>
+<section class="section">
+  <h3 class="title is-2">Groups</h3>
+  <div class="columns is-multiline">
+    {% for group in groups %}
+    <div class="column is-one-third">
+      <div class="card columns">
+        <div class="column card-content">
+          <div class="media">
+            <div class="media-content">
+              <p class="title is-4"><a href="{{ group.render_path | prepend: site.baseurl }}">{{ group | rdf_property: "rdfs:label" }}</a></p>
+              <p class="subtitle is-6">{{ group.iri }}</p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
+    {% endfor %}
   </div>
-</div>
-{% endfor %}
-</div>
+</section>
 {% endif %}
 
 {% assign members = page.rdf | rdf_property: "foaf:member", nil, true %}
-<h3 class="title">Members</h3>
-<div class="columns is-multiline">
-{% for member in members %}
-<div class="column is-one-third">
-{% include person_card.html person=member %}
-</div>
-{% endfor %}
-</div>
+<section class="section">
+  <h3 class="title is-2">Members</h3>
+  <div class="columns is-multiline">
+    {% for member in members %}
+    <div class="column is-one-third">
+      {% include person_card.html person=member %}
+    </div>
+    {% endfor %}
+  </div>
+</section>
