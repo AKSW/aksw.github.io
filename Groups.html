@@ -5,9 +5,9 @@ layout: base
 
 {% assign aksw = "<http://aksw.org/Groups/AKSW>" | rdf_get %}
 {% assign groups = aksw | rdf_inverse_property: "aiiso:part_of", true %}
-<section class="section">
 {% for group in groups %}
+<section class="section">
 <h3 class="title is-3"><a href="{{ group.render_path | prepend: site.baseurl }}">{{ group | rdf_property: "rdfs:label" }}</a></h3>
 <p>{{ group | rdf_property: "dct:abstract" }}</p>
-{% endfor %}
 </section>
+{% endfor %}
