@@ -3,5 +3,62 @@ rdf_prefix_path: "_data/prefixes.sparql"
 layout: base
 ---
 
-{% assign aksw = "<http://aksw.org/Groups/AKSW>" | rdf_get %}
+{% capture group_query %}
+select distinct ?person where
+{
+  {
+    ?group foaf:member ?person .
+    ?group aiiso:part_of ?resourceUri .
+  } UNION {
+    ?resourceUri foaf:member ?person
+  }
+  ?person a foaf:Person .
+  OPTIONAL {
+    ?excludeA a <http://aksw.org/StudentWorker> .
+    filter (?person = ?excludeA)
+  }
+  filter(!bound(?excludeA)) .
+  OPTIONAL {
+    ?excludeB a <http://aksw.org/Alumni> .
+    filter (?person = ?excludeB)
+  }
+  filter(!bound(?excludeB)) .
+  OPTIONAL {
+    ?person foaf:familyName ?familyName
+  }
+} order by ASC(?familyName)
+{% endcapture %}
+
+{% capture students_query %}
+select distinct ?person ?name where
+{
+  ?person a <http://aksw.org/StudentWorker> ;
+    foaf:name ?name .
+  OPTIONAL { ?exclude a <http://aksw.org/Alumni> . filter (?person = ?exclude) }
+  OPTIONAL { ?person foaf:familyName ?familyName }
+  filter(!bound(?exclude) )
+} order by ASC(?familyName)
+{% endcapture %}
+
+{% assign group = "<http://aksw.org/Groups/AKSW>" | sparql_query: group_query %}
+<section class="section">
+  <h3 class="title is-1">{{ page.rdf | rdf_property: "rdfs:label" }}</h3>
+  <h4 class="title is-4">The following individuals belong to AKSW</h4>
+  <div class="columns is-multiline">
+    {% for member in group %}
+    <div class="column is-one-third">
+      {% include person_card.html person=member.person %}
+    </div>
+    {% endfor %}
+  </div>
+</section>
+{% assign students = "<http://aksw.org/Groups/AKSW>" | sparql_query: students_query %}
+<section class="section">
+<h4 class="title is-4">The following Students work with us </h4>
+<ul>
+  {% for member in students %}
+  <li><a href="{{ member.person.render_path | prepend: site.baseurl }}">{{ member.name }}</a></li>
+  {% endfor %}
+</ul>
+</section>
 <a href="{{ aksw.render_path | prepend: site.baseurl }}">See AKSW</a>
