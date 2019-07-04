@@ -12,7 +12,7 @@ rdf_prefix_path: "_data/prefixes.sparql"
   </head>
   <body>
     <div class="container">
-      {% include header.html %}
+      {% include_cached header.html %}
       {{ content }}
     </div>
     <script src="{{ "/dist/main.js" | prepend: site.baseurl }}"></script>

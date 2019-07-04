@@ -4,6 +4,7 @@ rootresource: "<http://aksw.org/>"
 
 plugins:
    - jekyll-rdf
+   - jekyll-include-cache
 
 # Jekyll RDF settings
 jekyll_rdf:
