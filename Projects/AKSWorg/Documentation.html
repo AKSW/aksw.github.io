@@ -97,7 +97,224 @@
   </div>
 </nav>
 
-      Hello http://aksw.org/Projects/AKSWorg/Documentation
+      <section class="section">
+  <h2 class="title is-1">AKSW Web Page Documentation</h2>
+  
+<p>{{toc tag=”ul” depth=”3”}}</p>
+
+<h1 id="big-picture">Big-Picture</h1>
+<p>This web page consists of linked data enabled resources.
+Each resource has a specific HTML5 representation (besides its RDF representation).
+This HTML representation is rendered by using a template and fill its variable parts with the content from these sources:</p>
+
+<ul>
+  <li>values (Literals) of specific attributes from the resource</li>
+  <li>output of helper markup (see below)</li>
+  <li>content rendered from sub-templates</li>
+</ul>
+
+<h1 id="resources-and-properties">Resources and Properties</h1>
+<p>The following attributes and classes are used by the templates.</p>
+
+<h2 id="classes">Classes</h2>
+<p>Currently, there are templates for the following classes of resources:</p>
+
+<ul>
+  <li>[[foaf:Document]]: a basic web page without specific lists and queries</li>
+  <li>[[aiiso:ResearchGroup]]: a (sub) research group with lists of member, research areas and projects</li>
+  <li>[[foaf:Person]]: a person with lists of projects and research areas</li>
+  <li>[[foaf:Project]]: an AKSW project.
+Can be a funded, a community or an open-source project.</li>
+</ul>
+
+<h2 id="properties">Properties</h2>
+<p>These properties can be applied to all resources:</p>
+
+<ul>
+  <li>[[rdfs:label]]: This is the overall headline, name or title of a resource.</li>
+  <li>[[site:menuLabel]]: If the resource title is too long for the menu, use this property in addition to [[rdfs:label]].</li>
+  <li>[[site:content]]: The main content property.
+The literal value should be of datatype [[sysont:Markdown]].</li>
+  <li>[[dcterms:abstract]]: This is a plain text attribute (no markup).
+The content of this attribute is used in extended lists and build the header of the resource as a first summary paragraph.</li>
+  <li>[[aksw:hookline]]: This a less than 100 character description of the resource.
+Hooklines are especially important for projects to advertise them in lists and on top of the project page.</li>
+  <li>[[sioc:feed]]: Use this object property to relate a RSS or Atom feed to this resource.
+The content of this feed is shown in the right side content column.</li>
+</ul>
+
+<p>In addition to the general properties, these class specific properties can be used:</p>
+
+<ul>
+  <li>for Projects: [[foaf:homepage]]</li>
+  <li>for Groups: [[aksw:researchAreas]], [[foaf:member]]</li>
+  <li>for Person: [[foaf:name]], [[foaf:currentProject]], [[foaf:pastProject]], [[foaf:mbox]], [[aksw:room]], [[aksw:publicationTag]] (for the publication list)</li>
+</ul>
+
+<h1 id="main-content">Main Content</h1>
+<p>The suggested markup language to write pages is <a href="http://daringfireball.net/projects/markdown/">Markdown</a>.
+Markdown is a text-to-HTML conversion language for web writers.
+Markdown is intended to be as easy-to-read and easy-to-write as is feasible.</p>
+
+<p>All details on Markdown syntax are available on the <a href="http://daringfireball.net/projects/markdown/syntax">syntax page</a>.
+Besides its readability, one main advantage of Markdown is its integration with HTML.
+Wherever you need HTML markup, you can use it without any quote or special syntax as <a href="http://daringfireball.net/projects/markdown/syntax#html">inline HTML</a>.
+Have a look at the sources of this document to copy/paste specific style elements which you want to reuse, or add new stuff and share it.</p>
+
+<p>The main content of each resource is saved as a Literal object with the attribute [[site:content]].
+See the description of this property for details about its usage.
+In general: All attributes and classes have a proper documentation, so you just need to click on them inside of OntoWiki for more details.</p>
+
+<h2 id="helper-markup">Helper Markup</h2>
+<p>Helper markup is used in the same way as wiki actions.
+The general syntax of a helper tag is: <code class="highlighter-rouge">{{tagname p1="value1" ... "pX"="valueX"}}</code>.</p>
+
+<p>The following helper exists so far.</p>
+
+<h3 id="table-of-content-helper">Table of Content helper</h3>
+<p>The <code class="highlighter-rouge">toc</code> helper creates an javascript generated table of contents at the position where the helper tag was written.</p>
+
+<p>The following options can be used</p>
+
+<ul>
+  <li><code class="highlighter-rouge">tag</code>: the toc type can be <code class="highlighter-rouge">ol</code>, <code class="highlighter-rouge">ul</code> or <code class="highlighter-rouge">div</code>, default is <code class="highlighter-rouge">ol</code></li>
+  <li><code class="highlighter-rouge">startlevel</code>: which heading level to start? default is <code class="highlighter-rouge">1</code></li>
+  <li><code class="highlighter-rouge">depth</code>: how many TOC levels you want? default is <code class="highlighter-rouge">2</code></li>
+</ul>
+
+<p>Examples (use a single <code class="highlighter-rouge">=</code> instead of <code class="highlighter-rouge">==</code>):</p>
+
+<ul>
+  <li><code class="highlighter-rouge">{{toc depth=="2"}}</code></li>
+</ul>
+
+<h3 id="link-helper">link helper</h3>
+<p>The <code class="highlighter-rouge">link</code> helper creates an internal page link to a specific resource.
+If you need to link to an aksw.org resource, you should use this helper instead of using plain HTML-links or Markdown link syntax.</p>
+
+<p>Possible parameters are:</p>
+
+<ul>
+  <li><code class="highlighter-rouge">literal</code>: search for this literal and link to its resource (the first found).
+    <ul>
+      <li>short form: <code class="highlighter-rouge">l</code></li>
+    </ul>
+  </li>
+  <li>‘uri’: instead of searching for a resource, use the given qname or uri string
+    <ul>
+      <li>short form: <code class="highlighter-rouge">r</code></li>
+    </ul>
+  </li>
+  <li><code class="highlighter-rouge">property</code>: search only for literals of the given property.
+    <ul>
+      <li>short form: <code class="highlighter-rouge">p</code></li>
+    </ul>
+  </li>
+  <li><code class="highlighter-rouge">text</code>: instead of using the resource title, use the given string as link text.
+    <ul>
+      <li>short form: <code class="highlighter-rouge">t</code></li>
+    </ul>
+  </li>
+</ul>
+
+<p>Examples (use a single <code class="highlighter-rouge">=</code> instead of <code class="highlighter-rouge">==</code>):</p>
+
+<ul>
+  <li><code class="highlighter-rouge">{{link uri=="http://aksw.org/About"}}</code>
+    <ul>
+      <li>result: {{link uri=”http://aksw.org/About”}}</li>
+    </ul>
+  </li>
+  <li><code class="highlighter-rouge">{{link r=="foaf:Person"}}</code>
+    <ul>
+      <li>result: {{link r=”foaf:Person”}}</li>
+      <li>comment: use qnames where possible, use short values</li>
+    </ul>
+  </li>
+  <li><code class="highlighter-rouge">{{link literal=="Projects"}}</code>
+    <ul>
+      <li>result: {{link literal=”Projects”}}</li>
+    </ul>
+  </li>
+  <li><code class="highlighter-rouge">{{link text=="our projects" literal="Projects"}}</code>
+    <ul>
+      <li>result: {{link text=”our projects” literal=”Projects”}}</li>
+    </ul>
+  </li>
+  <li><code class="highlighter-rouge">{{link property=="site:menuLabel" literal="About"}}</code>
+    <ul>
+      <li>result: {{link property=”site:menuLabel” literal=”About”}}</li>
+    </ul>
+  </li>
+  <li><code class="highlighter-rouge">{{link literal=="MyPage"}}</code>
+    <ul>
+      <li>result: {{link literal=”MyPage”}}</li>
+      <li>comment: no links to non existing resources</li>
+    </ul>
+  </li>
+  <li><code class="highlighter-rouge">{{link uri=="no/uri"}}</code>
+    <ul>
+      <li>result: {{link uri=”no/uri”}}</li>
+      <li>comment: wrong usage is indicated in this way, a mouseover tooltip over the error gives you more information about the problem</li>
+    </ul>
+  </li>
+  <li><code class="highlighter-rouge">{{link p=="foaf:nick" l="Seebi" t="my page"}}</code>
+    <ul>
+      <li>result: {{link p=”foaf:nick” l=”Seebi” t=”my page”}}</li>
+      <li>comment: Example with short parameters, qname and given link text</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="style-elements">Style Elements</h2>
+<p>There are specific style elements as two column sections or tables which you can add to your documents by using HTML markup.</p>
+
+<h3 id="multi-columns">Multi Columns</h3>
+
+<div class="multicolumns2">
+<strong>first columns</strong>
+<p>...</p>
+<p>...</p>
+<strong>second column</strong>
+<p>...</p>
+<p>...</p>
+</div>
+
+<h3 id="tables">Tables</h3>
+<p>Use standard HTML tables with table head and cell tags to achieve a look like this</p>
+
+<table>
+<thead>
+<tr>
+<th>Tabelle Head</th>
+<th>Tabelle Head</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Development</td>
+<td>methods, tools and applications</td>
+</tr>
+<tr>
+<td>applications</td>
+<td>adaptive Knowledge Engineering</td>
+</tr>
+</tbody>
+</table>
+
+<h1 id="navigation-structures">Navigation Structures</h1>
+
+<p>Menus are [[rdf:Seq]] resources of type [[aksw:Navigation]].
+The rdf properties <code class="highlighter-rouge">rdf:_1</code> till <code class="highlighter-rouge">rdf:_x</code> are used to arrange an ordererd list of resources which a used to render a navigation menu.
+Currently, we have these navigation resources:</p>
+
+<ul>
+  <li>{{link literal=”Main Navigation”}}</li>
+  <li>{{link literal=”Top Navigation”}}</li>
+</ul>
+
+
+</section>
 
     </div>
     <script src="/aksw.org.jekyllrdf/dist/main.js"></script>

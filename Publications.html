@@ -97,7 +97,19 @@
   </div>
 </nav>
 
-      Hello http://aksw.org/Publications
+      <section class="section">
+  <h2 class="title is-1">Publications</h2>
+  <nav class="nav-sidelinks">
+<ul>
+<li><strong class="headline">current funded projects</strong>
+{{query where="?resourceUri a aksw:FundedProject. OPTIONAL { ?resourceUri aksw:status ?status }  FILTER (?status != 'finished')" template="liplain"}}
+</li>
+&lt;/nav&gt;
+
+BibTeX entries for all AKSW publications can be found at [Bibsonomy](http://www.bibsonomy.org/user/aksw).
+</ul></nav>
+
+</section>
 
     </div>
     <script src="/aksw.org.jekyllrdf/dist/main.js"></script>

@@ -97,7 +97,54 @@
   </div>
 </nav>
 
-      Hello http://aksw.org/Projects
+      <section class="section">
+  <h2 class="title is-1">Projects</h2>
+  <p>{{toc depth=”1”}}</p>
+<h1 id="funded-projects">Funded Projects</h1>
+<nav class="nav-sidelinks">
+{{query where="?resourceUri a aksw:FundedProject; aksw:status 'active' ." template="liplain"}}
+</nav>
+
+<p>ASKW is currently funded with the following regional, national and European research projects:
+{{query where=”?resourceUri a aksw:FundedProject; aksw:status ‘active’ .” template=”abstract”}}</p>
+
+<p>AKSW was formerly funded with the following regional, national and European research projects:
+{{query where=”?resourceUri a aksw:FundedProject. ?resourceUri aksw:status ‘finished’ . “ template=”li”}}</p>
+
+<h1 id="open-source-projects">Open Source Projects</h1>
+<nav class="nav-sidelinks">
+{{query where="?resourceUri a aksw:OpenSourceProject." template="liplain"}}
+</nav>
+
+<p>AKSW has launched a number of high-impact R&amp;D OpenSource projects.
+{{query where=”?resourceUri a aksw:OpenSourceProject.” template=”abstract”}}</p>
+
+<h1 id="community-projects">Community Projects</h1>
+<nav class="nav-sidelinks">
+{{query where="?resourceUri a aksw:CommunityProject." template="liplain"}}
+</nav>
+
+<p>AKSW has launched a number of high-impact R&amp;D Community projects.
+{{query where=”?resourceUri a aksw:CommunityProject.” template=”abstract”}}</p>
+
+<h1 id="dataset-projects">Dataset Projects</h1>
+<nav class="nav-sidelinks">
+{{query where="?resourceUri a aksw:DatasetProject." template="liplain"}}
+</nav>
+
+<p>AKSW is publisher or contributer to the following dataset projects.
+{{query where=”?resourceUri a aksw:DatasetProject.” template=”abstract”}}</p>
+
+<h1 id="incubator-projects">Incubator Projects</h1>
+
+<p>{{query where=”?resourceUri a aksw:IncubatorProject.”}}</p>
+
+<h1 id="project-alumni">Project Alumni</h1>
+
+<p>Some projects have reached a stable state, but are currently not actively maintained and further developed.
+{{query where=”?resourceUri a aksw:AlumniProject.”}}</p>
+
+</section>
 
     </div>
     <script src="/aksw.org.jekyllrdf/dist/main.js"></script>

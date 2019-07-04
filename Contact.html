@@ -97,7 +97,68 @@
   </div>
 </nav>
 
-      Hello http://aksw.org/Contact
+      <section class="section">
+  <h2 class="title is-1">Contact</h2>
+  <nav class="nav-sidelinks">
+<ul>
+<li><strong class="headline">people</strong>
+{{query where="?group foaf:member ?resourceUri . ?group aiiso:part_of groups:AKSW . OPTIONAL { ?resourceUri &lt;http://xmlns.com/foaf/0.1/familyName&gt; ?familyName }" template="liplain" orderby="ASC(?familyName)"}}
+</li>
+&lt;/nav&gt;
+
+Please send emails to <a href="mailto:aksw@informatik.uni-leipzig.de">aksw@informatik.uni-leipzig.de</a>.
+
+## How To Find Us
+The Department of Business Information Systems is located in the new, central premises of Leipzig University at <a href="http://maps.google.de/maps?q=Augustusplatz+10,+Leipzig&amp;hl=de&amp;sll=51.151786,10.415039&amp;sspn=11.808931,28.54248&amp;oq=Augustusplatz+10&amp;hnear=Augustusplatz+10,+04109+Leipzig,+Sachsen&amp;t=m&amp;z=16=add">Augustusplatz 10</a>. You will find the offices of the AKSW research group in the Paulinum building on the 6th floor.
+
+### Directions
+
+#### By car
+
+* Motorway A9 (Berlin – Munich): Exit on Großkugel to the highway B6 or exit on Leipzig West to the Interstate B181, then follow directions to Leipzig's city centre (“Innenstadt Leipzig”)
+* Motorway A38 (Göttingen – Leipzig): Exit on Kreuz Rippachtal to the highway B87, then follow directions to Leipzig's city centre (“Innenstadt Leipzig”)
+* Motorway A14 (Nossen – Magdeburg): Exit on Leipzig Mitte to the highway B2 or exit on Leipzig Nordost to the Interstate B87, then follow directions to Leipzig's city centre (“Innenstadt Leipzig”)
+
+Follow the city's inner ring road until Augustusplatz / Goethestraße. You could use the underground car park at Augustusplatz <a href="https://maps.google.com/maps?f=d&amp;hl=de&amp;daddr=Augustusplatz,+Leipzig,+Germany">route finder</a>.
+
+#### By train
+Intercity and Intercity-Express trains connect Leipzig with almost all European cities. Take a look at the <a href="http://www.bahn.de/i/view/DEU/en/index.shtml">German Railways</a> website for planning your journey.
+
+The premises of the University of Leipzig are not far away from Leipzig’s Main Station (400m, 10 min walk). Public transportation is available right in front of the station. You can get a taxi or catch tram 4, 7, 12 or 15 heading eastward to reach our offices.Get off at the stop 'Augustusplatz'. If you turn right, the Paulinum building of the University, which resembles a church, should be in sight and approximately 100m ahead of you. Use the entrance of the Paulinum building.
+
+#### By plane
+It takes about 30 minutes by car to get from Leipzig-Halle Airport to the city centre. There are also direct trains from the airport to Leipzig’s Main Station. They leave every 30 minutes and take you to the city centre in about 15 minutes. To reach Augustusplatz 10, please follow the directions described above.
+
+If there are no direct flights to Leipzig from your city, you can also reach Leipzig via these airports:
+
+* Berlin (about one-hour train ride to Leipzig / approx. 40 Euro one way),
+  * From Berlin Tegel (airport code TXL) take the TXL bus to Berlin Hauptbahnhof main train station and the direct IC/ICE train to Leipzig
+  * From Berlin Schönefeld (airport code SXF) take the SXF bus to Berlin Südkreuz train station and the direct IC/ICE train to Leipzig
+* Frankfurt / Main (about 3.5 hours train ride / approx. 70 Euro one way)
+* Hannover (about three-hours train ride / approx. 50 Euro one way).
+
+Trains depart frequently (mostly hourly) from these cities to Leipzig. Please check the schedule at <a href="http://bahn.de/">Deutsche Bahn</a>.
+
+See also <a href="http://www.leipzig-halle-airport.de/en/index.html?newLanguage=en">www.leipzig-halle-airport.de</a> for more information.
+
+### Accommodation
+Leipzig offers a variety of hotels, hostels and apartments. We have shortlisted a few hotels for you <a href="http://aksw.org/extensions/site/sites/local/files/hotels_august20101.pdf">there</a>. A decent option right in the center and conveniently located between the train station and our office is <a href="http://www.motel-one.com/uk/hotels/leipzig.html">Motel One</a> (other than the name suggests its a modern, convenient and elegant hotel).
+
+### Address
+
+    Leipzig University
+    Faculty of Mathematics and Computer Science
+    Institute of Computer Science
+    Dept. Business Information Systems
+    Augustusplatz 10
+    04109 Leipzig, Germany
+
+Phone: <a href="tel:+493419732310">+49 (341) 97 32 310</a>
+
+Fax: <a href="tel:+493419732369">+49 (341) 97 32 369</a>
+</ul></nav>
+
+</section>
 
     </div>
     <script src="/aksw.org.jekyllrdf/dist/main.js"></script>

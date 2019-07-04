@@ -97,7 +97,56 @@
   </div>
 </nav>
 
-      Hello http://aksw.org/Teaching
+      <section class="section">
+  <h2 class="title is-1">Teaching</h2>
+  <nav class="nav-sidelinks">
+<ul>
+<li><strong class="headline">current funded projects</strong>
+{{query where="?resourceUri a aksw:FundedProject. OPTIONAL { ?resourceUri aksw:status ?status }  FILTER (?status != 'finished')" template="liplain"}}
+</li>
+<li><strong class="headline">featured projects</strong>
+{{query where="?resourceUri aksw:promoted 'true'^^xsd:boolean." template="liplain"}}
+</li>
+&lt;/nav&gt;
+
+
+# Semantic Web Module
+
+Together with the Intelligent Systems department at Uni Leipzig,  AKSW created the [master module Semantic Web](http://bis.informatik.uni-leipzig.de/de/Lehre/BAMA/SW). The module is usually held in the summer semester and consists of a lecture, a seminar and practical work.
+
+#  Module component-based software engineering
+“_Software aus Komponenten_”
+
+Together with the Intelligent Systems department at Uni Leipzig,  AKSW created the [master module “Software aus Komponenten”](http://bis.informatik.uni-leipzig.de/de/Lehre/BAMA/CW). The module is usually held in the winter semester and consists of a lecture, and a seminar.
+
+# SlideWiki
+
+AKSW develops the collaborative e-learning content authoring tool [SlideWiki](http://slidewiki.aksw.org). With SlideWiki educators and students can work together on creating richly structured e-learning content such as presentations and self-assessment tests. Further information about SlideWiki can be found in the [SlideWiki documentation](http://slidewiki.aksw.org/documentation/).
+
+# Student Supervision
+
+AKSW actively supervises internships as well as bachelor and master thesis. Most of the thesis topics are related to Web technologies, Semantic Web, ontologies, information systems and data management. They are usually performed in the context of an AKSW Project. You can also have a look at [BIS Abschlussarbeiten](http://bis.informatik.uni-leipzig.de/de/Abschlussarbeiten).
+
+# Leipzig School of Media
+
+AKSW organizes and performs the master study course [Content- &amp; Media-Engineering](http://www.leipzigschoolofmedia.de/master-content-and-media-engineering/) at Leipzig School of Media.
+
+# Past Courses
+
+## WiSe 2014/2015
+
+* [“Praktikum: Distributed Semantic Social Networks”](http://bis.informatik.uni-leipzig.de/de/Lehre/1415/WS/LV/DSSNP)
+
+## WiSe 2013/2014
+
+* [“Semantic Web based digital resource management – _Semantic Web basiertes digitales Ressourcenmanagement_”](http://aksw.org/Teaching/WiSe2013/ResourceManagementSeminar)
+
+## WiSe 2012/2013
+
+* [“Praktikum: Distributed Semantic Social Networks”](http://bis.informatik.uni-leipzig.de/de/Lehre/1213/WS/LV/DSSNP)
+</ul></nav>
+
+</section>
 
     </div>
     <script src="/aksw.org.jekyllrdf/dist/main.js"></script>

@@ -97,7 +97,36 @@
   </div>
 </nav>
 
-      Hello http://aksw.org/Presentations
+      <section class="section">
+  <h2 class="title is-1">Talks</h2>
+  <nav class="nav-sidelinks">
+<ul>
+<li><strong class="headline">current funded projects</strong>
+{{query where="?resourceUri a aksw:FundedProject. OPTIONAL { ?resourceUri aksw:status ?status }  FILTER (?status != 'finished')" template="liplain"}}
+</li>
+<li><strong class="headline">featured projects</strong>
+{{query where="?resourceUri aksw:promoted 'true'^^xsd:boolean." template="liplain"}}
+</li>
+&lt;/nav&gt;
+
+# Videolectures
+
+* Sören Auer: [Triplify - Light-weight Linked Data Publication from Relational Databases](http://videolectures.net/www09_auer_tlwldp/), at World Wide Web 2009 Conference
+* Sören Auer: [DBpedia: A Nucleus for a Web of Open Data](http://videolectures.net/iswc07_soeren_nwo/), at International Semantic Web Conference 2007
+* Sören Auer: [OntoWiki - A Tool for Social, Semantic Collaboration](http://videolectures.net/iswc06_auer_otssc/) at International Semantic Web Conference 2006
+
+# Talks
+
+* Jens Lehmann, Sören Auer: [Semantic Wikis and the Web of Data](http://jens-lehmann.org/files/2009_wod_wikis.odp) (OpenDocument format), invited talk at 1st KYOTO EU project workshop, 2009.
+* Jens Lehmann, Christoph Haase: [Ideal Downward Refinement in the EL Description Logic](http://jens-lehmann.org/files/2009_ilp.pdf), 19th International Conference on Inductive Logic Programming, 2009.
+* Jens Lehmann: [Presentation of AKSW Group and OWL Class Expressions Learning](http://jens-lehmann.org/files/2009_aifb.odp) (OpenDocument format), AIFB Karlsruhe, 2009.
+* [DBpedia.org - Querying Wikipedia like a Database](http://sites.wiwiss.fu-berlin.de/suhl/bizer/pub/Bizer-etal-WWW2007-DBpedia-Talk.pdf) [Developers track](http://www2007.org/prog-Developers.php) at the 16th International World Wide Web Conference (WWW2007), Banff, Canada, May 2007.
+* Jens Lehmann: [Hybrid Learning of Ontology Classes](http://jens-lehmann.org/files/2007_hybrid_learning_presentation.pdf) at the 5th International Conference on Machine Learning and Data Mining, 2007.
+* Jens Lehmann: [ALC Concept Learning with Refinement Operators](http://jens-lehmann.org/files/2007_concept_learning_refop_presentation.pdf) at the 17th International Conference on Inductive Logic Programming, 2007.
+* **SoftWiki - Agiles Requirements-Engineering für Softwareprojekte mit einer großen Anzahl verteilter Stakeholder.** Statuskonferenz Forschungsoffensive "Software Engineering 2006", 26-28 June 2006, Leipzig. [Slides as PDF](http://softwiki.de/files/folien_SOFT-WIKI.pdf)
+</ul></nav>
+
+</section>
 
     </div>
     <script src="/aksw.org.jekyllrdf/dist/main.js"></script>
