@@ -1,30 +1,30 @@
 <nav class="navbar" role="navigation" aria-label="main navigation">
   <div class="navbar-brand">
-    <a class="navbar-item" href="{{ root.render_path }}">
+    <a class="navbar-item brand-icon" href="{{ root.render_path }}">
       <img src="http://aksw.org/extensions/site/sites/local/images/logo-aksw.png" width="64" height="28">
     </a>
 
-    <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
-      <span aria-hidden="true"></span>
-      <span aria-hidden="true"></span>
-      <span aria-hidden="true"></span>
-    </a>
-  </div>
+    <input id="menuCheckbox" name="menuCheckbox" type="checkbox" style="display: none">
+    <label for="menuCheckbox" role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+      <span aria-hidden="true" class="bar1"></span>
+      <span aria-hidden="true" class="bar2"></span>
+      <span aria-hidden="true" class="bar3"></span>
+    </label>
 
-  <div id="navbarBasicExample" class="navbar-menu">
-    <div class="navbar-start">
-      {% assign nav = rootnavigation | rdf_container %}
-      {% for item in nav %}
-      <a class="navbar-item" href="{{ item.render_path | prepend: site.baseurl }}">
-        {% assign label = item | rdf_property: "site:menuLabel" %}
-        {% unless label %}
-        {% assign label = item | rdf_property: "rdfs:label" %}
-        {% endunless %}
-        {{ label }}
-      </a>
-      {% endfor %}
-
-
+    <div id="navbarBasicExample" class="navbar-menu">
+      <div class="navbar-start">
+        {% assign nav = rootnavigation | rdf_container %}
+        {% for item in nav %}
+        <a class="navbar-item" href="{{ item.render_path | prepend: site.baseurl }}">
+          {% assign label = item | rdf_property: "site:menuLabel" %}
+          {% unless label %}
+          {% assign label = item | rdf_property: "rdfs:label" %}
+          {% endunless %}
+          {{ label }}
+        </a>
+        {% endfor %}
+      </div>
     </div>
   </div>
+
 </nav>
