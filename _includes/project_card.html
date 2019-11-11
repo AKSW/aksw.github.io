@@ -1,0 +1,20 @@
+{% assign project = include.project %}
+<div class="card">
+    {% assign logo = project | rdf_property: "foaf:logo" %}
+    {% if logo %}
+    <div class="card-image">
+      <figure class="image">
+        <img src="{{ logo }}" alt="Project logo" />
+      </figure>
+    </div>
+    {% endif %}
+  <div class="card-content">
+    <div class="media">
+      <div class="media-content">
+        <p class="title is-4"><a href="{{ project.render_path | prepend: site.baseurl }}">{{ project | rdf_property: "rdfs:label" }}</a></p>
+        <p class="subtitle">{{ project | rdf_property: "aksw:hookline" }}</p>
+        <p class="subtitle is-6">{{ project.iri }}</p>
+      </div>
+    </div>
+  </div>
+</div>
