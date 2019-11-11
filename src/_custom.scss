@@ -1,31 +1,33 @@
-.navbar-brand .brand-icon {
-  display: block
-}
+@media screen and (max-width: 1023px) {
+  .navbar-brand .brand-icon {
+    display: block
+  }
 
-input[type=checkbox] ~ label.burger ~ .navbar-menu {
-  display: none;
-}
-input[type=checkbox]:checked ~ label.burger ~ .navbar-menu {
-  display: block;
-}
+  input[type=checkbox] ~ label.burger ~ .navbar-menu {
+    display: none;
+  }
+  input[type=checkbox]:checked ~ label.burger ~ .navbar-menu {
+    display: block;
+  }
 
-input[type=checkbox] ~ label.burger span {
-  transition: 0.4s;
-}
+  input[type=checkbox] ~ label.burger span {
+    transition: 0.4s;
+  }
 
-/* Rotate first bar */
-input[type=checkbox]:checked ~ label span.bar1 {
-  -webkit-transform: rotate(45deg) translate(0px, 0px) ;
-  transform: rotate(45deg) translate(0px, 0px) ;
-}
+  /* Rotate first bar */
+  input[type=checkbox]:checked ~ label span.bar1 {
+    -webkit-transform: rotate(45deg) translate(0px, 0px) ;
+    transform: rotate(45deg) translate(0px, 0px) ;
+  }
 
-/* Fade out the second bar */
-input[type=checkbox]:checked ~ label span.bar2 {
-  opacity: 0;
-}
+  /* Fade out the second bar */
+  input[type=checkbox]:checked ~ label span.bar2 {
+    opacity: 0;
+  }
 
-/* Rotate last bar */
-input[type=checkbox]:checked ~ label span.bar3 {
-  -webkit-transform: rotate(-45deg) translate(0px, 0px) ;
-  transform: rotate(-45deg) translate(0px, 0px) ;
+  /* Rotate last bar */
+  input[type=checkbox]:checked ~ label span.bar3 {
+    -webkit-transform: rotate(-45deg) translate(0px, 0px) ;
+    transform: rotate(-45deg) translate(0px, 0px) ;
+  }
 }
