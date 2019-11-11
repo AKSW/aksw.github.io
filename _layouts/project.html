@@ -3,39 +3,63 @@ rdf_prefix_path: "_data/prefixes.sparql"
 layout: base
 ---
 
-<h1 class="title">{{ page.rdf | rdf_property: "rdfs:label" }}</h1>
-{{ page.rdf }}
+<h1 class="title is-1">{{ page.rdf | rdf_property: "rdfs:label" }}</h1>
+<p class="subtitle">{{ page.rdf | rdf_property: "aksw:hookline" }}</p>
 
 <dl>
     <dt>Abstract:</dt>
     <dd>{{ page.rdf | rdf_property: "dct:abstract" }}</dd>
 </dl>
 
+<div class="buttons">
+  {% assign homepage = page.rdf | rdf_property: "foaf:homepage" %}
+  {% assign download = page.rdf | rdf_property: "doap:download-page" %}
+  {% if homepage %}
+  <a href="{{ homepage }}"><button class="button is-link">Homepage</button></a>
+  {% endif %}
+  {% if download %}
+  <a href="{{ download }}"><button class="button is-link">Download</button></a>
+  {% endif %}
+</div>
 
-<h2>Project Members</h2>
-<ul>
-    {% capture member_query %}
-    SELECT ?person WHERE {
-        {
-            ?person foaf:currentProject ?resourceUri
-        } UNION {
-            ?resourceUri doap:maintainer ?person
-        }
+{% assign logo = project | rdf_property: "foaf:logo" %}
+{% if logo %}
+<figure class="image column is-one-third">
+  <img src="{{ logo }}" alt="Project logo" />
+</figure>
+{% endif %}
+
+<div class="content">
+<h2 class="title is-2">Project Members</h2>
+</div>
+{% capture member_query %}
+SELECT ?person WHERE {
+    {
+        ?person foaf:currentProject ?resourceUri
+    } UNION {
+        ?resourceUri doap:maintainer ?person
     }
-    {% endcapture %}
-    {% assign members = page.rdf | sparql_query: member_query %}
-    {% for result in members %}
-    <li><a href="{{ result.person.page_url | prepend: site.baseurl }}">{{ result.person | rdf_property: "foaf:name" }}</a></li>
-    {% endfor %}
-</ul>
+}
+{% endcapture %}
+{% assign members = page.rdf | sparql_query: member_query %}
+<div class="columns is-multiline">
+  {% for result in members %}
+    <div class="column is-one-third">
+      {% include person_card.html person=result.person %}
+    </div>
+  {% endfor %}
+</div>
 
-<h2>Former Members</h2>
+<div class="content">
 {% assign former_members = page.rdf | rdf_inverse_property: "foaf:pastProject", true %}
+{% if former_members %}
+<h3 class="title is-3">Former Members</h3>
 <ul>
     {% for person in former_members %}
     <li><a href="{{ person.page_url | prepend: site.baseurl }}">{{ person | rdf_property: "foaf:name" }}</a></li>
     {% endfor %}
 </ul>
+{% endif %}
 
 <h2>Partner</h2>
 {% assign partners = page.rdf | rdf_property: "aksw:partner", nil, true %}
@@ -44,3 +68,4 @@ layout: base
     <li><a href="{{ partner.page_url | prepend: site.baseurl }}">{{ partner | rdf_property: "rdfs:label" }}</a></li>
     {% endfor %}
 </ul>
+</div>
