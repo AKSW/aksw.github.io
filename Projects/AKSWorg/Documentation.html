@@ -169,98 +169,98 @@ In general: All attributes and classes have a proper documentation, so you just 
 
 <h2 id="helper-markup">Helper Markup</h2>
 <p>Helper markup is used in the same way as wiki actions.
-The general syntax of a helper tag is: <code class="highlighter-rouge">{{tagname p1="value1" ... "pX"="valueX"}}</code>.</p>
+The general syntax of a helper tag is: <code class="language-plaintext highlighter-rouge">{{tagname p1="value1" ... "pX"="valueX"}}</code>.</p>
 
 <p>The following helper exists so far.</p>
 
 <h3 id="table-of-content-helper">Table of Content helper</h3>
-<p>The <code class="highlighter-rouge">toc</code> helper creates an javascript generated table of contents at the position where the helper tag was written.</p>
+<p>The <code class="language-plaintext highlighter-rouge">toc</code> helper creates an javascript generated table of contents at the position where the helper tag was written.</p>
 
 <p>The following options can be used</p>
 
 <ul>
-  <li><code class="highlighter-rouge">tag</code>: the toc type can be <code class="highlighter-rouge">ol</code>, <code class="highlighter-rouge">ul</code> or <code class="highlighter-rouge">div</code>, default is <code class="highlighter-rouge">ol</code></li>
-  <li><code class="highlighter-rouge">startlevel</code>: which heading level to start? default is <code class="highlighter-rouge">1</code></li>
-  <li><code class="highlighter-rouge">depth</code>: how many TOC levels you want? default is <code class="highlighter-rouge">2</code></li>
+  <li><code class="language-plaintext highlighter-rouge">tag</code>: the toc type can be <code class="language-plaintext highlighter-rouge">ol</code>, <code class="language-plaintext highlighter-rouge">ul</code> or <code class="language-plaintext highlighter-rouge">div</code>, default is <code class="language-plaintext highlighter-rouge">ol</code></li>
+  <li><code class="language-plaintext highlighter-rouge">startlevel</code>: which heading level to start? default is <code class="language-plaintext highlighter-rouge">1</code></li>
+  <li><code class="language-plaintext highlighter-rouge">depth</code>: how many TOC levels you want? default is <code class="language-plaintext highlighter-rouge">2</code></li>
 </ul>
 
-<p>Examples (use a single <code class="highlighter-rouge">=</code> instead of <code class="highlighter-rouge">==</code>):</p>
+<p>Examples (use a single <code class="language-plaintext highlighter-rouge">=</code> instead of <code class="language-plaintext highlighter-rouge">==</code>):</p>
 
 <ul>
-  <li><code class="highlighter-rouge">{{toc depth=="2"}}</code></li>
+  <li><code class="language-plaintext highlighter-rouge">{{toc depth=="2"}}</code></li>
 </ul>
 
 <h3 id="link-helper">link helper</h3>
-<p>The <code class="highlighter-rouge">link</code> helper creates an internal page link to a specific resource.
+<p>The <code class="language-plaintext highlighter-rouge">link</code> helper creates an internal page link to a specific resource.
 If you need to link to an aksw.org resource, you should use this helper instead of using plain HTML-links or Markdown link syntax.</p>
 
 <p>Possible parameters are:</p>
 
 <ul>
-  <li><code class="highlighter-rouge">literal</code>: search for this literal and link to its resource (the first found).
+  <li><code class="language-plaintext highlighter-rouge">literal</code>: search for this literal and link to its resource (the first found).
     <ul>
-      <li>short form: <code class="highlighter-rouge">l</code></li>
+      <li>short form: <code class="language-plaintext highlighter-rouge">l</code></li>
     </ul>
   </li>
   <li>‘uri’: instead of searching for a resource, use the given qname or uri string
     <ul>
-      <li>short form: <code class="highlighter-rouge">r</code></li>
+      <li>short form: <code class="language-plaintext highlighter-rouge">r</code></li>
     </ul>
   </li>
-  <li><code class="highlighter-rouge">property</code>: search only for literals of the given property.
+  <li><code class="language-plaintext highlighter-rouge">property</code>: search only for literals of the given property.
     <ul>
-      <li>short form: <code class="highlighter-rouge">p</code></li>
+      <li>short form: <code class="language-plaintext highlighter-rouge">p</code></li>
     </ul>
   </li>
-  <li><code class="highlighter-rouge">text</code>: instead of using the resource title, use the given string as link text.
+  <li><code class="language-plaintext highlighter-rouge">text</code>: instead of using the resource title, use the given string as link text.
     <ul>
-      <li>short form: <code class="highlighter-rouge">t</code></li>
+      <li>short form: <code class="language-plaintext highlighter-rouge">t</code></li>
     </ul>
   </li>
 </ul>
 
-<p>Examples (use a single <code class="highlighter-rouge">=</code> instead of <code class="highlighter-rouge">==</code>):</p>
+<p>Examples (use a single <code class="language-plaintext highlighter-rouge">=</code> instead of <code class="language-plaintext highlighter-rouge">==</code>):</p>
 
 <ul>
-  <li><code class="highlighter-rouge">{{link uri=="http://aksw.org/About"}}</code>
+  <li><code class="language-plaintext highlighter-rouge">{{link uri=="http://aksw.org/About"}}</code>
     <ul>
       <li>result: {{link uri=”http://aksw.org/About”}}</li>
     </ul>
   </li>
-  <li><code class="highlighter-rouge">{{link r=="foaf:Person"}}</code>
+  <li><code class="language-plaintext highlighter-rouge">{{link r=="foaf:Person"}}</code>
     <ul>
       <li>result: {{link r=”foaf:Person”}}</li>
       <li>comment: use qnames where possible, use short values</li>
     </ul>
   </li>
-  <li><code class="highlighter-rouge">{{link literal=="Projects"}}</code>
+  <li><code class="language-plaintext highlighter-rouge">{{link literal=="Projects"}}</code>
     <ul>
       <li>result: {{link literal=”Projects”}}</li>
     </ul>
   </li>
-  <li><code class="highlighter-rouge">{{link text=="our projects" literal="Projects"}}</code>
+  <li><code class="language-plaintext highlighter-rouge">{{link text=="our projects" literal="Projects"}}</code>
     <ul>
       <li>result: {{link text=”our projects” literal=”Projects”}}</li>
     </ul>
   </li>
-  <li><code class="highlighter-rouge">{{link property=="site:menuLabel" literal="About"}}</code>
+  <li><code class="language-plaintext highlighter-rouge">{{link property=="site:menuLabel" literal="About"}}</code>
     <ul>
       <li>result: {{link property=”site:menuLabel” literal=”About”}}</li>
     </ul>
   </li>
-  <li><code class="highlighter-rouge">{{link literal=="MyPage"}}</code>
+  <li><code class="language-plaintext highlighter-rouge">{{link literal=="MyPage"}}</code>
     <ul>
       <li>result: {{link literal=”MyPage”}}</li>
       <li>comment: no links to non existing resources</li>
     </ul>
   </li>
-  <li><code class="highlighter-rouge">{{link uri=="no/uri"}}</code>
+  <li><code class="language-plaintext highlighter-rouge">{{link uri=="no/uri"}}</code>
     <ul>
       <li>result: {{link uri=”no/uri”}}</li>
       <li>comment: wrong usage is indicated in this way, a mouseover tooltip over the error gives you more information about the problem</li>
     </ul>
   </li>
-  <li><code class="highlighter-rouge">{{link p=="foaf:nick" l="Seebi" t="my page"}}</code>
+  <li><code class="language-plaintext highlighter-rouge">{{link p=="foaf:nick" l="Seebi" t="my page"}}</code>
     <ul>
       <li>result: {{link p=”foaf:nick” l=”Seebi” t=”my page”}}</li>
       <li>comment: Example with short parameters, qname and given link text</li>
@@ -307,7 +307,7 @@ If you need to link to an aksw.org resource, you should use this helper instead 
 <h1 id="navigation-structures">Navigation Structures</h1>
 
 <p>Menus are [[rdf:Seq]] resources of type [[aksw:Navigation]].
-The rdf properties <code class="highlighter-rouge">rdf:_1</code> till <code class="highlighter-rouge">rdf:_x</code> are used to arrange an ordererd list of resources which a used to render a navigation menu.
+The rdf properties <code class="language-plaintext highlighter-rouge">rdf:_1</code> till <code class="language-plaintext highlighter-rouge">rdf:_x</code> are used to arrange an ordererd list of resources which a used to render a navigation menu.
 Currently, we have these navigation resources:</p>
 
 <ul>
