@@ -1,3 +1,8 @@
+
+.image.is-4by5 img {
+  object-fit: cover;
+}
+
 @media screen and (max-width: 1023px) {
   .navbar-brand .brand-icon {
     display: block
