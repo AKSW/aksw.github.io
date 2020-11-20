@@ -1,4 +1,8 @@
 {% assign person = include.person %}
+{% assign label = person | rdf_property: "skos:prefLabel" %}
+{% unless label %}
+{% assign label = person | rdf_property: "foaf:name" %}
+{% endunless %}
 <div class="card columns">
   <div class="column card-image is-one-third">
     <figure class="image is-4by5">
@@ -8,7 +12,7 @@
   <div class="column card-content">
     <div class="media">
       <div class="media-content">
-        <p class="title is-4"><a href="{{ person.render_path | prepend: site.baseurl }}">{{ person | rdf_property: "foaf:name" }}</a></p>
+        <p class="title is-4"><a href="{{ person.render_path | prepend: site.baseurl }}">{{ label }}</a></p>
         <p class="subtitle is-6">{{ person.iri }}</p>
       </div>
     </div>
