@@ -29,12 +29,12 @@ jobs:
     steps:
       # Checkout the source from the `jekyll` branch.
       - uses: actions/checkout@v2
-
-      env:
-        # use mongodb for the host here because we have specified a container for the job.
-        # If we were running the job on the VM this would be localhost
-        FUSEKI_HOST: fuseki
-        FUSEKI_PORT: ${{ job.services.fuseki.ports[3030] }}
+      - name: Build
+        env:
+          # use mongodb for the host here because we have specified a container for the job.
+          # If we were running the job on the VM this would be localhost
+          FUSEKI_HOST: fuseki
+          FUSEKI_PORT: ${{ job.services.fuseki.ports[3030] }}
       # Invoke this action against the newly checked out source code.
       # - uses: fabacab/jekyll-builder-for-github-pages-action@master
       #   with:
