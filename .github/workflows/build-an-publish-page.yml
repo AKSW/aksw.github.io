@@ -30,6 +30,7 @@ jobs:
       # Checkout the source from the `jekyll` branch.
       - uses: actions/checkout@v2
       - name: Build
+        uses: fabacab/jekyll-builder-for-github-pages-action@master
         env:
           # use mongodb for the host here because we have specified a container for the job.
           # If we were running the job on the VM this would be localhost
