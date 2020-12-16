@@ -23,7 +23,7 @@ jobs:
         ports:
         - 3030:3030
         volumes:
-          ${{ github.workspace }}/aksw-model:/staging
+        - ${{ github.workspace }}/aksw-model:/staging
         options: --entrypoint "exec /jena-fuseki/fuseki-server --file=/staging/aksw.org.nt /aksw"
 
     steps:
