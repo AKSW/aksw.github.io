@@ -14,22 +14,8 @@ jobs:
   build-and-publish:
     runs-on: ubuntu-latest # This job uses a GitHub-hosted runner.
 
-    services:
-      # befor this service is startet the repository
-      # https://github.com/AKSW/aksw.org-model.git
-      # needs to be clones to /tmp/aksw-models or some other path
-      fuseki:
-        image: stain/jena-fuseki
-        ports:
-        - 3030:3030
-        volumes:
-        - ${{ github.workspace }}/aksw-model:/staging
-        options: --entrypoint "exec /jena-fuseki/fuseki-server --file=/staging/aksw.org.nt /aksw"
-
     steps:
       # Checkout the source from the `jekyll` branch.
-      - name: Check out Site Repository
-        uses: actions/checkout@v2
       - name: Check out Model Repository
         uses: actions/checkout@v2
         with:
@@ -37,6 +23,10 @@ jobs:
           # Default: ${{ github.repository }}
           repository: 'https://github.com/AKSW/aksw.org-model.git'
           path: 'aksw-model'
+      - name: Run Fuseki
+        run: docker run -p 3030:3030 -v ${{ github.workspace }}/aksw-model:/staging -d stain/jena-fuseki /jena-fuseki/fuseki-server --file=/staging/aksw.org.nt /aksw
+        - name: Check out Site Repository
+          uses: actions/checkout@v2
       - name: Build
         uses: fabacab/jekyll-builder-for-github-pages-action@master
         env:
