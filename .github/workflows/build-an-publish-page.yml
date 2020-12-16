@@ -21,7 +21,7 @@ jobs:
         with:
           # Repository name with owner. For example, actions/checkout
           # Default: ${{ github.repository }}
-          repository: 'https://github.com/AKSW/aksw.org-model.git'
+          repository: 'AKSW/aksw.org-model'
           path: 'aksw-model'
       - name: Run Fuseki
         run: docker run -p 3030:3030 -v ${{ github.workspace }}/aksw-model:/staging -d stain/jena-fuseki /jena-fuseki/fuseki-server --file=/staging/aksw.org.nt /aksw
