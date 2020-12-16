@@ -25,6 +25,7 @@ jobs:
           path: 'aksw-model'
       - name: Run Fuseki
         run: docker run -p 3030:3030 -v ${{ github.workspace }}/aksw-model:/staging --network "host" --hostname fuseki --name fuseki -d stain/jena-fuseki /jena-fuseki/fuseki-server --file=/staging/aksw.org.nt /aksw
+      - run: docker network ls
       - name: curl 1
         uses: wei/curl@master
         continue-on-error: true
@@ -40,6 +41,7 @@ jobs:
         continue-on-error: true
         with:
           args: https://host.docker.internal:3030/aksw
+      - run: docker network ls
       #
       # - name: Check out Site Repository
       #   uses: actions/checkout@v2
