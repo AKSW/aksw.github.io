@@ -25,8 +25,8 @@ jobs:
           path: 'aksw-model'
       - name: Run Fuseki
         run: docker run -p 3030:3030 -v ${{ github.workspace }}/aksw-model:/staging -d stain/jena-fuseki /jena-fuseki/fuseki-server --file=/staging/aksw.org.nt /aksw
-        - name: Check out Site Repository
-          uses: actions/checkout@v2
+      - name: Check out Site Repository
+        uses: actions/checkout@v2
       - name: Build
         uses: fabacab/jekyll-builder-for-github-pages-action@master
         env:
