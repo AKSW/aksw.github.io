@@ -25,15 +25,28 @@ jobs:
           path: 'aksw-model'
       - name: Run Fuseki
         run: docker run -p 3030:3030 -v ${{ github.workspace }}/aksw-model:/staging --network "host" --hostname fuseki --name fuseki -d stain/jena-fuseki /jena-fuseki/fuseki-server --file=/staging/aksw.org.nt /aksw
-      - name: Check out Site Repository
-        uses: actions/checkout@v2
-      - name: Build
-        uses: fabacab/jekyll-builder-for-github-pages-action@master
-        env:
-          # use mongodb for the host here because we have specified a container for the job.
-          # If we were running the job on the VM this would be localhost
-          FUSEKI_HOST: fuseki
-          FUSEKI_PORT: ${{ job.services.fuseki.ports[3030] }}
+      - name: curl 1
+        uses: wei/curl@master
+        with:
+          args: https://fuseki:3030/aksw
+      - name: curl 2
+        uses: wei/curl@master
+        with:
+          args: https://localhost:3030/aksw
+      - name: curl 3
+        uses: wei/curl@master
+        with:
+          args: https://host.docker.internal:3030/aksw
+      #
+      # - name: Check out Site Repository
+      #   uses: actions/checkout@v2
+      # - name: Build
+      #   uses: fabacab/jekyll-builder-for-github-pages-action@master
+      #   env:
+      #     # use mongodb for the host here because we have specified a container for the job.
+      #     # If we were running the job on the VM this would be localhost
+      #     FUSEKI_HOST: fuseki
+      #     FUSEKI_PORT: ${{ job.services.fuseki.ports[3030] }}
       # Invoke this action against the newly checked out source code.
       # - uses: fabacab/jekyll-builder-for-github-pages-action@master
       #   with:
