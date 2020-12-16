@@ -23,12 +23,20 @@ jobs:
         ports:
         - 3030:3030
         volumes:
-          /tmp/aksw-model:/staging
+          ${{ github.workspace }}/aksw-model:/staging
         options: --entrypoint "exec /jena-fuseki/fuseki-server --file=/staging/aksw.org.nt /aksw"
 
     steps:
       # Checkout the source from the `jekyll` branch.
-      - uses: actions/checkout@v2
+      - name: Check out Site Repository
+        uses: actions/checkout@v2
+      - name: Check out Model Repository
+        uses: actions/checkout@v2
+        with:
+          # Repository name with owner. For example, actions/checkout
+          # Default: ${{ github.repository }}
+          repository: 'https://github.com/AKSW/aksw.org-model.git'
+          path: 'aksw-model'
       - name: Build
         uses: fabacab/jekyll-builder-for-github-pages-action@master
         env:
