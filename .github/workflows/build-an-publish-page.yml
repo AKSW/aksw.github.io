@@ -23,8 +23,9 @@ jobs:
           # Default: ${{ github.repository }}
           repository: 'AKSW/aksw.org-model'
           path: 'aksw-model'
+      - run: docker network ls
       - name: Run Fuseki
-        run: docker run -p 3030:3030 -v ${{ github.workspace }}/aksw-model:/staging --network "host" --hostname fuseki --name fuseki -d stain/jena-fuseki /jena-fuseki/fuseki-server --file=/staging/aksw.org.nt /aksw
+        run: docker run -p 3030:3030 -v ${{ github.workspace }}/aksw-model:/staging --network "bridge" --hostname fuseki --name fuseki -d stain/jena-fuseki /jena-fuseki/fuseki-server --file=/staging/aksw.org.nt /aksw
       - run: docker network ls
       - name: curl 1
         uses: wei/curl@master
