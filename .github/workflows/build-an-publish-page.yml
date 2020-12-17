@@ -33,7 +33,7 @@ jobs:
         continue-on-error: true
       - run: docker run --rm --network data --workdir /github/workspace -v ${{ github.workspace }}:/github/workspace ubuntu touch hallo.txt
       - run: ls -la
-      - run: docker run --rm --network data --workdir /github/workspace -v ${{ github.workspace }}:/github/workspace jekyll/builder jekyll build
+      - run: docker run --rm --network data --workdir /github/workspace -v ${{ github.workspace }}:/github/workspace -e JEKYLL_UID="$UID" -e JEKYLL_GID="$GID" jekyll/builder jekyll build
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@3.7.1
         with:
