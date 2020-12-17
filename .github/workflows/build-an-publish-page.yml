@@ -35,9 +35,7 @@ jobs:
       - run: ls -la
       - run: docker run --rm --network data --workdir /github/workspace -v ${{ github.workspace }}:/github/workspace -e JEKYLL_UID="$UID" -e JEKYLL_GID="$GID" jekyll/builder jekyll build
       - name: Deploy 🚀
-        uses: JamesIves/github-pages-deploy-action@3.7.1
+        uses: peaceiris/actions-gh-pages@v3
         with:
-          GITHUB_TOKEN: ${{ secrets.GH_PAGES_TOKEN }}
-          BRANCH: gh-pages # The branch the action should deploy to.
-          FOLDER: _site # The folder the action should deploy.
-          CLEAN: true # Automatically remove deleted files from the deploy branch
+          github_token: ${{ secrets.GH_PAGES_TOKEN }}
+          publish_dir: ./_site
