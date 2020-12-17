@@ -29,9 +29,8 @@ jobs:
       - run: docker network create data
       - name: Run Fuseki
         run: docker run -v ${{ github.workspace }}/.aksw-model:/staging --network data --hostname fuseki --name fuseki -d stain/jena-fuseki /jena-fuseki/fuseki-server --file=/staging/aksw.org.nt /aksw
-      - run: docker run --rm --network data curlimages/curl:latest http://fuseki:3030/aksw
-        continue-on-error: true
-      - run: docker run --rm --network data --workdir /github/workspace -v ${{ github.workspace }}:/github/workspace ubuntu touch hallo.txt
+      - run: npm install
+      - run: npx webpack
       - run: ls -la
       - run: docker run --rm --network data --workdir /github/workspace -v ${{ github.workspace }}:/github/workspace -e JEKYLL_UID="$UID" -e JEKYLL_GID="$GID" jekyll/builder jekyll build
       - name: Deploy 🚀
