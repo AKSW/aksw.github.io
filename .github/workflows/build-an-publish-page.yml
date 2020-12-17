@@ -31,18 +31,20 @@ jobs:
         uses: wei/curl@master
         continue-on-error: true
         with:
-          args: https://fuseki:3030/aksw
+          args: http://fuseki:3030/aksw
       - name: curl 2
         uses: wei/curl@master
         continue-on-error: true
         with:
-          args: https://localhost:3030/aksw
+          args: http://localhost:3030/aksw
       - name: curl 3
         uses: wei/curl@master
         continue-on-error: true
         with:
-          args: https://host.docker.internal:3030/aksw
+          args: http://host.docker.internal:3030/aksw
       - run: docker network ls
+      - run: curl http://localhost:3030/aksw
+        continue-on-error: true
       #
       # - name: Check out Site Repository
       #   uses: actions/checkout@v2
