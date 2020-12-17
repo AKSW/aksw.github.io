@@ -28,21 +28,11 @@ jobs:
         run: docker run -v ${{ github.workspace }}/aksw-model:/staging --network data --hostname fuseki --name fuseki -d stain/jena-fuseki /jena-fuseki/fuseki-server --file=/staging/aksw.org.nt /aksw
       - run: docker run --rm --network data curlimages/curl:latest http://fuseki:3030/aksw
         continue-on-error: true
-      #
-      # - name: Check out Site Repository
-      #   uses: actions/checkout@v2
-      # - name: Build
-      #   uses: fabacab/jekyll-builder-for-github-pages-action@master
-      #   env:
-      #     # use mongodb for the host here because we have specified a container for the job.
-      #     # If we were running the job on the VM this would be localhost
-      #     FUSEKI_HOST: fuseki
-      #     FUSEKI_PORT: ${{ job.services.fuseki.ports[3030] }}
-      # Invoke this action against the newly checked out source code.
-      # - uses: fabacab/jekyll-builder-for-github-pages-action@master
-      #   with:
-      #     # Provide this action with your repository's `GH_PAGES_TOKEN`
-      #     # "Secret" variable. This should be the value of a personal
-      #     # access token granted, at a minimum, the `public_repo` and
-      #     # the `repo_deployment` scopes needed to deploy to GH Pages.
-      #     secret_gh_pages_api_token: ${{ secrets.GH_PAGES_TOKEN }}
+      - run: docker run --rm --network data --workdir /github/workspace -v ${{ github.workspace }}:/github/workspace jekyll/builder jekyll build
+      - name: Deploy 🚀
+        uses: JamesIves/github-pages-deploy-action@3.7.1
+        with:
+          GITHUB_TOKEN: ${{ secrets.GH_PAGES_TOKEN }}
+          BRANCH: gh-pages # The branch the action should deploy to.
+          FOLDER: _site # The folder the action should deploy.
+          CLEAN: true # Automatically remove deleted files from the deploy branch
