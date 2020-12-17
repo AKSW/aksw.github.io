@@ -23,27 +23,10 @@ jobs:
           # Default: ${{ github.repository }}
           repository: 'AKSW/aksw.org-model'
           path: 'aksw-model'
-      - run: docker network ls
+      - run: docker network create data
       - name: Run Fuseki
-        run: docker run -p 3030:3030 -v ${{ github.workspace }}/aksw-model:/staging --network "bridge" --hostname fuseki --name fuseki -d stain/jena-fuseki /jena-fuseki/fuseki-server --file=/staging/aksw.org.nt /aksw
-      - run: docker network ls
-      - name: curl 1
-        uses: wei/curl@master
-        continue-on-error: true
-        with:
-          args: http://fuseki:3030/aksw
-      - name: curl 2
-        uses: wei/curl@master
-        continue-on-error: true
-        with:
-          args: http://localhost:3030/aksw
-      - name: curl 3
-        uses: wei/curl@master
-        continue-on-error: true
-        with:
-          args: http://host.docker.internal:3030/aksw
-      - run: docker network ls
-      - run: curl http://localhost:3030/aksw
+        run: docker run -v ${{ github.workspace }}/aksw-model:/staging --network data --hostname fuseki --name fuseki -d stain/jena-fuseki /jena-fuseki/fuseki-server --file=/staging/aksw.org.nt /aksw
+      - run: docker run -it --rm --network data curlimages/curl:latest http://fuseki:3030/aksw
         continue-on-error: true
       #
       # - name: Check out Site Repository
