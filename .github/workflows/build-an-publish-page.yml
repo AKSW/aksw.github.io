@@ -1,39 +1,32 @@
-# Name of your GitHub Actions workflow.
 name: Build & Publish to GitHub Pages
 
-# Specifies to run this workflow whenever a push is made (commits are
-# added) to the branch named `jekyll`.
 on:
   push:
     branches:
-      # Change this to the branch where you keep your Jekyll code.
       - master
 
-# Define a job named `build-and-publish` in your workflow.
 jobs:
   build-and-publish:
-    runs-on: ubuntu-latest # This job uses a GitHub-hosted runner.
+    runs-on: ubuntu-latest
 
     steps:
-      # Checkout the source from the `jekyll` branch.
-      - name: Check out Site Repository
+      - name: Check out Site Repository 📄
         uses: actions/checkout@v2
-      - name: Check out Model Repository
+      - name: Check out Model Repository 🗃️
         uses: actions/checkout@v2
         with:
-          # Repository name with owner. For example, actions/checkout
-          # Default: ${{ github.repository }}
           repository: 'AKSW/aksw.org-model'
           path: '.aksw-model'
-      - run: ls -la
-      - run: docker network create data
-      - name: Run Fuseki
+      - name: Create docker network 🖧
+        run: docker network create data
+      - name: Run Triple Store 📑
         run: docker run -v ${{ github.workspace }}/.aksw-model:/staging --network data --hostname fuseki --name fuseki -d stain/jena-fuseki /jena-fuseki/fuseki-server --file=/staging/aksw.org.nt /aksw
-      - run: |
+      - name: Provide JavaScript Dependencies 🚚
+        run: |
              npm install
              npx webpack
-      - run: ls -la
-      - run: docker run --rm --network data --workdir /github/workspace -v ${{ github.workspace }}:/github/workspace -e JEKYLL_UID="$UID" -e JEKYLL_GID="$GID" jekyll/builder jekyll build
+      - name: Build Jekyll-RDF Site ⚙️
+        run: docker run --rm --network data --workdir /github/workspace -v ${{ github.workspace }}:/github/workspace -e JEKYLL_UID="$UID" -e JEKYLL_GID="$GID" jekyll/builder jekyll build
       - name: Deploy 🚀
         uses: peaceiris/actions-gh-pages@v3
         with:
