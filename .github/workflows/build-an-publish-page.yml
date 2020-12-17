@@ -24,13 +24,14 @@ jobs:
           # Repository name with owner. For example, actions/checkout
           # Default: ${{ github.repository }}
           repository: 'AKSW/aksw.org-model'
-          path: 'aksw-model'
+          path: '.aksw-model'
       - run: ls -la
       - run: docker network create data
       - name: Run Fuseki
-        run: docker run -v ${{ github.workspace }}/aksw-model:/staging --network data --hostname fuseki --name fuseki -d stain/jena-fuseki /jena-fuseki/fuseki-server --file=/staging/aksw.org.nt /aksw
+        run: docker run -v ${{ github.workspace }}/.aksw-model:/staging --network data --hostname fuseki --name fuseki -d stain/jena-fuseki /jena-fuseki/fuseki-server --file=/staging/aksw.org.nt /aksw
       - run: docker run --rm --network data curlimages/curl:latest http://fuseki:3030/aksw
         continue-on-error: true
+      - run: docker run --rm --network data --workdir /github/workspace -v ${{ github.workspace }}:/github/workspace ubuntu touch hallo.txt
       - run: docker run --rm --network data --workdir /github/workspace -v ${{ github.workspace }}:/github/workspace jekyll/builder jekyll build
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@3.7.1
