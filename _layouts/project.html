@@ -33,14 +33,13 @@ layout: base
 <h2 class="title is-2">Project Members</h2>
 </div>
 {% capture member_query %}
-SELECT distinct ?person ?maintainer WHERE {
+SELECT distinct ?person WHERE {
     {
         ?person foaf:currentProject ?resourceUri
     } UNION {
         ?resourceUri doap:maintainer ?person
-        BIND(true AS ?maintainer)
     }
-} order by ?maintainer
+}
 {% endcapture %}
 {% assign members = page.rdf | sparql_query: member_query %}
 <div class="columns is-multiline">
