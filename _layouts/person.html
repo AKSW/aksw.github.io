@@ -13,25 +13,7 @@ layout: base
 <section class="section">
   <div class="columns is-multiline">
     <div class="column is-one-third">
-      <div class="card columns">
-        <div class="column card-image is-one-third">
-          <figure class="image is-4by5">
-            <img class="image" src="{{ page.rdf | rdf_property: "foaf:depiction" }}" alt="Personal image">
-          </figure>
-        </div>
-        <div class="column card-content">
-          <div class="media">
-            <div class="media-content">
-              <p class="title is-4">{{ page.rdf | rdf_property: "foaf:name" }}</p>
-              <p class="subtitle is-6">{{ page.rdf }}</p>
-              <p class="is-6">{{ page.rdf | rdf_property: "foaf:phone" }}</p>
-            </div>
-          </div>
-
-          <div class="content">
-          </div>
-        </div>
-      </div>
+      {% include person_card.html person=page.rdf %}
     </div>
 
     <div class="column is-two-thirds">
