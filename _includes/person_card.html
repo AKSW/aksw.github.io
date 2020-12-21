@@ -3,10 +3,14 @@
 {% unless label %}
 {% assign label = person | rdf_property: "foaf:name" %}
 {% endunless %}
+{% assign depiction = person | rdf_property: "foaf:depiction" %}
+{% capture depiction_alttext %}
+Personal image of {{ label }}
+{% endcapture %}
 <div class="card columns">
   <div class="column card-image is-one-third">
     <figure class="image is-4by5">
-      {% include img.html src="{{ person | rdf_property: "foaf:depiction" }}" alt="Personal image of {{ label }}" %}
+      {% include img.html src=depiction alt=depiction_alttext %}
     </figure>
   </div>
   <div class="column card-content">

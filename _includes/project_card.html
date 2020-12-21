@@ -3,9 +3,12 @@
 <div class="card">
     {% assign logo = project | rdf_property: "foaf:logo" %}
     {% if logo %}
+    {% capture logo_alttext %}
+    {{ label }} Project logo
+    {% endcapture %}
     <div class="card-image">
       <figure class="image">
-        {% include img.html src="{{ logo }}" alt="{{ label }} Project logo" %}
+        {% include img.html src=logo alt=logo_alttext %}
       </figure>
     </div>
     {% endif %}
