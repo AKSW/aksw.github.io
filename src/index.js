@@ -1,1 +1,2 @@
-require('./mystyles.scss');
+import 'loading-attribute-polyfill';
+import './mystyles.scss';
