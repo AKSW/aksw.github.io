@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "The aksw.org webpage",
   "main": "_site/index.html",
-  "dependencies": {},
+  "dependencies": {
+    "loading-attribute-polyfill": "^1.5.4"
+  },
   "devDependencies": {
     "bulma": "^0.7.5",
     "css-loader": "^1.0.1",

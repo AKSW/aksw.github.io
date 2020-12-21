@@ -1,0 +1,18 @@
+{%- assign src = include.src -%}
+{%- assign alt = include.alt -%}
+{%- assign href = include.link -%}
+{%- assign style = include.style -%}
+{%- unless style -%}
+{%- assign style = "width: 30%" -%}
+{%- endunless -%}
+{%- if link -%}
+<a href="{{ link }}" markdown="0">
+  <noscript class="loading-lazy">
+    <img src="{{ src }}" alt="{{ alt }}" style="{{ style }}" loading="lazy"/>
+  </noscript>
+</a>
+{%- else -%}
+<noscript class="loading-lazy" markdown="0">
+  <img src="{{ src }}" alt="{{ alt }}" style="{{ style }}" loading="lazy"/>
+</noscript>
+{%- endif -%}
