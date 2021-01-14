@@ -14,3 +14,4 @@ PREFIX site: <http://ns.ontowiki.net/SysOnt/Site/>
 PREFIX dct: <http://purl.org/dc/terms/>
 PREFIX aiiso: <http://purl.org/vocab/aiiso/schema#>
 PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX schema: <http://schema.org/>
