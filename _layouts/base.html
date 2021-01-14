@@ -9,6 +9,14 @@ rdf_prefix_path: "_data/prefixes.sparql"
     <meta name="description" content="{{ site.description }}">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="{{ "/dist/main.css" | prepend: site.baseurl }}">
+    {% if page.redirect_resource or page.redirect_url %}
+    {%- if page.redirect_resource -%}
+    {%- assign redirect_resource_node = page.redirect_resource | rdf_get -%}
+    <meta http-equiv="Refresh" content="0; url='{{ redirect_resource_node.render_path | relativize_url }}'" />
+    {% elsif page.redirect_url %}
+    <!--meta http-equiv="Refresh" content="0; url='{{ page.redirect_url }}'" /-->
+    {% endif %}
+    {% endif %}
   </head>
   <body>
     <div class="container">
