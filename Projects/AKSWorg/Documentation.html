@@ -105,7 +105,7 @@
   
 <p>{{toc tag=”ul” depth=”3”}}</p>
 
-<h1 id="big-picture">Big-Picture</h1>
+<h3 id="big-picture">Big-Picture</h1>
 <p>This web page consists of linked data enabled resources.
 Each resource has a specific HTML5 representation (besides its RDF representation).
 This HTML representation is rendered by using a template and fill its variable parts with the content from these sources:</p>
@@ -116,10 +116,10 @@ This HTML representation is rendered by using a template and fill its variable p
   <li>content rendered from sub-templates</li>
 </ul>
 
-<h1 id="resources-and-properties">Resources and Properties</h1>
+<h3 id="resources-and-properties">Resources and Properties</h1>
 <p>The following attributes and classes are used by the templates.</p>
 
-<h2 id="classes">Classes</h2>
+<h4 id="classes">Classes</h2>
 <p>Currently, there are templates for the following classes of resources:</p>
 
 <ul>
@@ -130,7 +130,7 @@ This HTML representation is rendered by using a template and fill its variable p
 Can be a funded, a community or an open-source project.</li>
 </ul>
 
-<h2 id="properties">Properties</h2>
+<h4 id="properties">Properties</h2>
 <p>These properties can be applied to all resources:</p>
 
 <ul>
@@ -154,7 +154,7 @@ The content of this feed is shown in the right side content column.</li>
   <li>for Person: [[foaf:name]], [[foaf:currentProject]], [[foaf:pastProject]], [[foaf:mbox]], [[aksw:room]], [[aksw:publicationTag]] (for the publication list)</li>
 </ul>
 
-<h1 id="main-content">Main Content</h1>
+<h3 id="main-content">Main Content</h1>
 <p>The suggested markup language to write pages is <a href="http://daringfireball.net/projects/markdown/">Markdown</a>.
 Markdown is a text-to-HTML conversion language for web writers.
 Markdown is intended to be as easy-to-read and easy-to-write as is feasible.</p>
@@ -168,13 +168,13 @@ Have a look at the sources of this document to copy/paste specific style element
 See the description of this property for details about its usage.
 In general: All attributes and classes have a proper documentation, so you just need to click on them inside of OntoWiki for more details.</p>
 
-<h2 id="helper-markup">Helper Markup</h2>
+<h4 id="helper-markup">Helper Markup</h2>
 <p>Helper markup is used in the same way as wiki actions.
 The general syntax of a helper tag is: <code class="language-plaintext highlighter-rouge">{{tagname p1="value1" ... "pX"="valueX"}}</code>.</p>
 
 <p>The following helper exists so far.</p>
 
-<h3 id="table-of-content-helper">Table of Content helper</h3>
+<h5 id="table-of-content-helper">Table of Content helper</h3>
 <p>The <code class="language-plaintext highlighter-rouge">toc</code> helper creates an javascript generated table of contents at the position where the helper tag was written.</p>
 
 <p>The following options can be used</p>
@@ -191,7 +191,7 @@ The general syntax of a helper tag is: <code class="language-plaintext highlight
   <li><code class="language-plaintext highlighter-rouge">{{toc depth=="2"}}</code></li>
 </ul>
 
-<h3 id="link-helper">link helper</h3>
+<h5 id="link-helper">link helper</h3>
 <p>The <code class="language-plaintext highlighter-rouge">link</code> helper creates an internal page link to a specific resource.
 If you need to link to an aksw.org resource, you should use this helper instead of using plain HTML-links or Markdown link syntax.</p>
 
@@ -269,10 +269,10 @@ If you need to link to an aksw.org resource, you should use this helper instead 
   </li>
 </ul>
 
-<h2 id="style-elements">Style Elements</h2>
+<h4 id="style-elements">Style Elements</h2>
 <p>There are specific style elements as two column sections or tables which you can add to your documents by using HTML markup.</p>
 
-<h3 id="multi-columns">Multi Columns</h3>
+<h5 id="multi-columns">Multi Columns</h3>
 
 <div class="multicolumns2">
 <strong>first columns</strong>
@@ -283,7 +283,7 @@ If you need to link to an aksw.org resource, you should use this helper instead 
 <p>...</p>
 </div>
 
-<h3 id="tables">Tables</h3>
+<h5 id="tables">Tables</h3>
 <p>Use standard HTML tables with table head and cell tags to achieve a look like this</p>
 
 <table>
@@ -305,7 +305,7 @@ If you need to link to an aksw.org resource, you should use this helper instead 
 </tbody>
 </table>
 
-<h1 id="navigation-structures">Navigation Structures</h1>
+<h3 id="navigation-structures">Navigation Structures</h1>
 
 <p>Menus are [[rdf:Seq]] resources of type [[aksw:Navigation]].
 The rdf properties <code class="language-plaintext highlighter-rouge">rdf:_1</code> till <code class="language-plaintext highlighter-rouge">rdf:_x</code> are used to arrange an ordererd list of resources which a used to render a navigation menu.

@@ -102,13 +102,13 @@
 
       <section class="section">
   <h2 class="title is-1">Events</h2>
-  <h1 id="upcoming-events">Upcoming Events</h1>
+  <h3 id="upcoming-events">Upcoming Events</h1>
 <nav class="nav-sidelinks">
 {{query where="?resourceUri a schema:Event . ?resourceUri schema:startDate ?startDate . filter(?startDate &gt; now())" orderby="DESC(?startDate)" template="liplain"}}
 </nav>
 <p>{{query where=”?resourceUri a schema:Event . ?resourceUri schema:startDate ?startDate . filter(?startDate &gt; now()) “ orderby=”DESC(?startDate)” template=”abstract”}}</p>
 
-<h1 id="past-events">Past Events</h1>
+<h3 id="past-events">Past Events</h1>
 <p>{{query where=”?resourceUri a schema:Event . ?resourceUri schema:startDate ?startDate . filter(now() &gt; ?startDate) “ orderby=”DESC(?startDate)” template=”liplain”}}</p>
 
 </section>
