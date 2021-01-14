@@ -101,16 +101,36 @@
 
 
       <section class="section">
-  <h2 class="title is-1">Events</h2>
-  <h3 id="upcoming-events">Upcoming Events</h1>
-<nav class="nav-sidelinks">
-{{query where="?resourceUri a schema:Event . ?resourceUri schema:startDate ?startDate . filter(?startDate &gt; now())" orderby="DESC(?startDate)" template="liplain"}}
-</nav>
-<p>{{query where=”?resourceUri a schema:Event . ?resourceUri schema:startDate ?startDate . filter(?startDate &gt; now()) “ orderby=”DESC(?startDate)” template=”abstract”}}</p>
+<h3 class="title is-3">Upcoming Events</h3>
 
-<h3 id="past-events">Past Events</h1>
-<p>{{query where=”?resourceUri a schema:Event . ?resourceUri schema:startDate ?startDate . filter(now() &gt; ?startDate) “ orderby=”DESC(?startDate)” template=”liplain”}}</p>
 
+
+</section>
+
+<section class="section">
+<h3 class="title is-3">Past Events</h3>
+
+<ul>
+
+<li><a href="Events/2013/ColloquiumPokharelCherix.html">AKSW Colloquium on Monday, October 21</a></li>
+
+<li><a href="SchemaEvent/AKSWColloquiumOnMondayNovember4.html">AKSW Colloquium on Monday, November 4</a></li>
+
+<li><a href="SchemaEvent/AKSWColloquiumWithSemanticWebChallenge2013WinnerOnMondayNovember11/1.html">AKSW Colloquium with Semantic Web Challenge 2013 Winner on Monday, November 11</a></li>
+
+<li><a href="SchemaEvent/AKSWColloquiumWithMohamedMorseysPhDDefensePractiseTalkOnMondayDecember2.html">AKSW Colloquium with Mohamed Morseys PhD defense practise talk on Monday, December 2</a></li>
+
+<li><a href="SchemaEvent/AKSWColloquiumMon16122013AboutTheSINAQuestionAnsweringSystemasPresentedAtIBMWatson.html">AKSW Colloquium (Mon, 16.12.2013) about the SINA question answering system (as presented at IBM Watson)</a></li>
+
+<li><a href="SchemaEvent/AKSWColloquiumWithNIFReleasePreparationOnMondayFebruary10.html">AKSW Colloquium with NIF Release Preparation on Monday, February 10</a></li>
+
+<li><a href="Event/AKSWColloquiumCurrentSemanticWebInitiativesInTheNetherlandsOnFridayMarch14RoomP901.html">AKSW Colloquium “Current semantic web initiatives in the Netherlands” on Friday, March 14, Room P901</a></li>
+
+<li><a href="Event/AKSWColloquiumTowardsAComputerAlgebraSemanticSocialNetworkOnMondayMarch17.html">AKSW Colloquium “Towards a Computer Algebra Semantic Social Network” on Monday, March 17</a></li>
+
+<li><a href="Events/2020/LeipzigerSemanticWebTag.html">8. Leipziger Semantic Web Tag (LSWT2020)</a></li>
+
+</ul>
 </section>
 
     </div>
