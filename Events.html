@@ -1,0 +1,24 @@
+---
+rdf_prefix_path: "_data/prefixes.sparql"
+layout: base
+---
+
+<section class="section">
+<h3 class="title is-3">Upcoming Events</h3>
+{% assign events = page.rdf | sparql_query: "select ?event ?label { ?event a schema:Event; rdfs:label ?label; schema:startDate ?startDate . optional { ?event schema:endDate ?endDate} filter(?startDate > now() || ?endDate > now()) } ORDER BY ?startDate ?endDate" %}
+
+{% for event in events %}
+<h4><a href="{{ event.event.render_path | relativize_url }}">{{ event.label }}</a></h4>
+<p>{{ event.event | rdf_property: "dct:abstract" }}</p>
+{% endfor %}
+</section>
+
+<section class="section">
+<h3 class="title is-3">Past Events</h3>
+{% assign events = page.rdf | sparql_query: "select ?event ?label { ?event a schema:Event; rdfs:label ?label; schema:startDate ?startDate . filter(now() > ?startDate) } ORDER BY ?startDate" %}
+<ul>
+{% for event in events %}
+<li><a href="{{ event.event.render_path | relativize_url }}">{{ event.label }}</a></li>
+{% endfor %}
+</ul>
+</section>
