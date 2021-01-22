@@ -17,4 +17,5 @@ jekyll_rdf:
         "http://xmlns.com/foaf/0.1/Organization": "group"
         "http://rdfs.org/ns/void#Dataset": "dataset"
         "http://xmlns.com/foaf/0.1/Person": "person"
+        "http://schema.org/Event": "event"
         "http://xmlns.com/foaf/0.1/Project": "project"
