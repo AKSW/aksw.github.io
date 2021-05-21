@@ -1,6 +1,7 @@
 _site
 .bundle
 .vendor
+.jekyll-cache
 dist
 node_modules
 Gemfile.lock
