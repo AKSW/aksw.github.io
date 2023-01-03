@@ -11,6 +11,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - uses: arduino/setup-task@v1
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Check out Site Repository 📄
         uses: actions/checkout@v2
       - name: Check out Model Repository 🗃️
@@ -22,8 +25,8 @@ jobs:
         run: docker run -v ${{ github.workspace }}/.aksw-model:/staging --name aksw.org_model -d stain/jena-fuseki /jena-fuseki/fuseki-server --file=/staging/aksw.org.nt /aksw
       - name: Provide JavaScript Dependencies 🚚
         run: |
-             npm install
-             npx webpack
+             task install
+             task build-style
       - name: Build Jekyll-RDF Site ⚙️
         run: docker run --rm --network container:aksw.org_model --workdir /github/workspace -v ${{ github.workspace }}:/github/workspace -e JEKYLL_UID="$UID" -e JEKYLL_GID="$GID" jekyll/builder jekyll build
       - name: Deploy 🚀
