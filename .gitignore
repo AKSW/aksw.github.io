@@ -2,6 +2,7 @@ _site
 .bundle
 .vendor
 .jekyll-cache
+.aksw-model
 dist
 node_modules
 Gemfile.lock

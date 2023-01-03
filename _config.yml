@@ -10,7 +10,7 @@ plugins:
 jekyll_rdf:
     baseiri: "http://aksw.org"
     remote:
-      endpoint: "http://fuseki:3030/aksw/query"
+      endpoint: "http://aksw.org_model:3030/aksw/query"
     restriction: "SELECT ?resourceUri WHERE { ?resourceUri ?p ?o . FILTER regex(str(?resourceUri), \"http://aksw.org/\") }"
     default_template: "default"
     class_template_mappings:

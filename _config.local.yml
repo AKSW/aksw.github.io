@@ -1,0 +1,4 @@
+# Jekyll RDF settings
+jekyll_rdf:
+    remote:
+      endpoint: "http://localhost:3030/aksw/query"
