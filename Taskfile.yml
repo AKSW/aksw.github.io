@@ -38,7 +38,7 @@ tasks:
   ci:
     desc: Build tasks for the CI
     deps:
-      - task: data:sync
+      - task: data:model-update
       - task: style:build
     cmds:
       - task: build
@@ -97,17 +97,12 @@ tasks:
     cmds:
       - '{{.STYLE_WATCH_FILES}} | entr task style:build'
 
-  data:sync:
-    desc: Synchronize the data in the CI
-    cmds:
-      - task: data:get-graph
-
   data:model-init:
     - git clone git@github.com:AKSW/aksw.org-model.git .aksw-model
 
   data:model-update:
     deps:
-      - sync-data:model-init
+      - data:model-init
     cmds:
       - cd .model && git pull
 
