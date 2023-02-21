@@ -111,7 +111,7 @@ tasks:
 
   data:model-serve:
     cmds:
-      - docker run -p 3030:3030 --name aksw.org_model -v {{.MODEL_DIR}}/:/graph -d docker.io/stain/jena-fuseki /jena-fuseki/fuseki-server --file=/graph/aksw.org.nt /aksw
+      - docker run -p 3030:3030 --name aksw.org_model -v {{.PWD}}/{{.MODEL_DIR}}/:/graph -d docker.io/stain/jena-fuseki /jena-fuseki/fuseki-server --file=/graph/aksw.org.nt /aksw
     status:
       - docker inspect aksw.org_model
 
