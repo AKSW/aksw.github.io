@@ -1,7 +1,7 @@
 source "https://rubygems.org"
+ruby RUBY_VERSION
 
 group :jekyll_plugins do
-    gem "jekyll-rdf", "~> 3.2"
+    gem "jekyll-rdf"
     gem 'jekyll-include-cache'
-    gem 'psych', '~> 4'
 end
