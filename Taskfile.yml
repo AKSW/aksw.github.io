@@ -110,10 +110,12 @@ tasks:
       - test -d {{.MODEL_DIR}}
 
   data:model-serve:
+    deps:
+      - data:model-init
     cmds:
-      - docker run -p 3030:3030 --name aksw.org_model -v {{.PWD}}/{{.MODEL_DIR}}/:/graph -d docker.io/stain/jena-fuseki /jena-fuseki/fuseki-server --file=/graph/aksw.org.nt /aksw
+      - docker run -p 3030:3030 --name aksw.org_model -v {{.PWD}}/{{.MODEL_DIR}}/:/graph -d docker.io/stain/jena-fuseki /jena-fuseki/fuseki-server --file=/graph/{{.GRAPH_FILE}}.nt /aksw
     status:
-      - '[ "$( docker inspect --format "{{.State.Running}}" aksw.org_model )" = "true" ]'
+      - '[ "$( docker inspect --format "{{`{{.State.Running}}`}}" aksw.org_model )" = "true" ]'
 
   data:model-serve-stop:
     - docker stop aksw.org_model
