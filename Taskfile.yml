@@ -97,18 +97,21 @@ tasks:
     cmds:
       - '{{.STYLE_WATCH_FILES}} | entr task style:build'
 
-  data:model-init:
-    - git clone git@github.com:AKSW/aksw.org-model.git .aksw-model
-
   data:model-update:
     deps:
       - data:model-init
     cmds:
       - cd .model && git pull
 
+  data:model-init:
+    cmds:
+      - git clone git@github.com:AKSW/aksw.org-model.git {{.MODEL_DIR}}
+    status:
+      - test -d {{.MODEL_DIR}}
+
   data:model-serve:
     cmds:
-      - docker run -p 3030:3030 --name aksw.org_model -v .aksw-model/:/graph -d docker.io/stain/jena-fuseki /jena-fuseki/fuseki-server --file=/graph/aksw.org.nt /aksw
+      - docker run -p 3030:3030 --name aksw.org_model -v {{.MODEL_DIR}}/:/graph -d docker.io/stain/jena-fuseki /jena-fuseki/fuseki-server --file=/graph/aksw.org.nt /aksw
     status:
       - docker inspect aksw.org_model
 
