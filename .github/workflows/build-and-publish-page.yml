@@ -22,7 +22,7 @@ jobs:
           repository: 'AKSW/aksw.org-model'
           path: '.aksw-model'
       - name: Run Triple Store 📑
-        run: docker run -v ${{ github.workspace }}/.aksw-model:/staging --name aksw.org_model -d stain/jena-fuseki /jena-fuseki/fuseki-server --file=/staging/aksw.org.nt /aksw
+        run: task data:model-serve
       - name: Build Jekyll-RDF Site ⚙️
         run: task ci
       - name: Deploy 🚀
