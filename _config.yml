@@ -1,5 +1,5 @@
-baseurl: "/aksw.org.jekyllrdf" # the subpath of your site, e.g. /blog
-url: "https://aksw.github.io" # the base hostname & protocol for your site, e.g. http://example.com
+baseurl: "/" # the subpath of your site, e.g. /blog
+url: "https://aksw.org" # the base hostname & protocol for your site, e.g. http://example.com
 rootresource: "<http://aksw.org/>"
 
 plugins:

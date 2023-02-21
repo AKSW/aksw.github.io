@@ -57,8 +57,8 @@ select distinct ?person ?name where
 <h4 class="title is-4">The following Students work with us </h4>
 <ul>
   {% for member in students %}
-  <li><a href="{{ member.person.render_path | prepend: site.baseurl }}">{{ member.name }}</a></li>
+  <li><a href="{{ member.person.render_path | relativize_url }}">{{ member.name }}</a></li>
   {% endfor %}
 </ul>
 </section>
-<a href="{{ aksw.render_path | prepend: site.baseurl }}">See AKSW</a>
+<a href="{{ aksw.render_path | relativize_url }}">See AKSW</a>

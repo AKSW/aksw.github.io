@@ -26,7 +26,7 @@ layout: base
 <ul>
 {% for project in former_funded_projects %}
 <li>
-  <a href="{{ project.project.render_path | prepend: site.baseurl  }}">{{ project.label }}</a>
+  <a href="{{ project.project.render_path | relativize_url }}">{{ project.label }}</a>
 </li>
 {% endfor %}
 </ul>
@@ -80,7 +80,7 @@ layout: base
 <ul>
 {% for project in incubator_projects %}
 <li>
-  <a href="{{ project.project.render_path | prepend: site.baseurl  }}">{{ project.label }}</a>
+  <a href="{{ project.project.render_path | relativize_url }}">{{ project.label }}</a>
 </li>
 {% endfor %}
 </ul>
@@ -93,7 +93,7 @@ layout: base
 <ul>
 {% for project in alumni_projects %}
 <li>
-  <a href="{{ project.project.render_path | prepend: site.baseurl  }}">{{ project.label }}</a>
+  <a href="{{ project.project.render_path | relativize_url }}">{{ project.label }}</a>
 </li>
 {% endfor %}
 <ul>

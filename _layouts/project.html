@@ -56,7 +56,7 @@ SELECT distinct ?person WHERE {
 <h3 class="title is-3">Former Members</h3>
 <ul>
     {% for person in former_members %}
-    <li><a href="{{ person.page_url | prepend: site.baseurl }}">{{ person | rdf_property: "foaf:name" }}</a></li>
+    <li><a href="{{ person.page_url | relativize_url }}">{{ person | rdf_property: "foaf:name" }}</a></li>
     {% endfor %}
 </ul>
 {% endif %}
@@ -65,7 +65,7 @@ SELECT distinct ?person WHERE {
 {% assign partners = page.rdf | rdf_property: "aksw:partner", nil, true %}
 <ul>
     {% for partner in partners %}
-    <li><a href="{{ partner.page_url | prepend: site.baseurl }}">{{ partner | rdf_property: "rdfs:label" }}</a></li>
+    <li><a href="{{ partner.page_url | relativize_url }}">{{ partner | rdf_property: "rdfs:label" }}</a></li>
     {% endfor %}
 </ul>
 </div>

@@ -6,7 +6,7 @@ layout: base
 <section class="section">
   {% assign groups = page.rdf | rdf_inverse_property: "foaf:member", true %}
   {% for group in groups %}
-  <a class="button is-rounded" href="{{ group.render_path | prepend: site.baseurl }}">{{ group | rdf_property: "rdfs:label" }}</a>
+  <a class="button is-rounded" href="{{ group.render_path | relativize_url }}">{{ group | rdf_property: "rdfs:label" }}</a>
   {% endfor %}
 </section>
 
@@ -35,7 +35,7 @@ layout: base
         {% endcapture %}
         {% assign projects = page.rdf | sparql_query: project_query %}
         {% for result in projects %}
-        <li><a href="{{ result.project.page_url | prepend: site.baseurl }}">{{ result.project | rdf_property: "rdfs:label" }}</a></li>
+        <li><a href="{{ result.project.render_path | relativize_url }}">{{ result.project | rdf_property: "rdfs:label" }}</a></li>
         {% endfor %}
       </ul>
     </div>

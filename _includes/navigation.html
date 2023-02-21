@@ -15,7 +15,7 @@
       <div class="navbar-start">
         {% assign nav = rootnavigation | rdf_container %}
         {% for item in nav %}
-        <a class="navbar-item" href="{{ item.render_path | prepend: site.baseurl }}">
+        <a class="navbar-item" href="{{ item.render_path | relativize_url }}">
           {% assign label = item | rdf_property: "site:menuLabel" %}
           {% unless label %}
           {% assign label = item | rdf_property: "rdfs:label" %}

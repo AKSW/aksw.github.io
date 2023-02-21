@@ -8,7 +8,7 @@ rdf_prefix_path: "_data/prefixes.sparql"
     <title>{{ site.title }}</title>
     <meta name="description" content="{{ site.description }}">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="{{ "/dist/main.css" | prepend: site.baseurl }}">
+    <link rel="stylesheet" href="{% relative_link /dist/main.css %}">
     {% if page.redirect_resource or page.redirect_url %}
     {%- if page.redirect_resource -%}
     {%- assign redirect_resource_node = page.redirect_resource | rdf_get -%}
@@ -23,6 +23,6 @@ rdf_prefix_path: "_data/prefixes.sparql"
       {% include_cached header.html resource=page.rdf %}
       {{ content }}
     </div>
-    <script src="{{ "/dist/main.js" | prepend: site.baseurl }}"></script>
+    <script src="{% relative_link /dist/main.js %}"></script>
   </body>
 </html>
