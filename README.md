@@ -1,32 +1,51 @@
 # aksw.org Homepage
 
+The model repo is at: https://github.com/AKSW/aksw.org-model
+
 ## Preparation
 
-- Install [Ruby](https://www.ruby-lang.org/) >= 2.1
-- Install [Bundler](https://bundler.io/)
-- Install [NPM](https://www.npmjs.com/)
-- Install [Task](https://taskfile.dev/)
+- Git
+- [Task](https://taskfile.dev/)
+- Docker or Podman
+- For the styles:
+  - [Node.js](https://nodejs.org/)
+  - [NPM](https://www.npmjs.com/)
+- Optionally:
+  - Python (for `serve` resp. `watch`)
+  - [entr](http://eradman.com/entrproject/) (for `watch` resp. `build:watch`)
 
 
-## Prepare Model
+## See the Site
 
 ```
-$ task model-init
+$ task watch
 ```
 
-## Compile
+## Step by Step
+### Prepare Model
 
 ```
-$ task model-serve
-$ task install serve
+$ task data:model-init
+$ task data:model-serve
 ```
 
-open ```http://127.0.0.1:4000/aksw.org.jekyllrdf/``` ([link](http://127.0.0.1:4000/aksw.org.jekyllrdf/)) in your browser
-
-## Stop
-
-Don't forget to terminate the fuseki container
+The model container will continue running. Don't forget to terminate the model's fuseki container when you are done with everything.
 
 ```
 $ task model-serve-stop
 ```
+
+### Compile Site and Styles
+
+```
+$ task style:build
+$ task build
+```
+
+### Serve
+
+```
+$ task serve
+```
+
+Now open ```http://localhost:8000/``` ([link](http://localhost:8000/)) in your browser.
