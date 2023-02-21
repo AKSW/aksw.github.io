@@ -9,7 +9,8 @@ on:
 jobs:
   build-and-publish:
     runs-on: ubuntu-latest
-
+    env:
+      MODEL_EXTERNAL_DOCKER_NETWORK: data
     steps:
       - uses: arduino/setup-task@v1
         with:
@@ -21,6 +22,8 @@ jobs:
         with:
           repository: 'AKSW/aksw.org-model'
           path: '.aksw-model'
+      - name: Create docker network 🖧
+        run: docker network create ${{ MODEL_EXTERNAL_DOCKER_NETWORK }}
       - name: Run Triple Store 📑
         run: task data:model-serve
       - name: Build Jekyll-RDF Site ⚙️

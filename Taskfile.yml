@@ -16,6 +16,9 @@ vars:
     sh: id -u
   ID_GID:
     sh: id -g
+  MODEL_DOCKER_NETWORK: '{{.MODEL_EXTERNAL_DOCKER_NETWORK | default "container:aksw.org_model"}}'
+  MODEL_EXTERNAL_DOCKER_NETWORK_ARG:
+    sh: 'if [ -n "{{.MODEL_EXTERNAL_DOCKER_NETWORK}}" ]; then echo "--network {{.MODEL_EXTERNAL_DOCKER_NETWORK}}"; fi'
 
   JEKYLL_UID: '{{.JEKYLL_UID | default .ID_UID}}'
   JEKYLL_GID: '{{.JEKYLL_GID | default .ID_GID}}'
@@ -75,7 +78,7 @@ tasks:
     - |
       docker run --rm \
       --workdir /github/workspace \
-      --network container:aksw.org_model \
+      --network {{.MODEL_DOCKER_NETWORK}} \
       -v {{.WORKING_DIRECTORY}}:/github/workspace \
       -e TZ=Europe/Berlin {{.JEKYLL_USER_ARG}} -e BUNDLE_PATH=.vendor \
       {{.JEKYLL_IMAGE}} jekyll build --config _config.yml -d {{.TARGET}}
@@ -113,7 +116,7 @@ tasks:
     deps:
       - data:model-init
     cmds:
-      - docker run -p 3030:3030 --name aksw.org_model -v {{.PWD}}/{{.MODEL_DIR}}/:/graph -d docker.io/stain/jena-fuseki /jena-fuseki/fuseki-server --file=/graph/{{.GRAPH_FILE}}.nt /aksw
+      - docker run -p 3030:3030 --name aksw.org_model {{.MODEL_EXTERNAL_DOCKER_NETWORK_ARG}} -v {{.PWD}}/{{.MODEL_DIR}}/:/graph -d docker.io/stain/jena-fuseki /jena-fuseki/fuseki-server --file=/graph/{{.GRAPH_FILE}}.nt /aksw
     status:
       - '[ "$( docker inspect --format "{{`{{.State.Running}}`}}" aksw.org_model )" = "true" ]'
 
