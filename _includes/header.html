@@ -1,6 +1,7 @@
-{% assign root=site.rootresource | rdf_get %}
-{% assign rootnavigation=root | rdf_property: "void:rootResource" %}
+{% assign root = site.rootresource | rdf_get %}
+{% assign rootnavigation = root | rdf_property: "void:rootResource" %}
 {% assign currentResource = include.resource %}
+{% assign root_link = root.render_path | relativize_url %}
 
 <section class="hero">
   <div class="hero-body">
@@ -10,4 +11,7 @@
     </div>
   </div>
 </section>
-{% include_cached navigation.html %}
+{% comment %}
+Passing root_link to the include is necessary for its cache controll
+{% endcomment %}
+{% include_cached navigation.html root_link=root_link %}
