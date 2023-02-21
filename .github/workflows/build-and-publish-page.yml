@@ -23,7 +23,7 @@ jobs:
           repository: 'AKSW/aksw.org-model'
           path: '.aksw-model'
       - name: Create docker network 🖧
-        run: docker network create ${{ MODEL_EXTERNAL_DOCKER_NETWORK }}
+        run: docker network create ${MODEL_EXTERNAL_DOCKER_NETWORK}
       - name: Run Triple Store 📑
         run: task data:model-serve
       - name: Build Jekyll-RDF Site ⚙️
