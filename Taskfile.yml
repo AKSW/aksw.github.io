@@ -1,0 +1,124 @@
+version: '3'
+
+vars:
+  MODEL_REPO: git@github.com:AKSW/aksw.org-model.git
+  MODEL_DIR: .aksw-model
+  GRAPH_FILE: aksw.org
+  GRAPH_IRI:
+    sh: cat {{.MODEL_DIR}}/{{.GRAPH_FILE}}.nt.graph || echo none
+
+  GIT_USER_NAME: AKSW Update Bot 🤖
+  GIT_USER_EMAIL: aksw.org-update-bot@aksw.org
+  GIT_COMMIT_MESSAGE: Update via pipeline
+
+  WORKING_DIRECTORY: '{{.github.workspace | default .PWD}}'
+  ID_UID:
+    sh: id -u
+  ID_GID:
+    sh: id -g
+  MODEL_DOCKER_NETWORK: '{{.MODEL_EXTERNAL_DOCKER_NETWORK | default "container:aksw.org_model"}}'
+  MODEL_EXTERNAL_DOCKER_NETWORK_ARG:
+    sh: 'if [ -n "{{.MODEL_EXTERNAL_DOCKER_NETWORK}}" ]; then echo "--network {{.MODEL_EXTERNAL_DOCKER_NETWORK}}"; fi'
+
+  JEKYLL_UID: '{{.JEKYLL_UID | default .ID_UID}}'
+  JEKYLL_GID: '{{.JEKYLL_GID | default .ID_GID}}'
+  JEKYLL_USER_ARG:
+    sh: '[ "$(docker info --format "{{`{{if .Host.Security.Rootless}}true{{end}}`}}")" = "true" ] || echo -u "{{.JEKYLL_UID}}:{{.JEKYLL_GID}}"'
+  JEKYLL_IMAGE: ghcr.io/aksw/jekyll-rdf:4.0.4
+
+  TARGET: '{{.TARGET | default "_site"}}'
+
+  BUILD_WATCH_FILES: find . -name '*' -not -path "./.git/*" -not -path "./.git" -not -path "./.jekyll-cache/*" -not -path "./.jekyll-cache" -not -path "./src/*" -not -path "./src"
+  STYLE_WATCH_FILES: find ./src -name '*'
+
+tasks:
+
+  default:
+    desc: List all tasks
+    cmds:
+      - task -a
+
+  ci:
+    desc: Build tasks for the CI
+    deps:
+      - task: data:model-update
+      - task: style:build
+    cmds:
+      - task: build
+
+  build:
+    desc: Build the page
+    deps:
+      - task: data:model-serve
+    cmds:
+      - task: build:docker
+        vars:
+          TARGET: '{{.TARGET}}'
+
+  watch:
+    desc: Serve the page and rebuild it on changes
+    deps:
+      - task: serve
+      - task: build:watch
+      - task: style:watch
+    cmds:
+      - echo "Terminate"
+
+  serve:
+    desc: Serve the locally built site
+    cmds:
+      - python -m http.server --directory {{.TARGET}}
+
+  build:watch:
+    desc: Watch for changes in the directory and rebuild the page, should be combined with task serve in a second terminal
+    cmds:
+      - '{{.BUILD_WATCH_FILES}} | entr task build'
+
+  build:docker:
+    - |
+      docker run --rm \
+      --workdir /github/workspace \
+      --network {{.MODEL_DOCKER_NETWORK}} \
+      -v {{.WORKING_DIRECTORY}}:/github/workspace \
+      -e TZ=Europe/Berlin {{.JEKYLL_USER_ARG}} -e BUNDLE_PATH=.vendor \
+      {{.JEKYLL_IMAGE}} jekyll build --config _config.yml -d {{.TARGET}}
+
+  style:install:
+    cmds:
+      - npm install
+    status:
+      - test -d node_modules
+
+  style:build:
+    deps:
+      - task: style:install
+    cmds:
+      - npm run build
+
+  style:watch:
+    desc: Watch for changes in the styles and scripts directory and rebuild the webpack
+    cmds:
+      - '{{.STYLE_WATCH_FILES}} | entr task style:build'
+
+  data:model-update:
+    deps:
+      - data:model-init
+    cmds:
+      - cd {{.MODEL_DIR}} && git pull
+
+  data:model-init:
+    cmds:
+      - git clone git@github.com:AKSW/aksw.org-model.git {{.MODEL_DIR}}
+    status:
+      - test -d {{.MODEL_DIR}}
+
+  data:model-serve:
+    deps:
+      - data:model-init
+    cmds:
+      - docker run -p 3030:3030 --name aksw.org_model {{.MODEL_EXTERNAL_DOCKER_NETWORK_ARG}} -v {{.PWD}}/{{.MODEL_DIR}}/:/graph -d docker.io/stain/jena-fuseki /jena-fuseki/fuseki-server --file=/graph/{{.GRAPH_FILE}}.nt /aksw
+    status:
+      - '[ "$( docker inspect --format "{{`{{.State.Running}}`}}" aksw.org_model )" = "true" ]'
+
+  data:model-serve-stop:
+    - docker stop aksw.org_model
