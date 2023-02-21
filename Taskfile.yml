@@ -101,7 +101,7 @@ tasks:
     deps:
       - data:model-init
     cmds:
-      - cd .model && git pull
+      - cd {{.MODEL_DIR}} && git pull
 
   data:model-init:
     cmds:
