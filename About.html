@@ -112,18 +112,7 @@
   
   
   
-  <nav class="nav-sidelinks">
-<ul>
-<li><strong class="headline">current funded projects</strong>
-{{query where="?resourceUri a aksw:FundedProject. OPTIONAL { ?resourceUri aksw:status ?status }  FILTER (?status != 'finished')" template="liplain"}}
-</li>
-<li><strong class="headline">featured projects</strong>
-{{query where="?resourceUri aksw:promoted 'true'^^xsd:boolean." template="liplain"}}
-</li>
-</ul>
-</nav>
-
-<p>The Research Group <strong>Agile Knowledge Engineering and Semantic Web (AKSW)</strong> is hosted by the Chair of
+  <p>The Research Group <strong>Agile Knowledge Engineering and Semantic Web (AKSW)</strong> is hosted by the Chair of
 <a href="http://bis.informatik.uni-leipzig.de">Business Information Systems</a> (BIS) of the <a href="http://www.informatik.uni-leipzig.de">Institute of Computer Science</a> (IfI) / <a href="http://www.uni-leipzig.de">University of Leipzig</a> as well as the <a href="http://infai.org">Institute for Applied Informatics</a> (InfAI).</p>
 
 <h3 id="goals">Goals</h1>
@@ -141,11 +130,6 @@
 <h3 id="projects">Projects</h1>
 <p>AKSW has launched a number of high-impact R&amp;D projects.
 Please look at the <a href="/Projects">projects page</a> for a comprehensive description of AKSW’s funded as well as community, open source and past projects.</p>
-
-<h3 id="demos">Demos</h1>
-<p>Please have a look at our demos:</p>
-
-<p>{{query where=”?resourceUri a aksw:Demo.” template=”wheel”}}</p>
 
   
 </section>
