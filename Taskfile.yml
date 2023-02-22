@@ -125,7 +125,8 @@ tasks:
 
   data:model-update:
     deps:
-      - data:model-init
+      - task: data:model-init
+      - task: data:model-serve-stop
     cmds:
       - cd {{.MODEL_DIR}} && git pull
 
