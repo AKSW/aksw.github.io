@@ -67,6 +67,31 @@ tasks:
     cmds:
       - python -m http.server --directory {{.TARGET}}
 
+  clean:
+    desc: Remove some residuals
+    cmds:
+      - task: clean:docker
+
+  clean:docker:
+    desc: Remove some docker residuals
+    cmds:
+      - task: data:model-serve-stop
+      - docker network rm {{.MODEL_DOCKER_NETWORK}}
+
+  clean:cache:
+    desc: Remove some residuals
+    cmds:
+      - rm -rf .vendor || true
+      - rm -rf .jekyll-cache || true
+
+  clean:dist:
+    desc: Remove all generated artifacts
+    desp:
+      - task: clean:docker
+      - task: clean:cache
+    cmds:
+      - rm -rf {{.MODEL_DIR}} || true
+
   build:watch:
     desc: Watch for changes in the directory and rebuild the page, should be combined with task serve in a second terminal
     cmds:
