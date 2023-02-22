@@ -21,7 +21,23 @@ The model repo is at: https://github.com/AKSW/aksw.org-model
 $ task watch
 ```
 
-## Step by Step
+## Update the Model
+
+Stops the fuseki updates the model repo. (The next build will restart fuseki again. *Question: does anyone know, how to tell fuseki to reload the graph file?*)
+
+```
+$ task data:model-update
+```
+
+## Clean
+
+Remove all things that were created by the setup
+
+```
+$ task clean:dist
+```
+
+## Step by Step Build of the Site
 ### Prepare Model
 
 ```
