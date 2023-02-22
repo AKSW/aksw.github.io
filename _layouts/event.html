@@ -8,6 +8,12 @@ layout: base
   <div class="subtitle is-4">
     {{ page.rdf | rdf_property: "schema:startDate" | date: "%-d. %B %Y" }}—{{ page.rdf | rdf_property: "schema:endDate" | date: "%-d. %B %Y" }}
   </div>
+  {% assign homepage = page.rdf | rdf_property: "foaf:homepage" %}
+  {% if homepage %}
+  <div class="buttons">
+    <a class="button is-link" href="{{ homepage }}">Homepage</a>
+  </div>
+  {% endif %}
 
   {% assign content = page.rdf | rdf_property: "site:content" %}
   {% assign description = page.rdf | rdf_property: "schema:description" %}
