@@ -16,9 +16,7 @@ vars:
     sh: id -u
   ID_GID:
     sh: id -g
-  MODEL_DOCKER_NETWORK: '{{.MODEL_EXTERNAL_DOCKER_NETWORK | default "container:aksw.org_model"}}'
-  MODEL_EXTERNAL_DOCKER_NETWORK_ARG:
-    sh: 'if [ -n "{{.MODEL_EXTERNAL_DOCKER_NETWORK}}" ]; then echo "--network {{.MODEL_EXTERNAL_DOCKER_NETWORK}}"; fi'
+  MODEL_DOCKER_NETWORK: '{{.MODEL_EXTERNAL_DOCKER_NETWORK | default "aksw_data"}}'
 
   JEKYLL_UID: '{{.JEKYLL_UID | default .ID_UID}}'
   JEKYLL_GID: '{{.JEKYLL_GID | default .ID_GID}}'
@@ -114,11 +112,18 @@ tasks:
 
   data:model-serve:
     deps:
-      - data:model-init
+      - task: data:model-init
+      - task: data:docker-network
     cmds:
-      - docker run -p 3030:3030 --name aksw.org_model {{.MODEL_EXTERNAL_DOCKER_NETWORK_ARG}} -v {{.PWD}}/{{.MODEL_DIR}}/:/graph -d docker.io/stain/jena-fuseki /jena-fuseki/fuseki-server --file=/graph/{{.GRAPH_FILE}}.nt /aksw
+      - docker run --rm -p 3030:3030 --name aksw.org_model --network {{.MODEL_DOCKER_NETWORK}} -v {{.PWD}}/{{.MODEL_DIR}}/:/graph -d docker.io/stain/jena-fuseki /jena-fuseki/fuseki-server --file=/graph/{{.GRAPH_FILE}}.nt /aksw
     status:
       - '[ "$( docker inspect --format "{{`{{.State.Running}}`}}" aksw.org_model )" = "true" ]'
 
   data:model-serve-stop:
-    - docker stop aksw.org_model
+    - docker stop aksw.org_model || echo "data container not running, don't need to stop it"
+
+  data:docker-network:
+    cmds:
+      - docker network create {{.MODEL_DOCKER_NETWORK}}
+    status:
+      - 'docker network inspect {{.MODEL_DOCKER_NETWORK}}'
