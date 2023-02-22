@@ -79,9 +79,10 @@ tasks:
       - docker network rm {{.MODEL_DOCKER_NETWORK}}
 
   clean:cache:
-    desc: Remove some residuals
+    desc: Remove caches and dependencies
     cmds:
       - rm -rf .vendor || true
+      - rm -rf node_modules || true
       - rm -rf .jekyll-cache || true
 
   clean:dist:
