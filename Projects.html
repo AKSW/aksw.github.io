@@ -37,7 +37,7 @@ layout: base
 <p>AKSW has launched a number of high-impact R&D OpenSource projects.</p>
 </div>
 
-{% assign opensource_projects = page.rdf | sparql_query: "select ?project { ?project a aksw:OpenSourceProject }" %}
+{% assign opensource_projects = page.rdf | sparql_query: "select ?project { ?project a aksw:OpenSourceProject ; aksw:status 'active'}" %}
 <div class="columns is-multiline">
   {% for row in opensource_projects %}
   <div class="column is-one-quarter">
@@ -51,7 +51,7 @@ layout: base
 <p class="content">AKSW has launched a number of high-impact R&D Community projects.</p>
 </div>
 
-{% assign community_projects = page.rdf | sparql_query: "select ?project { ?project a aksw:CommunityProject }" %}
+{% assign community_projects = page.rdf | sparql_query: "select ?project { ?project a aksw:CommunityProject ; aksw:status 'active' }" %}
 <div class="columns is-multiline">
   {% for row in community_projects %}
   <div class="column is-one-quarter">
@@ -65,7 +65,7 @@ layout: base
 <p class="content">AKSW is publisher or contributer to the following dataset projects.</p>
 </div>
 
-{% assign dataset_projects = page.rdf | sparql_query: "select ?project { ?project a aksw:DatasetProject }" %}
+{% assign dataset_projects = page.rdf | sparql_query: "select ?project { ?project a aksw:DatasetProject ; aksw:status 'active'}" %}
 <div class="columns is-multiline">
   {% for row in dataset_projects %}
   <div class="column is-one-third">
@@ -76,7 +76,7 @@ layout: base
 
 <div class="content">
 <h3 class="title is-3">Incubator Projects</h3>
-{% assign incubator_projects = page.rdf | sparql_query: "select ?project ?label { ?project a aksw:IncubatorProject ; rdfs:label ?label }" %}
+{% assign incubator_projects = page.rdf | sparql_query: "select ?project ?label { ?project a aksw:IncubatorProject ; rdfs:label ?label ; aksw:status 'active'}" %}
 <ul>
 {% for project in incubator_projects %}
 <li>
@@ -89,7 +89,7 @@ layout: base
 <div class="content">
 <h3 class="title is-3">Project Alumni</h3>
 <p class="content">Some projects have reached a stable state, but are currently not actively maintained and further developed.</p>
-{% assign alumni_projects = page.rdf | sparql_query: "select ?project ?label { ?project a aksw:AlumniProject ; rdfs:label ?label }" %}
+{% assign alumni_projects = page.rdf | sparql_query: "select ?project ?label { ?project a <http://xmlns.com/foaf/0.1/Project> ; rdfs:label ?label ; aksw:status 'finished'}" %}
 <ul>
 {% for project in alumni_projects %}
 <li>
