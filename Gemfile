@@ -3,5 +3,6 @@ ruby RUBY_VERSION
 
 group :jekyll_plugins do
     gem "jekyll-rdf"
-    gem 'jekyll-include-cache'
+    gem "liquid-md5"
+    gem "jekyll-include-cache"
 end

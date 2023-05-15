@@ -2,8 +2,11 @@ baseurl: "/" # the subpath of your site, e.g. /blog
 url: "https://aksw.org" # the base hostname & protocol for your site, e.g. http://example.com
 rootresource: "<http://aksw.org/>"
 
+assets_baseurl: "https://static.aksw.org/assets/"
+
 plugins:
    - jekyll-rdf
+   - liquid-md5
    - jekyll-include-cache
 
 # Jekyll RDF settings
