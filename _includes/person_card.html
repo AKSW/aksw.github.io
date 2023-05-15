@@ -5,9 +5,13 @@
 {% endunless %}
 {% assign depiction_resource = person | rdf_property: "foaf:depiction" %}
 {% if depiction_resource %}
-{% assign depiction = depiction_resource.iri | md5 | prepend: site.assets_baseurl %}
+  {% if depiction_resource.iri %}
+    {% assign depiction = depiction_resource.iri | md5 | prepend: site.assets_baseurl %}
+  {% else %}
+    {% assign depiction = depiction_resource | md5 | prepend: site.assets_baseurl %}
+  {% endif %}
 {% else %}
-{% assign depiction = "placeholder_person.svg" | prepend: site.assets_baseurl %}
+  {% assign depiction = "placeholder_person.svg" | prepend: site.assets_baseurl %}
 {% endif %}
 {% capture depiction_alttext %}
 Personal image of {{ label }}
