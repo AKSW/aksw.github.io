@@ -3,6 +3,7 @@ rdf_prefix_path: "_data/prefixes.sparql"
 layout: base
 ---
 
+{% include head.html page=page %}
 <h2 class="title is-1">{{ page.rdf | rdf_property: "rdfs:label" }}</h2>
 {{ page.rdf }}
 
@@ -98,3 +99,4 @@ layout: base
 {% endfor %}
 <ul>
 </div>
+{% include foot.html page=page %}

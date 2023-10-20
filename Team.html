@@ -3,6 +3,7 @@ rdf_prefix_path: "_data/prefixes.sparql"
 layout: base
 ---
 
+{% include head.html page=page %}
 {% capture group_query %}
 select distinct ?person where
 {
@@ -62,3 +63,4 @@ select distinct ?person ?name where
 </ul>
 </section>
 <a href="{{ aksw.render_path | relativize_url }}">See AKSW</a>
+{% include foot.html page=page %}

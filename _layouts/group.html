@@ -3,6 +3,7 @@ rdf_prefix_path: "_data/prefixes.sparql"
 layout: base
 ---
 
+{% include head.html page=page %}
 <section class="section">
   <h2 class="title is-1">{{ page.rdf | rdf_property: "rdfs:label" }}</h2>
   {% assign areas = page.rdf | rdf_property: "aksw:researchAreas", nil, true %}
@@ -47,3 +48,4 @@ layout: base
     {% endfor %}
   </div>
 </section>
+{% include foot.html page=page %}

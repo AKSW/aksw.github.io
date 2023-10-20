@@ -1,0 +1,30 @@
+---
+rdf_prefix_path: "_data/prefixes.sparql"
+layout: base
+title: Publications
+---
+
+{% include head.html page=page bibtag='aksw' %}
+<section class="section">
+<h2 class="title is-2">Publications</h2>
+<aside class="empty"></aside>
+<div id="publications">
+  <div ex:role="view" ex:showAll="true" ex:grouped="true" ex:orders=".year,.label" ex:directions="descending,ascending" ex:showSummary="true" ex:showDuplicates="false">
+    <div ex:role="lens" ex:itemTypes="Publication" style="display: none">
+      <span ex:content="if(.url <> '', concat('<a href=', .url, '>', .label, '</a>'), .label)"></span>
+      <span ex:if-exists=".author">
+        <span class="meta"><em>by</em> <strong class="author" ex:content=".author"></strong></span>
+      </span>
+      <span class="meta">
+        <span ex:content="if(exists(.booktitle), concat('<em>in</em> ', .booktitle), '')"></span>
+        <span class="journal" ex:content="if(exists(.journal), concat('<em>in</em> ', .journal), '')"></span>
+        <span ex:if-exists=".editor">(Editors: <span class="editor" ex:content=".editor"></span>)</span>
+        <a class="link" ex:href-content="id()" target="_blank">[Bibsonomy<span class="hideme"> of <span ex:content=".label"></span></span>]</a>
+      </span>
+      <span class="note" ex:content="if(exists(.note), concat('<br/><em>Note:</em> ', .note), '')"></span>
+      <span class="abstract" ex:content="if(exists(.abstract), concat('<br/><details><summary>Abstract</summary> ', .abstract, '</details>'), '')"></span>
+    </div>
+  </div>
+</div>
+</section>
+{% include foot.html page=page %}

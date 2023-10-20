@@ -3,6 +3,11 @@ rdf_prefix_path: "_data/prefixes.sparql"
 layout: base
 ---
 
+{% assign publicationTag = page.rdf | rdf_property: 'aksw:publicationTag' %}
+{% if publicationTag %}
+{%   assign publicationTag = publicationTag | prepend: 'aksw/' %}
+{% endif %}
+{% include head.html page=page bibtag=publicationTag %}
 <section class="section">
   {% assign groups = page.rdf | rdf_inverse_property: "foaf:member", true %}
   {% for group in groups %}
@@ -16,12 +21,12 @@ layout: base
       {% include person_card.html person=page.rdf %}
     </div>
 
-    <div class="column is-two-thirds">
+    <div class="column is-two-thirds content">
       {{ page.rdf | rdf_property: "dct:description" | markdownify }}
       {{ page.rdf | rdf_property: "site:content" | markdownify }}
     </div>
 
-    <div class="column is-one-third">
+    <div class="column is-one-third content">
       <h2>Projects</h2>
       <ul>
         {% capture project_query %}
@@ -38,6 +43,29 @@ layout: base
         <li><a href="{{ result.project.render_path | relativize_url }}">{{ result.project | rdf_property: "rdfs:label" }}</a></li>
         {% endfor %}
       </ul>
+      {% if publicationTag %}
+      <h2>Publications</h2>
+      <aside class="empty"></aside>
+      <div id="publications">
+        <div ex:role="view" ex:grouped="false" ex:orders=".year,.label" ex:directions="descending,ascending" ex:showSummary="true" ex:showDuplicates="false">
+          <div ex:role="lens" ex:itemTypes="Publication" style="display: none">
+            <span ex:content="if(.url <> '', concat('<a href=', .url, '>', .label, '</a>'), .label)"></span>
+            <span ex:if-exists=".author">
+              <span class="meta"><em>by</em> <strong class="author" ex:content=".author"></strong></span>
+            </span>
+            <span class="meta">
+              <span ex:content="if(exists(.booktitle), concat('<em>in</em> ', .booktitle), '')"></span>
+              <span class="journal" ex:content="if(exists(.journal), concat('<em>in</em> ', .journal), '')"></span>
+              <span ex:if-exists=".editor">(Editors: <span class="editor" ex:content=".editor"></span>)</span>
+              <a class="link" ex:href-content="id()" target="_blank">[Bibsonomy<span class="hideme"> of <span ex:content=".label"></span></span>]</a>
+            </span>
+            <span class="note" ex:content="if(exists(.note), concat('<br/><em>Note:</em> ', .note), '')"></span>
+            <span class="abstract" ex:content="if(exists(.abstract), concat('<br/><details><summary>Abstract</summary> ', .abstract, '</details>'), '')"></span>
+          </div>
+        </div>
+      </div>
+      {% endif %}
     </div>
   </div>
 </section>
+{% include foot.html page=page %}

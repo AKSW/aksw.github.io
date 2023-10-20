@@ -3,6 +3,7 @@ rdf_prefix_path: "_data/prefixes.sparql"
 layout: base
 ---
 
+{% include head.html page=page %}
 {% assign aksw = "<http://aksw.org/Groups/AKSW>" | rdf_get %}
 {% assign groups = aksw | rdf_inverse_property: "aiiso:part_of", true %}
 {% for group in groups %}
@@ -11,3 +12,4 @@ layout: base
 <p>{{ group | rdf_property: "dct:abstract" }}</p>
 </section>
 {% endfor %}
+{% include foot.html page=page %}
