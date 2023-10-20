@@ -1,10 +1,28 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8">
-    <title></title>
+    
+    
+    
+    
+    
+    <title>AKSW - Amrapali Zaveri</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <script>
+      function exhibitAddId() {
+        Exhibit.wait(function(){ Exhibit.Controls["id"] = { f: function(args,roots,rootValueTypes,defaultRootName,database) {
+          return new Exhibit.Expression._Collection([roots[defaultRootName]], "text")
+        } } })
+      }
+    </script>
+    <script onload="exhibitAddId()" src="https://api.simile-widgets.org/exhibit/3.1.1/exhibit-api.js" type="text/javascript" async></script>
+    <link href="https://www.bibsonomy.org/json/user/aksw/zaveri?items=1000&callback=cb" type="application/jsonp" rel="exhibit/data" ex:jsonp-callback="cb" async />
+    
     <link rel="stylesheet" href="dist/main.css">
     
   </head>
@@ -90,7 +108,8 @@
 </nav>
 
 
-      <section class="section">
+
+<section class="section">
   
   
 </section>
@@ -130,14 +149,14 @@ Personal image of Dr. Amrapali Zaveri
 
     </div>
 
-    <div class="column is-two-thirds">
+    <div class="column is-two-thirds content">
       
 
       
 
     </div>
 
-    <div class="column is-one-third">
+    <div class="column is-one-third content">
       <h2>Projects</h2>
       <ul>
         
@@ -160,11 +179,54 @@ Personal image of Dr. Amrapali Zaveri
         <li><a href="Projects/GHO.html">GHO</a></li>
         
       </ul>
+      
+      <h2>Publications</h2>
+      <aside class="empty"></aside>
+      <div id="publications">
+        <div ex:role="view" ex:grouped="false" ex:orders=".year,.label" ex:directions="descending,ascending" ex:showSummary="true" ex:showDuplicates="false">
+          <div ex:role="lens" ex:itemTypes="Publication" style="display: none">
+            <span ex:content="if(.url <> '', concat('<a href=', .url, '>', .label, '</a>'), .label)"></span>
+            <span ex:if-exists=".author">
+              <span class="meta"><em>by</em> <strong class="author" ex:content=".author"></strong></span>
+            </span>
+            <span class="meta">
+              <span ex:content="if(exists(.booktitle), concat('<em>in</em> ', .booktitle), '')"></span>
+              <span class="journal" ex:content="if(exists(.journal), concat('<em>in</em> ', .journal), '')"></span>
+              <span ex:if-exists=".editor">(Editors: <span class="editor" ex:content=".editor"></span>)</span>
+              <a class="link" ex:href-content="id()" target="_blank">[Bibsonomy<span class="hideme"> of <span ex:content=".label"></span></span>]</a>
+            </span>
+            <span class="note" ex:content="if(exists(.note), concat('<br/><em>Note:</em> ', .note), '')"></span>
+            <span class="abstract" ex:content="if(exists(.abstract), concat('<br/><details><summary>Abstract</summary> ', .abstract, '</details>'), '')"></span>
+          </div>
+        </div>
+      </div>
+      
     </div>
   </div>
 </section>
-
     </div>
+    <footer class="footer">
+      <div class="columns">
+        <div class="column">
+	</div>
+        <div class="column">
+          <div>
+	    <ul>
+	      
+              <li><a href="https://aksw.eccenca.dev/explore?graph=http://aksw.org/&resource=http://aksw.org/AmrapaliZaveri&inlineView=true">Open resource in eccenca Corporate Memory</a></li>
+              <li><a href="https://aksw.eccenca.dev/explore?graph=http://aksw.org/&resource=http://aksw.org/AmrapaliZaveri&tab=turtle&inlineView=true">Open source code in eccenca Corporate Memory</a></li>
+              <li><a href="https://github.com/AKSW/aksw.github.io/blob/develop/_layouts/person.html">View template on Github</a></li>
+	      
+	      <li><a href="https://github.com/AKSW/aksw.github.io/blob/develop//AmrapaliZaveri.html">View page source on Github</a></li>
+	    </ul>
+          </div>
+	</div>
+        <div class="column">
+	</div>
+      </div>
+    </footer>
     <script src="dist/main.js"></script>
   </body>
 </html>
+
+
