@@ -22,7 +22,7 @@ vars:
   JEKYLL_GID: '{{.JEKYLL_GID | default .ID_GID}}'
   JEKYLL_USER_ARG:
     sh: '[ "$(docker info --format "{{`{{if .Host.Security.Rootless}}true{{end}}`}}")" = "true" ] || echo -u "{{.JEKYLL_UID}}:{{.JEKYLL_GID}}"'
-  JEKYLL_IMAGE: ghcr.io/aksw/jekyll-rdf:4.1.1
+  JEKYLL_IMAGE: ghcr.io/aksw/jekyll-rdf:4.1.2
 
   TARGET: '{{.TARGET | default "_site"}}'
 
