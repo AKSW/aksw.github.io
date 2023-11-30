@@ -1,0 +1,239 @@
+/* Global styles */
+
+/*body {
+  font-family: "Roboto", sans-serif;
+  background-color: #f5f5f5;
+  color: #212121;
+}
+* {
+  font-family: "Roboto", sans-serif;
+}*/
+
+/* Header styles 
+header {
+  text-align: center;
+  font-size: 1.75em;
+  margin: 30px;
+}*/
+.container {
+  padding: 0 !important;
+}
+
+/* navbar styles */
+.navbar {
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  text-size-adjust: 100%;
+  font-family: BlinkMacSystemFont,-apple-system,"Segoe UI","Roboto","Oxygen","Ubuntu","Cantarell","Fira Sans","Droid Sans","Helvetica Neue","Helvetica","Arial",sans-serif;
+  color: #4a4a4a;
+  font-size: 1em;
+  font-weight: 400;
+  line-height: 1.5;
+  box-sizing: inherit;
+  background-color: #fff;
+  position: relative;
+  z-index: 30;
+  align-items: stretch;
+  display: flex;
+  min-height: 3.25rem;
+  padding: 0;
+}
+
+.navbar-brand {
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  text-size-adjust: 100%;
+  font-family: BlinkMacSystemFont,-apple-system,"Segoe UI","Roboto","Oxygen","Ubuntu","Cantarell","Fira Sans","Droid Sans","Helvetica Neue","Helvetica","Arial",sans-serif;
+  color: #4a4a4a;
+  font-size: 1em;
+  font-weight: 400;
+  line-height: 1.5;
+  box-sizing: inherit;
+  align-items: stretch;
+  display: flex;
+  flex-shrink: 0;
+  min-height: 3.25rem;
+  margin-left: -0.75rem;
+  padding: 0;
+}
+
+.section {
+  padding-left: 0.75rem;
+  padding-top: 1.5rem;
+}
+
+/* Content styles */
+#content {
+  display: flex;
+  justify-content: flex-start;
+  width: 100%;
+  background-color: #ffffff;
+  border-radius: 10px;
+}
+
+/* Filters styles */
+#filters {
+  width: 290px;
+  padding: 20px;
+  border-right: 2px solid #ddd;
+  font-size: 18px;
+}
+#filters .expand {
+  cursor: pointer;
+  transition: color 0.3s;
+}
+#filters .expand:hover {
+  color: #007bff;
+}
+#filters p,
+#filters label,
+#filters h2 {
+  font-size: 18px;
+}
+
+/* Year filter styles */
+#yearFilter {
+  display: none;
+  max-height: 500px;
+  overflow-y: auto;
+  padding-top: 15px 0;
+  border-bottom: 1px solid #ddd; /* Light grey bottom border */
+  border-top: 1px solid #ddd;
+  padding: 10px;
+  margin-bottom: 10px; /* Space between year and author filters */
+}
+#yearFilter input[type="checkbox"] {
+  margin-right: 0px;
+}
+#yearFilter label {
+  margin: 0.5px;
+  margin-left: 10px;
+  color: #495057;
+}
+
+#yearlabel.expand {
+  border-top: #ddd 1px solid;
+  padding-top: 15px;
+}
+
+#authorFilter {
+  display: none;
+  max-height: 500px;
+  overflow-y: auto;
+  padding-top: 10px 0;
+  border-bottom: 1px solid #ddd; /* Light grey bottom border */
+  border-top: 1px solid #ddd;
+  padding: 10px;
+  margin-bottom: 10px; /* Space between year and author filters */
+}
+
+#authorFilter input[type="checkbox"] {
+  margin-right: 0px;
+}
+
+#authorFilter label {
+  margin: 0.25px;
+  margin-left: 5px;
+  color: #495057;
+  font-size: 12px;
+}
+
+/* Search styles */
+#search {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 20px;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-bottom: 20px;
+  border-top: 2px solid #ddd;
+}
+#textFilter {
+  width: 100%;
+}
+
+/* Publication styles */
+.results {
+  border-top: 2px solid #ddd;
+  padding-top: 10px;
+}
+.publication {
+  position: relative;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 15px;
+  margin-top: 15px;
+  margin-right: 30px;
+  margin-left: 30px;
+  border-radius: 0px;
+}
+.publication h2 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: bold;
+}
+.publication p {
+  margin: 10px 0;
+  color: #6c757d;
+}
+
+/* Form control styles */
+.form-control {
+  padding: 15px;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.03);
+  border-radius: 8px;
+}
+
+/* URL button styles */
+.url-button {
+  margin-right: 15px;
+}
+.url-button:hover {
+  cursor: pointer;
+}
+
+/* Info box styles */
+.info-box {
+  background-color: #f9f9f9;
+  margin-top: 15px;
+  border: 1px solid #ddd;
+  padding: 10px;
+  max-height: 0;
+  overflow: hidden;
+}
+
+.publication .info-box {
+  max-height: 1000px;
+}
+
+/* Sort toggle styles */
+.sort-toggle {
+  display: none;
+}
+.sort-toggle + label {
+  height: 25px;
+  display: inline-block;
+  cursor: pointer;
+  margin-bottom: 15px;
+  transition: color 0.3s;
+  width: 100%;
+  text-align: left;
+}
+.sort-toggle + label:hover {
+  color: #007bff;
+}
+.sort-toggle:checked + label #arrow {
+  content: "↑";
+}
+#arrow {
+  display: inline-block;
+  margin-right: 0px; /* Add this line */
+  line-height: 25px;
+}
+
+/* counter styles */
+#counter {
+  padding-bottom: 15px;
+  border-bottom: #ddd 1px solid;
+}
