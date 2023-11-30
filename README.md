@@ -42,13 +42,14 @@ $ task clean:dist
 
 ```
 $ task data:model-init
+$ chmod -R go+rX .aksw-model
 $ task data:model-serve
 ```
 
 The model container will continue running. Don't forget to terminate the model's fuseki container when you are done with everything.
 
 ```
-$ task model-serve-stop
+$ task data:model-serve-stop
 ```
 
 ### Compile Site and Styles
