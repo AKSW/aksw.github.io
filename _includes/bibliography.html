@@ -2,16 +2,17 @@
 <html>
   <head>
     <title>Bibliography</title>
-    <link
-      rel="stylesheet"
-      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
-    />
     <link rel="stylesheet" href="/bibliography/bibliography.css" />
   </head>
   <body>
     <div id="search">
       <div style="width: 45%; margin: auto">
-        <input id="textFilter" type="text" placeholder="Search..." class="form-control">
+        <input
+          id="textFilter"
+          type="text"
+          placeholder="Search..."
+          class="form-control"
+        />
       </div>
     </div>
     <div id="content">
@@ -23,10 +24,12 @@
             ><span id="arrow">↓</span> Descending</label
           >
         </div>
-        <h2 class="expand" id="yearlabel" onclick="toggleYearFilter()">+ Year</h2>
-        <div id="yearFilter"></div>
+        <h2 class="expand" id="yearlabel" onclick="toggleYearFilter()">
+          + Year
+        </h2>
+        <div id="yearFilter" class="filter"></div>
         <h2 class="expand" onclick="toggleAuthorFilter()">+ Author</h2>
-<div id="authorFilter"></div>
+        <div id="authorFilter" class="filter"></div>
       </div>
       <div class="results" style="width: 100%">
         <div id="infoModal" class="modal">
@@ -44,7 +47,5 @@
     </div>
 
     <script src="/bibliography/bibliography.js"></script>
-
-
   </body>
 </html>

@@ -86,25 +86,32 @@ header {
   color: #007bff;
 }
 #filters p,
-#filters label,
-#filters h2 {
+#filters label {
   font-size: 18px;
 }
+#filters h2 {
+  font-size: 18px;
+  font-weight: normal;
+}
 
-/* Year filter styles */
-#yearFilter {
+.filter {
   display: none;
   max-height: 500px;
   overflow-y: auto;
-  padding-top: 15px 0;
-  border-bottom: 1px solid #ddd; /* Light grey bottom border */
+  border-bottom: 1px solid #ddd;
   border-top: 1px solid #ddd;
   padding: 10px;
-  margin-bottom: 10px; /* Space between year and author filters */
 }
-#yearFilter input[type="checkbox"] {
+
+.filter input[type="checkbox"] {
   margin-right: 0px;
 }
+
+#yearFilter {
+  padding-top: 15px 0;
+  margin-bottom: 10px;
+}
+
 #yearFilter label {
   margin: 0.5px;
   margin-left: 10px;
@@ -114,21 +121,12 @@ header {
 #yearlabel.expand {
   border-top: #ddd 1px solid;
   padding-top: 15px;
+  margin-bottom: 10px;
 }
 
 #authorFilter {
-  display: none;
-  max-height: 500px;
-  overflow-y: auto;
   padding-top: 10px 0;
-  border-bottom: 1px solid #ddd; /* Light grey bottom border */
-  border-top: 1px solid #ddd;
-  padding: 10px;
-  margin-bottom: 10px; /* Space between year and author filters */
-}
-
-#authorFilter input[type="checkbox"] {
-  margin-right: 0px;
+  margin-bottom: 10px;
 }
 
 #authorFilter label {
@@ -215,7 +213,8 @@ header {
   height: 25px;
   display: inline-block;
   cursor: pointer;
-  margin-bottom: 15px;
+  margin-top: 10px;
+  margin-bottom: 10px;
   transition: color 0.3s;
   width: 100%;
   text-align: left;
