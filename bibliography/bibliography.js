@@ -151,9 +151,17 @@ function updateSortOrder() {
 // Converts JSON to BibTeX
 function jsonToBibtex(json) {
   let bibtex = "@" + json["pub-type"] + "{" + json["bibtexKey"] + ",\n";
+  let standardFields = ["title", "author", "year", "journal", "volume", "number", "pages", "month", "note", "key", "publisher", "series", "address", "edition", "isbn", "url", "doi", "abstract", "keywords", "editors"];
+
   for (let key in json) {
-    if (key !== "pub-type" && key !== "bibtexKey") {
-      bibtex += "  " + key + " = {" + json[key] + "},\n";
+    if (standardFields.includes(key)) {
+      if (key === "authors" || key === "editors") {
+        // Convert each author/editor object to a string and join the array into a single string
+        let names = json[key].map(person => person.first + " " + person.last).join(" and ");
+        bibtex += "  " + key + " = {" + names + "},\n";
+      } else {
+        bibtex += "  " + key + " = {" + json[key] + "},\n";
+      }
     }
   }
   bibtex += "}";
