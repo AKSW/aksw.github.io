@@ -355,12 +355,18 @@ function appendPublicationYear(div, publication) {
 // Appends a Bib button to a div
 function appendBibButton(div, publication) {
   let infoButton = createButton("BIB");
+  infoButton.id = "bibButton"; // Added id to the button
+  let indicator = createIndicator();
+
   infoButton.addEventListener("click", function () {
     let bibtex = jsonToBibtex(publication);
     let infoBox = createInfoBoxWithButton(bibtex); // Use the new function
     toggleInfoBox(div, infoBox);
+    indicator.textContent = indicator.textContent === "▼" ? "▲" : "▼"; // Toggle the indicator
   });
+
   div.appendChild(infoButton);
+  div.appendChild(indicator);
 }
 
 // Creates a button with the given text
@@ -384,12 +390,25 @@ function appendUrlButton(div, publication, property, text) {
 function appendAbstractButton(div, publication) {
   if (publication.abstract) {
     let abstractButton = createButton("ABS");
+    let indicator = createIndicator();
+
     abstractButton.addEventListener("click", function () {
       let infoBox = createInfoBox(publication.abstract);
       toggleInfoBox(div, infoBox);
+      indicator.textContent = indicator.textContent === "▼" ? "▲" : "▼"; // Toggle the indicator
     });
+
     div.appendChild(abstractButton);
+    div.appendChild(indicator);
   }
+}
+
+// Creates an indicator
+function createIndicator() {
+  let indicator = document.createElement("span");
+  indicator.textContent = "▼"; // Downward arrow to indicate expandability
+  indicator.className = "indicator";
+  return indicator;
 }
 
 // Displays pagination buttons

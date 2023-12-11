@@ -150,6 +150,14 @@ header {
 }
 #textFilter {
   width: 100%;
+  padding: 6px 12px;
+  font-size: 14px;
+  line-height: 1.42857143;
+  color: #555;
+  background-color: #fff;
+  background-image: none;
+  border: 2px solid #ddd;
+  border-radius: 2px;
 }
 
 /* Publication styles */
@@ -185,10 +193,19 @@ header {
 
 /* URL button styles */
 .url-button {
-  margin-right: 15px;
+  margin-left: 15px;
 }
 .url-button:hover {
   cursor: pointer;
+}
+
+#bibButton{
+  margin-left:0px !important;
+}
+
+.indicator {
+  font-size: 0.8em;
+  padding-left: 5px;
 }
 
 /* Info box styles */
@@ -196,7 +213,7 @@ header {
   background-color: #f9f9f9;
   margin-top: 15px;
   border: 1px solid #ddd;
-  padding: 10px;
+  margin: 10px;
   max-height: 0;
   overflow: hidden;
 }
