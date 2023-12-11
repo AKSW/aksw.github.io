@@ -108,7 +108,7 @@ header {
 }
 
 #yearFilter {
-  padding-top: 15px 0;
+  padding-top: 10px 0;
   margin-bottom: 10px;
 }
 
@@ -118,7 +118,7 @@ header {
   color: #495057;
 }
 
-#yearlabel.expand {
+#yearLabel.expand {
   border-top: #ddd 1px solid;
   padding-top: 15px;
   margin-bottom: 10px;
@@ -130,10 +130,14 @@ header {
 }
 
 #authorFilter label {
-  margin: 0.25px;
+  margin: 0.5px;
   margin-left: 5px;
   color: #495057;
   font-size: 12px;
+}
+
+#authorLabel.expand {
+  margin-bottom: 10px;
 }
 
 /* Search styles */
