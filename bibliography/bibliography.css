@@ -220,6 +220,7 @@ header {
   margin: 10px;
   max-height: 0;
   overflow: hidden;
+  padding: 10px;
 }
 
 .publication .info-box {

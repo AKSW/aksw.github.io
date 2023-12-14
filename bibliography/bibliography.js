@@ -363,19 +363,24 @@ function appendPublicationYear(div, publication) {
 // Appends a Bib button to a div
 function appendBibButton(div, publication) {
   let infoButton = createButton("BIB");
-  infoButton.id = "bibButton"; // Added id to the button
-  let indicator = createIndicator();
-
+  let indicator = createIndicator("bibIndicator" + publication.bibtexKey); // Pass a unique id
+  
   infoButton.addEventListener("click", function () {
-    let bibtex = jsonToBibtex(publication);
-    let infoBox = createInfoBoxWithButton(bibtex); // Use the new function
-    toggleInfoBox(div, infoBox);
-    indicator.textContent = indicator.textContent === "▼" ? "▲" : "▼"; // Toggle the indicator
+  let bibtex = jsonToBibtex(publication);
+  let infoBox = createInfoBoxWithButton(bibtex);
+  toggleInfoBox(div, infoBox);
+  indicator.textContent = indicator.textContent === "▼" ? "▲" : "▼"; // Toggle the indicator
+  
+  // Reset the other button's indicator
+  let otherIndicator = document.getElementById("absIndicator" + publication.bibtexKey);
+  if (otherIndicator) {
+  otherIndicator.textContent = "▼";
+  }
   });
-
+  
   div.appendChild(infoButton);
   div.appendChild(indicator);
-}
+  }
 
 // Creates a button with the given text
 function createButton(text) {
@@ -397,27 +402,35 @@ function appendUrlButton(div, publication, property, text) {
 // Appends an abstract button to a div
 function appendAbstractButton(div, publication) {
   if (publication.abstract) {
-    let abstractButton = createButton("ABS");
-    let indicator = createIndicator();
-
-    abstractButton.addEventListener("click", function () {
-      let infoBox = createInfoBox(publication.abstract);
-      toggleInfoBox(div, infoBox);
-      indicator.textContent = indicator.textContent === "▼" ? "▲" : "▼"; // Toggle the indicator
-    });
-
-    div.appendChild(abstractButton);
-    div.appendChild(indicator);
+  let abstractButton = createButton("ABS");
+  let indicator = createIndicator("absIndicator" + publication.bibtexKey); // Pass a unique id
+  
+  abstractButton.addEventListener("click", function () {
+  let infoBox = createInfoBox(publication.abstract);
+  toggleInfoBox(div, infoBox);
+  indicator.textContent = indicator.textContent === "▼" ? "▲" : "▼"; // Toggle the indicator
+  
+  // Reset the other button's indicator
+  let otherIndicator = document.getElementById("bibIndicator" + publication.bibtexKey);
+  if (otherIndicator) {
+  otherIndicator.textContent = "▼";
   }
-}
+  });
+  
+  div.appendChild(abstractButton);
+  div.appendChild(indicator);
+  }
+  }
+  
 
 // Creates an indicator
-function createIndicator() {
+function createIndicator(id) {
   let indicator = document.createElement("span");
   indicator.textContent = "▼"; // Downward arrow to indicate expandability
   indicator.className = "indicator";
+  indicator.id = id; // Set the id
   return indicator;
-}
+  }
 
 // Displays pagination buttons
 function displayPaginationButtons(container, totalPublications) {
