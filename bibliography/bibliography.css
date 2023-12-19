@@ -142,6 +142,26 @@ header {
 }
 
 /* Search styles */
+.search-and-guide {
+  display: flex;
+  justify-content: center;
+  position: relative;
+}
+
+.guide-button {
+  position: absolute;
+  right: 0;
+  align-self: center;
+  border: 2px solid #ddd;
+  background-color: #fff;
+  font-size: 14px;
+  line-height: 1.42857143;
+  color: #555;
+  border-radius: 2px;
+}
+
+
+
 #search {
   display: flex;
   justify-content: center;
@@ -274,4 +294,82 @@ header {
   line-height: 1.5;
   border-radius: .25rem;
   transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+}
+
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1000; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgba(0,0,0,0.8); /* Black w/ opacity */
+  transition: all 0.5s ease-in-out; /* Smooth transition */
+}
+
+.modal-content {
+  background-color: #fefefe;
+  margin: 20% auto; /* 10% from the top and centered */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%; /* Could be more or less, depending on screen size */
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19); /* Add some shadow for 3D effect */
+  transition: all 0.3s ease-in-out; /* Smooth transition */
+}
+
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  transition: color 0.3s ease; /* Smooth color transition */
+}
+
+.modal-content {
+  background-color: #fefefe;
+  margin: 10% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 60%;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+  transition: all 0.3s ease-in-out;
+}
+
+.close-button {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  transition: color 0.3s ease;
+}
+
+.close-button:hover,
+.close-button:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.modal-content h2 {
+  margin-bottom: 15px;
+}
+
+.modal-content p {
+  margin-bottom: 10px;
+}
+
+.modal-list {
+  margin-bottom: 20px;
+}
+
+.modal-list li {
+  margin-bottom: 10px;
+}
+
+.modal-fat {
+  font-weight: bold;
+  font-size: 1.2em;
+  text-align: center;
 }

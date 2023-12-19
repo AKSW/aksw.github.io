@@ -6,6 +6,7 @@ let currentInfoBoxContent = "";
 // Fetches data and initializes the application
 window.onload = function () {
   fetchDataAndInitialize();
+  setupModal();
 };
 
 // Fetches data and initializes the application
@@ -215,6 +216,27 @@ function toggleFilterDisplay(filterId) {
 function changePage(page) {
   currentPage = page;
   updateDOM();
+}
+
+// Sets up the modal for the info
+function setupModal() {
+  var modal = document.getElementById("userGuideModal");
+  var btn = document.getElementById("openModal");
+  var span = document.getElementById("closeModal");
+
+  btn.onclick = function() {
+    modal.style.display = "block";
+  }
+
+  span.onclick = function() {
+    modal.style.display = "none";
+  }
+
+  window.onclick = function(event) {
+    if (event.target == modal) {
+      modal.style.display = "none";
+    }
+  }
 }
 
 // Creates an info box with the given content

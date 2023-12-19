@@ -1,14 +1,32 @@
 <link rel="stylesheet" href="/bibliography/bibliography.css" />
-<div id="search">
-  <div style="width: 45%; margin: auto">
-    <input
-      id="textFilter"
-      type="text"
-      placeholder="Search..."
-      class="form-control"
-    />
+<div class="search-and-guide">
+  <div id="search">
+    <div style="width: 45%; margin: auto">
+      <input
+        id="textFilter"
+        type="text"
+        placeholder="Search..."
+        class="form-control"
+      />
+    </div>
   </div>
+  <button id="openModal" class="guide-button">info</button>
 </div>
+
+<div id="userGuideModal" class="modal">
+  <div class="modal-content">
+    <span id="closeModal" class="close-button">&times;</span>
+    <p class="modal-fat">Welcome to the aksw Publications Overview! This interactive platform allows you to explore a collection of publications with ease. Here's how you can make the most of it:</p>
+    <ul class="modal-list">
+      <li><strong>Search:</strong> Enter keywords in the search bar at the top to find specific publications. This feature scans all fields of the publications.</li>
+      <li><strong>Filters:</strong> On the left side, you'll find filters for the year of publication and authors. To view these filters, click on "+ Year" or "+ Author" to expand the filter section. Check the boxes next to the desired years or authors to narrow down the list of publications.</li>
+      <li><strong>Sort:</strong> Above the filters, there's a toggle for sorting the publications. You can arrange them in ascending or descending order based on the year of publication.</li>
+      <li><strong>Pagination:</strong> The publications are displayed in a paginated format for easy navigation. Use the buttons at the bottom to move between pages.</li>
+      <li><strong>Abstract, Bibtex, PDF, and URL View:</strong> Each publication comes with "ABS", "BIB", "PDF", and "URL" buttons. Click "ABS" to view the abstract, "BIB" to view the Bibtex, "PDF" to access the PDF version of the publication, and "URL" to visit the publication's webpage. The selected information will appear right below the publication.</li>
+    </ul>
+    <p class="modal-fat">Enjoy exploring the wealth of information available in the publications!</p>  </div>
+</div>
+
 <div id="content">
   <div id="filters">
     <p id="counter"></p>
@@ -43,3 +61,4 @@
 </div>
 
 <script src="/bibliography/bibliography.js"></script>
+
