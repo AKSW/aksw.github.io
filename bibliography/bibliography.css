@@ -116,6 +116,7 @@ header {
   margin: 0.5px;
   margin-left: 10px;
   color: #495057;
+  font-size: 12px;
 }
 
 #yearLabel.expand {
@@ -257,4 +258,20 @@ header {
 #counter {
   padding-bottom: 15px;
   border-bottom: #ddd 1px solid;
+}
+
+.page-button {
+  display: inline-block;
+  font-weight: 400;
+  color: #212529;
+  text-align: center;
+  vertical-align: middle;
+  cursor: pointer;
+  background-color: transparent;
+  border: 1px solid #ddd;
+  margin: 1rem .75rem .375rem .75rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  border-radius: .25rem;
+  transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
 }

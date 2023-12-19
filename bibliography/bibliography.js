@@ -86,7 +86,7 @@ function getUniqueAuthors() {
 
 // Gets the full name of an author
 function getFullName(author) {
-  let fullName = author.first + " " + author.last;
+  let fullName = (author.first + " " + author.last).trim();
   return fullName.replace(/(^|\s)and /i, "");
 }
 
@@ -466,7 +466,7 @@ function appendPageButton(div, page, condition) {
 function createPageButton(page) {
   let pageButton = document.createElement("button");
   pageButton.textContent = page;
-  pageButton.className = "btn btn-secondary mr-2";
+  pageButton.className = "btn btn-secondary mr-2 page-button"; // Added 'pagination-button' class
   return pageButton;
 }
 
@@ -474,6 +474,6 @@ function createPageButton(page) {
 function appendCurrentPageButton(div, page) {
   let currentPageButton = document.createElement("button");
   currentPageButton.textContent = page;
-  currentPageButton.className = "btn btn-primary mr-2";
+  currentPageButton.className = "btn btn-primary mr-2 page-button"; // Added 'pagination-button' class
   div.appendChild(currentPageButton);
 }
