@@ -151,13 +151,36 @@ function updateSortOrder() {
 // Converts JSON to BibTeX
 function jsonToBibtex(json) {
   let bibtex = "@" + json["pub-type"] + "{" + json["bibtexKey"] + ",\n";
-  let standardFields = ["title", "author", "year", "journal", "volume", "number", "pages", "month", "note", "key", "publisher", "series", "address", "edition", "isbn", "url", "doi", "abstract", "keywords", "editors"];
+  let standardFields = [
+    "title",
+    "author",
+    "year",
+    "journal",
+    "volume",
+    "number",
+    "pages",
+    "month",
+    "note",
+    "key",
+    "publisher",
+    "series",
+    "address",
+    "edition",
+    "isbn",
+    "url",
+    "doi",
+    "abstract",
+    "keywords",
+    "editors",
+  ];
 
   for (let key in json) {
     if (standardFields.includes(key)) {
       if (key === "authors" || key === "editors") {
         // Convert each author/editor object to a string and join the array into a single string
-        let names = json[key].map(person => person.first + " " + person.last).join(" and ");
+        let names = json[key]
+          .map((person) => person.first + " " + person.last)
+          .join(" and ");
         bibtex += "  " + key + " = {" + names + "},\n";
       } else {
         bibtex += "  " + key + " = {" + json[key] + "},\n";
@@ -207,20 +230,24 @@ function createInfoBox(content) {
 
 // Creates an info box with the given content and a copy button
 function createInfoBoxWithButton(content) {
-  let infoBox = createInfoBox(content); 
+  let infoBox = createInfoBox(content);
 
   // Create a copy button
   let button = document.createElement("button");
   button.textContent = "Copy to clipboard";
-  button.style.cssText = "position: absolute; top: 0; right: 0; font-size: 0.8em; border: none; background-color: #007BFF; color: white; padding: 5px 10px; border-radius: 5px; margin-top: 5px; margin-right: 5px;";
-  button.addEventListener("click", function() {
-    navigator.clipboard.writeText(content).then(function() {
-      console.log('Copying to clipboard was successful!');
-      button.style.backgroundColor = "#6c757d";
-      button.textContent = "Copied to clipboard";
-    }, function(err) {
-      console.error('Could not copy text: ', err);
-    });
+  button.style.cssText =
+    "position: absolute; top: 0; right: 0; font-size: 0.8em; border: none; background-color: #007BFF; color: white; padding: 5px 10px; border-radius: 5px; margin-top: 5px; margin-right: 5px;";
+  button.addEventListener("click", function () {
+    navigator.clipboard.writeText(content).then(
+      function () {
+        console.log("Copying to clipboard was successful!");
+        button.style.backgroundColor = "#6c757d";
+        button.textContent = "Copied to clipboard";
+      },
+      function (err) {
+        console.error("Could not copy text: ", err);
+      }
+    );
   });
 
   // Append the button to the info box
@@ -277,31 +304,52 @@ function updateDOM() {
 function filterPublicationsBySearchAndCheckboxes() {
   let textFilter = document.getElementById("textFilter").value.toLowerCase();
   let yearCheckboxes = document.querySelectorAll("#yearFilter input:checked");
-  let authorCheckboxes = document.querySelectorAll("#authorFilter input:checked");
+  let authorCheckboxes = document.querySelectorAll(
+    "#authorFilter input:checked"
+  );
 
   return publicationsData.filter((publication) => {
-    return isPublicationInTextFilter(publication, textFilter) &&
+    return (
+      isPublicationInTextFilter(publication, textFilter) &&
       isPublicationInYearFilter(publication, yearCheckboxes) &&
-      isPublicationInAuthorFilter(publication, authorCheckboxes);
+      isPublicationInAuthorFilter(publication, authorCheckboxes)
+    );
   });
 }
 
 // Checks if a publication is in the text filter
 function isPublicationInTextFilter(publication, textFilter) {
-  return publication.label.toLowerCase().includes(textFilter) ||
-    (publication.authors && publication.authors.some((author) => getFullName(author).toLowerCase().includes(textFilter)));
+  return (
+    publication.label.toLowerCase().includes(textFilter) ||
+    (publication.authors &&
+      publication.authors.some((author) =>
+        getFullName(author).toLowerCase().includes(textFilter)
+      ))
+  );
 }
 
 // Checks if a publication is in the year filter
 function isPublicationInYearFilter(publication, yearCheckboxes) {
-  return yearCheckboxes.length === 0 ||
-    Array.from(yearCheckboxes).some((checkbox) => checkbox.value == publication.year);
+  return (
+    yearCheckboxes.length === 0 ||
+    Array.from(yearCheckboxes).some(
+      (checkbox) => checkbox.value == publication.year
+    )
+  );
 }
 
 // Checks if a publication is in the author filter
 function isPublicationInAuthorFilter(publication, authorCheckboxes) {
-  return authorCheckboxes.length === 0 ||
-    Array.from(authorCheckboxes).some((checkbox) => publication.authors && publication.authors.some((author) => getFullName(author) === checkbox.value));
+  return (
+    authorCheckboxes.length === 0 ||
+    Array.from(authorCheckboxes).some(
+      (checkbox) =>
+        publication.authors &&
+        publication.authors.some(
+          (author) => getFullName(author) === checkbox.value
+        )
+    )
+  );
 }
 
 // Paginates publications
@@ -345,8 +393,7 @@ function appendPublicationAuthors(div, publication) {
   let authors = document.createElement("p");
   if (publication.authors) {
     authors.textContent =
-      "" +
-      publication.authors.map((a) => a.first + " " + a.last).join(", ");
+      "" + publication.authors.map((a) => a.first + " " + a.last).join(", ");
   } else {
     authors.textContent = "Authors: N/A";
   }
@@ -364,23 +411,25 @@ function appendPublicationYear(div, publication) {
 function appendBibButton(div, publication) {
   let infoButton = createButton("BIB");
   let indicator = createIndicator("bibIndicator" + publication.bibtexKey); // Pass a unique id
-  
+
   infoButton.addEventListener("click", function () {
-  let bibtex = jsonToBibtex(publication);
-  let infoBox = createInfoBoxWithButton(bibtex);
-  toggleInfoBox(div, infoBox);
-  indicator.textContent = indicator.textContent === "▼" ? "▲" : "▼"; // Toggle the indicator
-  
-  // Reset the other button's indicator
-  let otherIndicator = document.getElementById("absIndicator" + publication.bibtexKey);
-  if (otherIndicator) {
-  otherIndicator.textContent = "▼";
-  }
+    let bibtex = jsonToBibtex(publication);
+    let infoBox = createInfoBoxWithButton(bibtex);
+    toggleInfoBox(div, infoBox);
+    indicator.textContent = indicator.textContent === "▼" ? "▲" : "▼"; // Toggle the indicator
+
+    // Reset the other button's indicator
+    let otherIndicator = document.getElementById(
+      "absIndicator" + publication.bibtexKey
+    );
+    if (otherIndicator) {
+      otherIndicator.textContent = "▼";
+    }
   });
-  
+
   div.appendChild(infoButton);
   div.appendChild(indicator);
-  }
+}
 
 // Creates a button with the given text
 function createButton(text) {
@@ -402,26 +451,27 @@ function appendUrlButton(div, publication, property, text) {
 // Appends an abstract button to a div
 function appendAbstractButton(div, publication) {
   if (publication.abstract) {
-  let abstractButton = createButton("ABS");
-  let indicator = createIndicator("absIndicator" + publication.bibtexKey); // Pass a unique id
-  
-  abstractButton.addEventListener("click", function () {
-  let infoBox = createInfoBox(publication.abstract);
-  toggleInfoBox(div, infoBox);
-  indicator.textContent = indicator.textContent === "▼" ? "▲" : "▼"; // Toggle the indicator
-  
-  // Reset the other button's indicator
-  let otherIndicator = document.getElementById("bibIndicator" + publication.bibtexKey);
-  if (otherIndicator) {
-  otherIndicator.textContent = "▼";
+    let abstractButton = createButton("ABS");
+    let indicator = createIndicator("absIndicator" + publication.bibtexKey); // Pass a unique id
+
+    abstractButton.addEventListener("click", function () {
+      let infoBox = createInfoBox(publication.abstract);
+      toggleInfoBox(div, infoBox);
+      indicator.textContent = indicator.textContent === "▼" ? "▲" : "▼"; // Toggle the indicator
+
+      // Reset the other button's indicator
+      let otherIndicator = document.getElementById(
+        "bibIndicator" + publication.bibtexKey
+      );
+      if (otherIndicator) {
+        otherIndicator.textContent = "▼";
+      }
+    });
+
+    div.appendChild(abstractButton);
+    div.appendChild(indicator);
   }
-  });
-  
-  div.appendChild(abstractButton);
-  div.appendChild(indicator);
-  }
-  }
-  
+}
 
 // Creates an indicator
 function createIndicator(id) {
@@ -430,7 +480,7 @@ function createIndicator(id) {
   indicator.className = "indicator";
   indicator.id = id; // Set the id
   return indicator;
-  }
+}
 
 // Displays pagination buttons
 function displayPaginationButtons(container, totalPublications) {
