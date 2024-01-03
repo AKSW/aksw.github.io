@@ -11,7 +11,7 @@ window.onload = function () {
 
 // Fetches data and initializes the application
 function fetchDataAndInitialize() {
-  fetch("/bibliography/aksw.json")
+  fetch("dist/aksw.json")
     .then(handleFetchResponse)
     .then(initializeData)
     .then(addEventListeners)
@@ -193,12 +193,12 @@ function jsonToBibtex(json) {
 }
 
 // Toggles the display of the year filter
-function toggleYearFilter() {
+window.toggleYearFilter = function() {
   toggleFilterDisplay("yearFilter");
 }
 
 // Toggles the display of the author filter
-function toggleAuthorFilter() {
+window.toggleAuthorFilter = function() {
   toggleFilterDisplay("authorFilter");
 }
 
