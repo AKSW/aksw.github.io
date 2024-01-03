@@ -506,20 +506,22 @@ function createIndicator(id) {
 
 // Displays pagination buttons
 function displayPaginationButtons(container, totalPublications) {
-  let totalPages = Math.ceil(totalPublications / PUBLICATIONS_PER_PAGE);
+  if (totalPublications > 0) {
+    let totalPages = Math.ceil(totalPublications / PUBLICATIONS_PER_PAGE);
 
-  // Create a div for pagination buttons
-  let paginationDiv = document.createElement("div");
-  paginationDiv.style.textAlign = "center"; // Center the buttons
+    // Create a div for pagination buttons
+    let paginationDiv = document.createElement("div");
+    paginationDiv.style.textAlign = "center"; // Center the buttons
 
-  appendPageButton(paginationDiv, 1, currentPage > 2); // First page
-  appendPageButton(paginationDiv, currentPage - 1, currentPage > 1); // Previous page
-  appendCurrentPageButton(paginationDiv, currentPage); // Current page
-  appendPageButton(paginationDiv, currentPage + 1, currentPage < totalPages); // Next page
-  appendPageButton(paginationDiv, totalPages, currentPage < totalPages - 1); // Last page
+    appendPageButton(paginationDiv, 1, currentPage > 2); // First page
+    appendPageButton(paginationDiv, currentPage - 1, currentPage > 1); // Previous page
+    appendCurrentPageButton(paginationDiv, currentPage); // Current page
+    appendPageButton(paginationDiv, currentPage + 1, currentPage < totalPages); // Next page
+    appendPageButton(paginationDiv, totalPages, currentPage < totalPages - 1); // Last page
 
-  // Append the pagination div to the container
-  container.appendChild(paginationDiv);
+    // Append the pagination div to the container
+    container.appendChild(paginationDiv);
+  }
 }
 
 // Appends a page button to a div
@@ -546,6 +548,6 @@ function createPageButton(page) {
 function appendCurrentPageButton(div, page) {
   let currentPageButton = document.createElement("button");
   currentPageButton.textContent = page;
-  currentPageButton.className = "btn btn-primary mr-2 page-button"; // Added 'pagination-button' class
+  currentPageButton.className = "btn btn-primary mr-2 page-button current-page-button"; // Added 'pagination-button' and 'current-page-button' classes
   div.appendChild(currentPageButton);
 }
