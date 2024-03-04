@@ -3,6 +3,7 @@ rdf_prefix_path: "_data/prefixes.sparql"
 layout: base
 ---
 
+{% include head.html page=page %}
 {% capture group_query %}
 select distinct ?person where
 {
@@ -23,6 +24,22 @@ select distinct ?person where
     filter (?person = ?excludeB)
   }
   filter(!bound(?excludeB)) .
+  OPTIONAL {
+    ?person foaf:familyName ?familyName
+  }
+} order by ASC(?familyName)
+{% endcapture %}
+
+{% capture oldgroup_query %}
+select distinct ?person where
+{
+  {
+    ?group foaf:member ?person .
+    ?group aiiso:part_of ?resourceUri .
+  } UNION {
+    ?resourceUri foaf:member ?person
+  }
+  ?person a foaf:Person , <http://aksw.org/GrownUp> , <http://aksw.org/Alumni> .
   OPTIONAL {
     ?person foaf:familyName ?familyName
   }
@@ -52,6 +69,17 @@ select distinct ?person ?name where
     {% endfor %}
   </div>
 </section>
+{% assign oldgroup = "<http://aksw.org/Groups/AKSW>" | sparql_query: oldgroup_query %}
+<section class="section">
+  <h4 class="title is-4">The following individuals grew up at AKSW</h4>
+  <div class="columns is-multiline">
+    {% for member in oldgroup %}
+    <div class="column is-one-third">
+      {% include person_card.html person=member.person %}
+    </div>
+    {% endfor %}
+  </div>
+</section>
 {% assign students = "<http://aksw.org/Groups/AKSW>" | sparql_query: students_query %}
 <section class="section">
 <h4 class="title is-4">The following Students work with us </h4>
@@ -62,3 +90,4 @@ select distinct ?person ?name where
 </ul>
 </section>
 <a href="{{ aksw.render_path | relativize_url }}">See AKSW</a>
+{% include foot.html page=page %}

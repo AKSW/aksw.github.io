@@ -2,6 +2,8 @@
 rdf_prefix_path: "_data/prefixes.sparql"
 layout: base
 ---
+
+{% include head.html page=page %}
 {% capture upcomming_query %}
 select ?event ?label {
   ?event a schema:Event;
@@ -50,3 +52,4 @@ select ?event ?label {
 </ul>
 </div>
 </section>
+{% include foot.html page=page %}

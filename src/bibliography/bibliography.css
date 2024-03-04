@@ -1,0 +1,378 @@
+/* Global styles */
+
+/*body {
+  font-family: "Roboto", sans-serif;
+  background-color: #f5f5f5;
+  color: #212121;
+}
+* {
+  font-family: "Roboto", sans-serif;
+}*/
+
+/* Header styles 
+header {
+  text-align: center;
+  font-size: 1.75em;
+  margin: 30px;
+}*/
+.container {
+  padding: 0 !important;
+}
+
+/* navbar styles */
+.navbar {
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  text-size-adjust: 100%;
+  font-family: BlinkMacSystemFont,-apple-system,"Segoe UI","Roboto","Oxygen","Ubuntu","Cantarell","Fira Sans","Droid Sans","Helvetica Neue","Helvetica","Arial",sans-serif;
+  color: #4a4a4a;
+  font-size: 1em;
+  font-weight: 400;
+  line-height: 1.5;
+  box-sizing: inherit;
+  background-color: #fff;
+  position: relative;
+  z-index: 30;
+  align-items: stretch;
+  display: flex;
+  min-height: 3.25rem;
+  padding: 0;
+}
+
+.navbar-brand {
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  text-size-adjust: 100%;
+  font-family: BlinkMacSystemFont,-apple-system,"Segoe UI","Roboto","Oxygen","Ubuntu","Cantarell","Fira Sans","Droid Sans","Helvetica Neue","Helvetica","Arial",sans-serif;
+  color: #4a4a4a;
+  font-size: 1em;
+  font-weight: 400;
+  line-height: 1.5;
+  box-sizing: inherit;
+  align-items: stretch;
+  display: flex;
+  flex-shrink: 0;
+  min-height: 3.25rem;
+  margin-left: -0.75rem;
+  padding: 0;
+}
+
+.section {
+  padding-left: 0.75rem;
+  padding-top: 1.5rem;
+}
+
+/* Content styles */
+#content {
+  display: flex;
+  justify-content: flex-start;
+  width: 100%;
+  background-color: #ffffff;
+  border-radius: 10px;
+}
+
+/* Filters styles */
+#filters {
+  width: 290px;
+  padding: 20px;
+  border-right: 2px solid #ddd;
+  font-size: 18px;
+}
+#filters .expand {
+  cursor: pointer;
+  transition: color 0.3s;
+}
+#filters .expand:hover {
+  color: #007bff;
+}
+#filters p,
+#filters label {
+  font-size: 18px;
+}
+#filters h2 {
+  font-size: 18px;
+  font-weight: normal;
+}
+
+.filter {
+  display: none;
+  max-height: 500px;
+  overflow-y: auto;
+  border-bottom: 1px solid #ddd;
+  border-top: 1px solid #ddd;
+  padding: 10px;
+}
+
+.filter input[type="checkbox"] {
+  margin-right: 0px;
+}
+
+#yearFilter {
+  padding-top: 10px 0;
+  margin-bottom: 10px;
+}
+
+#yearFilter label {
+  margin: 0.5px;
+  margin-left: 10px;
+  color: #495057;
+  font-size: 12px;
+}
+
+#yearLabel.expand {
+  border-top: #ddd 1px solid;
+  padding-top: 15px;
+  margin-bottom: 10px;
+}
+
+#authorFilter {
+  padding-top: 10px 0;
+  margin-bottom: 10px;
+}
+
+#authorFilter label {
+  margin: 0.5px;
+  margin-left: 5px;
+  color: #495057;
+  font-size: 12px;
+}
+
+#authorLabel.expand {
+  margin-bottom: 10px;
+}
+
+/* Search styles */
+.search-and-guide {
+  display: flex;
+  justify-content: center;
+  position: relative;
+}
+
+.guide-button {
+  position: absolute;
+  right: 0;
+  align-self: center;
+  border: 2px solid #ddd;
+  background-color: #fff;
+  font-size: 14px;
+  line-height: 1.42857143;
+  color: #555;
+  border-radius: 2px;
+}
+
+#search {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 20px;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-bottom: 20px;
+  border-top: 2px solid #ddd;
+}
+#textFilter {
+  width: 100%;
+  padding: 6px 12px;
+  font-size: 14px;
+  line-height: 1.42857143;
+  color: #555;
+  background-color: #fff;
+  background-image: none;
+  border: 2px solid #ddd;
+  border-radius: 2px;
+}
+
+/* Publication styles */
+.results {
+  border-top: 2px solid #ddd;
+  padding-top: 10px;
+}
+.publication {
+  position: relative;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 15px;
+  margin-top: 15px;
+  margin-right: 30px;
+  margin-left: 30px;
+  border-radius: 0px;
+}
+.publication h2 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: bold;
+}
+.publication p {
+  margin: 10px 0;
+  color: #6c757d;
+}
+
+/* Form control styles */
+.form-control {
+  padding: 15px;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.03);
+  border-radius: 8px;
+}
+
+/* URL button styles */
+.url-button {
+  margin-left: 15px;
+}
+.url-button:hover {
+  cursor: pointer;
+}
+
+#bibButton{
+  margin-left:0px !important;
+}
+
+.indicator {
+  font-size: 0.8em;
+  padding-left: 5px;
+}
+
+/* Info box styles */
+.info-box {
+  background-color: #f9f9f9;
+  margin-top: 15px;
+  border: 1px solid #ddd;
+  margin: 10px;
+  max-height: 0;
+  overflow: hidden;
+  padding: 10px;
+}
+
+.publication .info-box {
+  max-height: 1000px;
+}
+
+/* Sort toggle styles */
+.sort-toggle {
+  display: none;
+}
+.sort-toggle + label {
+  height: 25px;
+  display: inline-block;
+  cursor: pointer;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  transition: color 0.3s;
+  width: 100%;
+  text-align: left;
+}
+.sort-toggle + label:hover {
+  color: #007bff;
+}
+.sort-toggle:checked + label #arrow {
+  content: "↑";
+}
+#arrow {
+  display: inline-block;
+  margin-right: 0px; /* Add this line */
+  line-height: 25px;
+}
+
+/* counter styles */
+#counter {
+  padding-bottom: 15px;
+  border-bottom: #ddd 1px solid;
+}
+
+.page-button {
+  display: inline-block;
+  font-weight: 400;
+  color: #212529;
+  text-align: center;
+  vertical-align: middle;
+  cursor: pointer;
+  background-color: transparent;
+  border: 1px solid #ddd;
+  margin: 1rem .75rem .375rem .75rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  border-radius: .25rem;
+  transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+}
+
+.current-page-button {
+  font-size: 1.1em !important; 
+  padding: 5px 8px !important; 
+}
+
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1000; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgba(0,0,0,0.8); /* Black w/ opacity */
+  transition: all 0.5s ease-in-out; /* Smooth transition */
+}
+
+.modal-content {
+  background-color: #fefefe;
+  margin: 20% auto; /* 10% from the top and centered */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%; /* Could be more or less, depending on screen size */
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19); /* Add some shadow for 3D effect */
+  transition: all 0.3s ease-in-out; /* Smooth transition */
+}
+
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  transition: color 0.3s ease; /* Smooth color transition */
+}
+
+.modal-content {
+  background-color: #fefefe;
+  margin: 10% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 60%;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+  transition: all 0.3s ease-in-out;
+}
+
+.close-button {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  transition: color 0.3s ease;
+}
+
+.close-button:hover,
+.close-button:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.modal-content h2 {
+  margin-bottom: 15px;
+}
+
+.modal-content p {
+  margin-bottom: 10px;
+}
+
+.modal-list {
+  margin-bottom: 20px;
+}
+
+.modal-list li {
+  margin-bottom: 10px;
+}
+
+.modal-fat {
+  font-weight: bold;
+  font-size: 1.2em;
+  text-align: center;
+}

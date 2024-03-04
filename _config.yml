@@ -2,9 +2,24 @@ baseurl: "/" # the subpath of your site, e.g. /blog
 url: "https://aksw.org" # the base hostname & protocol for your site, e.g. http://example.com
 rootresource: "<http://aksw.org/>"
 
+assets_baseurl: "https://static.aksw.org/assets/"
+
 plugins:
    - jekyll-rdf
+   - liquid-md5
    - jekyll-include-cache
+
+# Exclude files from moving them to _site
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - src
+  - Taskfile.yml
+  - README.md
+  - package.json
+  - package-lock.json
+  - webpack.config.js
+  - node_modules
 
 # Jekyll RDF settings
 jekyll_rdf:

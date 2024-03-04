@@ -3,10 +3,21 @@
 {% unless label %}
 {% assign label = person | rdf_property: "foaf:name" %}
 {% endunless %}
-{% assign depiction = person | rdf_property: "foaf:depiction" %}
+{% assign depiction_resource = person | rdf_property: "foaf:depiction" %}
+{% if depiction_resource %}
+  {% if depiction_resource.iri %}
+    {% assign depiction = depiction_resource.iri | md5 | prepend: site.assets_baseurl %}
+  {% else %}
+    {% assign depiction = depiction_resource | md5 | prepend: site.assets_baseurl %}
+  {% endif %}
+{% else %}
+  {% assign depiction = "placeholder_person.svg" | prepend: site.assets_baseurl %}
+{% endif %}
 {% capture depiction_alttext %}
 Personal image of {{ label }}
 {% endcapture %}
+{% assign phone = person | rdf_property: "foaf:phone" %}
+{% assign mbox = person | rdf_property: "foaf:mbox" %}
 <div class="card columns">
   <div class="column card-image is-one-third">
     <figure class="image is-4by5">
@@ -18,8 +29,8 @@ Personal image of {{ label }}
       <div class="media-content">
         <p class="title is-4"><a href="{{ person.render_path | relativize_url }}">{{ label }}</a></p>
         <p class="subtitle is-6">{{ person.iri }}</p>
-        <p class="is-6">{{ person | rdf_property: "foaf:phone" }}</p>
-        <p class="is-6">{{ person | rdf_property: "foaf:mbox" }}</p>
+        <p class="is-6"><a href="{{ phone }}">{{ phone | replace_first: "tel:" }}</a></p>
+        <p class="is-6"><a href="{{ mbox }}">{{ mbox | replace_first: "mailto:" }}</a></p>
       </div>
     </div>
   </div>

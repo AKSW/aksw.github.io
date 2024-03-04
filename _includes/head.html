@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    {% assign title = page.rdf | rdf_property: "rdfs:label" %}
+    {% unless title %}{% assign title = page.rdf | rdf_property: "foaf:name" %}{% endunless %}
+    {% unless title %}{% assign title = page.title %}{% endunless %}
+    {% unless title %}{% assign title = site.title %}{% endunless %}
+    {% if title %}{% assign title = title | prepend: " - " %}{% endif %}
+    <title>AKSW{{ title }}</title>
+    <meta name="description" content="{{ site.description }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    {% if include.bibtag %}
+    <script>
+      function exhibitAddId() {
+        Exhibit.wait(function(){ Exhibit.Controls["id"] = { f: function(args,roots,rootValueTypes,defaultRootName,database) {
+          return new Exhibit.Expression._Collection([roots[defaultRootName]], "text")
+        } } })
+      }
+    </script>
+    <script onload="exhibitAddId()" src="https://api.simile-widgets.org/exhibit/3.1.1/exhibit-api.js" type="text/javascript" async></script>
+    <link href="https://www.bibsonomy.org/json/user/{{ include.bibtag }}?items=1000&callback=cb" type="application/jsonp" rel="exhibit/data" ex:jsonp-callback="cb" async />
+    {% endif %}
+    <link rel="stylesheet" href="{% relative_link /dist/main.css %}">
+    {% if page.redirect_resource or page.redirect_url %}
+    {%- if page.redirect_resource -%}
+    {%- assign redirect_resource_node = page.redirect_resource | rdf_get -%}
+    <meta http-equiv="Refresh" content="0; url='{{ redirect_resource_node.render_path | relativize_url }}'" />
+    {% elsif page.redirect_url %}
+    <!--meta http-equiv="Refresh" content="0; url='{{ page.redirect_url }}'" /-->
+    {% endif %}
+    {% endif %}
+  </head>
+  <body>
+    <div class="container">
+      {% include_cached header.html resource=page.rdf %}

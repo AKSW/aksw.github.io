@@ -3,6 +3,7 @@ rdf_prefix_path: "_data/prefixes.sparql"
 layout: base
 ---
 
+{% include head.html page=page %}
 <h1 class="title is-1">{{ page.rdf | rdf_property: "rdfs:label" }}</h1>
 <p class="subtitle">{{ page.rdf | rdf_property: "aksw:hookline" }}</p>
 
@@ -69,3 +70,4 @@ SELECT distinct ?person WHERE {
     {% endfor %}
 </ul>
 </div>
+{% include foot.html page=page %}

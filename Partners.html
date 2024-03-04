@@ -3,6 +3,7 @@ rdf_prefix_path: "_data/prefixes.sparql"
 layout: base
 ---
 
+{% include head.html page=page %}
 <section class="section">
 <h3 class="title is-3">Partners</h3>
 {% assign partners = page.rdf | sparql_query: "select distinct ?partner ?label { ?project aksw:partner ?partner . ?partner rdfs:label ?label }" %}
@@ -12,3 +13,4 @@ layout: base
 <p>{{ event.event | rdf_property: "dct:abstract" }}</p>
 {% endfor %}
 </section>
+{% include foot.html page=page %}

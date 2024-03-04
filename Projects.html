@@ -3,6 +3,7 @@ rdf_prefix_path: "_data/prefixes.sparql"
 layout: base
 ---
 
+{% include head.html page=page %}
 <h2 class="title is-1">{{ page.rdf | rdf_property: "rdfs:label" }}</h2>
 {{ page.rdf }}
 
@@ -37,7 +38,7 @@ layout: base
 <p>AKSW has launched a number of high-impact R&D OpenSource projects.</p>
 </div>
 
-{% assign opensource_projects = page.rdf | sparql_query: "select ?project { ?project a aksw:OpenSourceProject }" %}
+{% assign opensource_projects = page.rdf | sparql_query: "select ?project { ?project a aksw:OpenSourceProject . FILTER NOT EXISTS { ?project a <http://aksw.org/schema/AlumniProject> }}" %}
 <div class="columns is-multiline">
   {% for row in opensource_projects %}
   <div class="column is-one-quarter">
@@ -51,7 +52,7 @@ layout: base
 <p class="content">AKSW has launched a number of high-impact R&D Community projects.</p>
 </div>
 
-{% assign community_projects = page.rdf | sparql_query: "select ?project { ?project a aksw:CommunityProject }" %}
+{% assign community_projects = page.rdf | sparql_query: "select ?project { ?project a aksw:CommunityProject . FILTER NOT EXISTS { ?project a <http://aksw.org/schema/AlumniProject> }}" %}
 <div class="columns is-multiline">
   {% for row in community_projects %}
   <div class="column is-one-quarter">
@@ -65,7 +66,7 @@ layout: base
 <p class="content">AKSW is publisher or contributer to the following dataset projects.</p>
 </div>
 
-{% assign dataset_projects = page.rdf | sparql_query: "select ?project { ?project a aksw:DatasetProject }" %}
+{% assign dataset_projects = page.rdf | sparql_query: "select ?project { ?project a aksw:DatasetProject . FILTER NOT EXISTS { ?project a <http://aksw.org/schema/AlumniProject> }}" %}
 <div class="columns is-multiline">
   {% for row in dataset_projects %}
   <div class="column is-one-third">
@@ -76,7 +77,7 @@ layout: base
 
 <div class="content">
 <h3 class="title is-3">Incubator Projects</h3>
-{% assign incubator_projects = page.rdf | sparql_query: "select ?project ?label { ?project a aksw:IncubatorProject ; rdfs:label ?label }" %}
+{% assign incubator_projects = page.rdf | sparql_query: "select ?project ?label { ?project a aksw:IncubatorProject ; rdfs:label ?label . FILTER NOT EXISTS { ?project a <http://aksw.org/schema/AlumniProject> }}" %}
 <ul>
 {% for project in incubator_projects %}
 <li>
@@ -98,3 +99,4 @@ layout: base
 {% endfor %}
 <ul>
 </div>
+{% include foot.html page=page %}

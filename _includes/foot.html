@@ -1,0 +1,26 @@
+    </div>
+    <footer class="footer">
+      <div class="columns">
+        <div class="column">
+	</div>
+        <div class="column">
+          <div>
+	    <ul>
+	      {% if page.rdf %}
+              <li><a href="https://aksw.eccenca.dev/explore?graph=http://aksw.org/&resource={{ page.rdf.iri }}&inlineView=true">Open resource in eccenca Corporate Memory</a></li>
+              <li><a href="https://aksw.eccenca.dev/explore?graph=http://aksw.org/&resource={{ page.rdf.iri }}&tab=turtle&inlineView=true">Open source code in eccenca Corporate Memory</a></li>
+              <li><a href="https://github.com/AKSW/aksw.github.io/blob/develop/_layouts/{{ page.template }}.html">View template on Github</a></li>
+	      {% else %}
+              <li><a href="https://github.com/AKSW/aksw.github.io/blob/develop/_layouts/{{ page.layout }}.html">View template on Github</a></li>
+	      {% endif %}
+	      <li><a href="https://github.com/AKSW/aksw.github.io/blob/develop{{ page.dir }}{{ page.name }}">View page source on Github</a></li>
+	    </ul>
+          </div>
+	</div>
+        <div class="column">
+	</div>
+      </div>
+    </footer>
+    <script src="{% relative_link /dist/main.js %}"></script>
+  </body>
+</html>

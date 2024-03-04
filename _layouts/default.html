@@ -2,6 +2,7 @@
 layout: base
 ---
 
+{% include head.html page=page %}
 <section class="section">
   <h2 class="title is-1">{{ page.rdf | rdf_property: "rdfs:label" }}</h2>
   {% assign abstract = page.rdf | rdf_property: "dct:abstract" %}
@@ -23,3 +24,4 @@ layout: base
   {{ content | markdownify | replace: "<h4", "<h6" | replace: "<h3", "<h5" | replace: "<h2", "<h4" | replace: "<h1", "<h3" }}
   {% endif %}
 </section>
+{% include foot.html page=page %}
