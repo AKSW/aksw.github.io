@@ -11,16 +11,6 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     
-    <script>
-      function exhibitAddId() {
-        Exhibit.wait(function(){ Exhibit.Controls["id"] = { f: function(args,roots,rootValueTypes,defaultRootName,database) {
-          return new Exhibit.Expression._Collection([roots[defaultRootName]], "text")
-        } } })
-      }
-    </script>
-    <script onload="exhibitAddId()" src="https://api.simile-widgets.org/exhibit/3.1.1/exhibit-api.js" type="text/javascript" async></script>
-    <link href="https://www.bibsonomy.org/json/user/aksw?items=1000&callback=cb" type="application/jsonp" rel="exhibit/data" ex:jsonp-callback="cb" async />
-    
     <link rel="stylesheet" href="dist/main.css">
     
   </head>
@@ -108,26 +98,75 @@
 
 
 <section class="section">
-<h2 class="title is-2">Publications</h2>
+<h2 class="title is-3">Publications</h2>
 <aside class="empty"></aside>
-<div id="publications">
-  <div ex:role="view" ex:showAll="true" ex:grouped="true" ex:orders=".year,.label" ex:directions="descending,ascending" ex:showSummary="true" ex:showDuplicates="false">
-    <div ex:role="lens" ex:itemTypes="Publication" style="display: none">
-      <span ex:content="if(.url <> '', concat('<a href=', .url, '>', .label, '</a>'), .label)"></span>
-      <span ex:if-exists=".author">
-        <span class="meta"><em>by</em> <strong class="author" ex:content=".author"></strong></span>
-      </span>
-      <span class="meta">
-        <span ex:content="if(exists(.booktitle), concat('<em>in</em> ', .booktitle), '')"></span>
-        <span class="journal" ex:content="if(exists(.journal), concat('<em>in</em> ', .journal), '')"></span>
-        <span ex:if-exists=".editor">(Editors: <span class="editor" ex:content=".editor"></span>)</span>
-        <a class="link" ex:href-content="id()" target="_blank">[Bibsonomy<span class="hideme"> of <span ex:content=".label"></span></span>]</a>
-      </span>
-      <span class="note" ex:content="if(exists(.note), concat('<br/><em>Note:</em> ', .note), '')"></span>
-      <span class="abstract" ex:content="if(exists(.abstract), concat('<br/><details><summary>Abstract</summary> ', .abstract, '</details>'), '')"></span>
+
+<link rel="stylesheet" href="dist/main.css" />
+<div class="search-and-guide">
+  <div id="search">
+    <div style="width: 45%; margin: auto">
+      <input
+        id="textFilter"
+        type="text"
+        placeholder="Search..."
+        class="form-control"
+      />
+    </div>
+  </div>
+  <button id="openModal" class="guide-button">info</button>
+</div>
+
+<div id="userGuideModal" class="modal">
+  <div class="modal-content">
+    <span id="closeModal" class="close-button">&times;</span>
+    <p class="modal-fat">Welcome to the aksw Publications Overview! This interactive platform allows you to explore a collection of publications with ease. Here's how you can make the most of it:</p>
+    <ul class="modal-list">
+      <li><strong>Search:</strong> Enter keywords in the search bar at the top to find specific publications. This feature scans all fields of the publications.</li>
+      <li><strong>Filters:</strong> On the left side, you'll find filters for the year of publication and authors. To view these filters, click on "+ Year" or "+ Author" to expand the filter section. Check the boxes next to the desired years or authors to narrow down the list of publications.</li>
+      <li><strong>Sort:</strong> Above the filters, there's a toggle for sorting the publications. You can arrange them in ascending or descending order based on the year of publication.</li>
+      <li><strong>Pagination:</strong> The publications are displayed in a paginated format for easy navigation. Use the buttons at the bottom to move between pages.</li>
+      <li><strong>Abstract, Bibtex, PDF, and URL View:</strong> Each publication comes with "ABS", "BIB", "PDF", and "URL" buttons. Click "ABS" to view the abstract, "BIB" to view the Bibtex, "PDF" to access the PDF version of the publication, and "URL" to visit the publication's webpage. The selected information will appear right below the publication.</li>
+    </ul>
+    <p class="modal-fat">Enjoy exploring the wealth of information available in the publications!</p>  </div>
+</div>
+
+<div id="content">
+  <div id="filters">
+    <p id="counter"></p>
+    <div>
+      <input type="checkbox" id="sort" class="sort-toggle" />
+      <label for="sort" id="sortLabel"
+        ><span id="arrow">↓</span> Descending</label
+      >
+    </div>
+    <h2 class="expand" id="yearLabel" onclick="toggleYearFilter()">
+      + Year
+    </h2>
+    <div id="yearFilter" class="filter"></div>
+    <h2 class="expand" id="authorLabel" onclick="toggleAuthorFilter()">
+      + Author
+    </h2>
+    <div id="authorFilter" class="filter"></div>
+  </div>
+  <div class="results" style="width: 100%">
+    <div id="infoModal" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <span class="close">&times;</span>
+        </div>
+        <pre id="infoData"></pre>
+      </div>
+    </div>
+    <div id="publications">
+      <!-- Publications will be appended here -->
     </div>
   </div>
 </div>
+
+<script src="dist/main.js"></script>
+
+
+
 </section>
     </div>
     <footer class="footer">
