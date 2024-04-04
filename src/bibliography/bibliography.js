@@ -11,11 +11,17 @@ window.onload = function () {
 
 // Fetches data and initializes the application
 function fetchDataAndInitialize() {
-  fetch("dist/aksw.json")
+  fetch("https://cdn.statically.io/gh/AKSW/aksw.bib/main/aksw.bib")
     .then(handleFetchResponse)
+    .then(parseBibtexData)
     .then(initializeData)
     .then(addEventListeners)
     .catch(handleFetchError);
+}
+
+function handleFetchError(error) {
+  console.error("There has been a problem with your fetch operation:", error);
+  // Display an error message to the user or take appropriate action
 }
 
 // Handles the fetch response
@@ -23,20 +29,47 @@ function handleFetchResponse(response) {
   if (!response.ok) {
     throw new Error("HTTP error " + response.status);
   }
-  return response.json();
+  return response.text();
 }
 
 // Initializes data and updates the DOM
 function initializeData(data) {
-  publicationsData = filterPublications(data.items);
+  publicationsData = data;
   generateCheckboxesForYears();
   generateCheckboxesForAuthors();
   updateDOM();
 }
 
-// Filters out items that are not publications
-function filterPublications(items) {
-  return items.filter((item) => item.type === "Publication");
+function parseBibtexData(bibtexString) {
+  const entries = bibtexString.split('@');
+  const parsedEntries = [];
+
+  for (let i = 1; i < entries.length; i++) {
+    const entry = entries[i].trim();
+    if (entry) {
+      const [entryType, entryContent] = entry.split('{', 2);
+      const [entryKey, entryFields] = entryContent.split(',', 2);
+
+      const fields = {};
+
+      if (entryFields) {
+        const fieldPairs = entryFields.split(',');
+
+        for (let j = 0; j < fieldPairs.length; j++) {
+          const [key, value] = fieldPairs[j].split('=');
+          fields[key.trim()] = value.trim().replace(/[{}]/g, '');
+        }
+      }
+
+      parsedEntries.push({
+        entryType: entryType.trim().toLowerCase(),
+        entryKey: entryKey.trim(),
+        fields: fields,
+      });
+    }
+  }
+
+  return parsedEntries;
 }
 
 // Generates checkboxes for each year
@@ -54,7 +87,7 @@ function generateCheckboxesForYears() {
 
 // Gets unique years from publicationsData
 function getUniqueYears() {
-  let years = Array.from(new Set(publicationsData.map((item) => item.year)));
+  let years = Array.from(new Set(publicationsData.map((item) => item.fields.year)));
   years.sort((a, b) => b - a); // Sort years in descending order
   return years;
 }
@@ -77,18 +110,12 @@ function getUniqueAuthors() {
   let authors = Array.from(
     new Set(
       publicationsData.flatMap((item) =>
-        item.authors ? item.authors.map(getFullName) : []
+        item.fields.author ? item.fields.author.split(' and ').map(author => author.trim()) : []
       )
     )
   );
   authors.sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()));
   return authors;
-}
-
-// Gets the full name of an author
-function getFullName(author) {
-  let fullName = (author.first + " " + author.last).trim();
-  return fullName.replace(/(^|\s)and /i, "");
 }
 
 // Appends a checkbox to a filter
@@ -147,49 +174,6 @@ function updateSortOrder() {
     arrow.textContent = "↓";
     sortLabel.innerHTML = '<span id="arrow">↓</span> Descending'; // Set the label text to "Descending" when not checked
   }
-}
-
-// Converts JSON to BibTeX
-function jsonToBibtex(json) {
-  let bibtex = "@" + json["pub-type"] + "{" + json["bibtexKey"] + ",\n";
-  let standardFields = [
-    "title",
-    "author",
-    "year",
-    "journal",
-    "volume",
-    "number",
-    "pages",
-    "month",
-    "note",
-    "key",
-    "publisher",
-    "series",
-    "address",
-    "edition",
-    "isbn",
-    "url",
-    "doi",
-    "abstract",
-    "keywords",
-    "editors",
-  ];
-
-  for (let key in json) {
-    if (standardFields.includes(key)) {
-      if (key === "authors" || key === "editors") {
-        // Convert each author/editor object to a string and join the array into a single string
-        let names = json[key]
-          .map((person) => person.first + " " + person.last)
-          .join(" and ");
-        bibtex += "  " + key + " = {" + names + "},\n";
-      } else {
-        bibtex += "  " + key + " = {" + json[key] + "},\n";
-      }
-    }
-  }
-  bibtex += "}";
-  return bibtex;
 }
 
 // Toggles the display of the year filter
@@ -278,6 +262,7 @@ function createInfoBoxWithButton(content) {
   return infoBox;
 }
 
+
 // Toggles the display of an info box
 function toggleInfoBox(publicationDiv, infoBox) {
   // Remove any existing info box
@@ -306,7 +291,7 @@ function updateDOM() {
   let sortOrder = document.getElementById("sort").checked ? "asc" : "desc";
   // Sort filtered publications
   filteredPublications.sort((a, b) => {
-    return sortOrder === "asc" ? a.year - b.year : b.year - a.year;
+    return sortOrder === "asc" ? a.fields.year - b.fields.year : b.fields.year - a.fields.year;
   });
 
   let paginatedPublications = paginatePublications(filteredPublications);
@@ -342,11 +327,9 @@ function filterPublicationsBySearchAndCheckboxes() {
 // Checks if a publication is in the text filter
 function isPublicationInTextFilter(publication, textFilter) {
   return (
-    publication.label.toLowerCase().includes(textFilter) ||
-    (publication.authors &&
-      publication.authors.some((author) =>
-        getFullName(author).toLowerCase().includes(textFilter)
-      ))
+    publication.entryKey.toLowerCase().includes(textFilter) ||
+    (publication.fields.author &&
+      publication.fields.author.toLowerCase().includes(textFilter))
   );
 }
 
@@ -355,7 +338,7 @@ function isPublicationInYearFilter(publication, yearCheckboxes) {
   return (
     yearCheckboxes.length === 0 ||
     Array.from(yearCheckboxes).some(
-      (checkbox) => checkbox.value == publication.year
+      (checkbox) => checkbox.value == publication.fields.year
     )
   );
 }
@@ -366,10 +349,8 @@ function isPublicationInAuthorFilter(publication, authorCheckboxes) {
     authorCheckboxes.length === 0 ||
     Array.from(authorCheckboxes).some(
       (checkbox) =>
-        publication.authors &&
-        publication.authors.some(
-          (author) => getFullName(author) === checkbox.value
-        )
+        publication.fields.author &&
+        publication.fields.author.split(' and ').map(author => author.trim()).includes(checkbox.value)
     )
   );
 }
@@ -381,13 +362,11 @@ function paginatePublications(filteredPublications) {
   return filteredPublications.slice(start, end);
 }
 
-// Displays a publication
 function displayPublication(container, publication) {
   let div = createPublicationDiv(publication);
   container.appendChild(div);
 }
 
-// Creates a div for a publication
 function createPublicationDiv(publication) {
   let div = document.createElement("div");
   div.className = "publication";
@@ -398,7 +377,6 @@ function createPublicationDiv(publication) {
   appendBibButton(div, publication);
   appendUrlButton(div, publication, "url", "PDF");
   appendAbstractButton(div, publication);
-  appendUrlButton(div, publication, "id", "URL");
 
   return div;
 }
@@ -406,16 +384,15 @@ function createPublicationDiv(publication) {
 // Appends the publication title to a div
 function appendPublicationTitle(div, publication) {
   let title = document.createElement("h2");
-  title.textContent = publication.label;
+  title.textContent = publication.entryKey;
   div.appendChild(title);
 }
 
 // Appends the publication authors to a div
 function appendPublicationAuthors(div, publication) {
   let authors = document.createElement("p");
-  if (publication.authors) {
-    authors.textContent =
-      "" + publication.authors.map((a) => a.first + " " + a.last).join(", ");
+  if (publication.fields.author) {
+    authors.textContent = publication.fields.author;
   } else {
     authors.textContent = "Authors: N/A";
   }
@@ -425,24 +402,23 @@ function appendPublicationAuthors(div, publication) {
 // Appends the publication year to a div
 function appendPublicationYear(div, publication) {
   let year = document.createElement("p");
-  year.textContent = "" + publication.year;
+  year.textContent = publication.fields.year;
   div.appendChild(year);
 }
 
 // Appends a Bib button to a div
 function appendBibButton(div, publication) {
   let infoButton = createButton("BIB");
-  let indicator = createIndicator("bibIndicator" + publication.bibtexKey); // Pass a unique id
+  let indicator = createIndicator("bibIndicator" + publication.entryKey); // Pass a unique id
 
   infoButton.addEventListener("click", function () {
-    let bibtex = jsonToBibtex(publication);
-    let infoBox = createInfoBoxWithButton(bibtex);
+    let infoBox = createInfoBoxWithButton(publication.bibtex);
     toggleInfoBox(div, infoBox);
     indicator.textContent = indicator.textContent === "▼" ? "▲" : "▼"; // Toggle the indicator
 
     // Reset the other button's indicator
     let otherIndicator = document.getElementById(
-      "absIndicator" + publication.bibtexKey
+      "absIndicator" + publication.entryKey
     );
     if (otherIndicator) {
       otherIndicator.textContent = "▼";
@@ -463,27 +439,27 @@ function createButton(text) {
 
 // Appends a URL button to a div
 function appendUrlButton(div, publication, property, text) {
-  if (publication[property]) {
+  if (publication.fields[property]) {
     let urlButton = createButton(text);
-    urlButton.href = publication[property];
+    urlButton.href = publication.fields[property];
     div.appendChild(urlButton);
   }
 }
 
 // Appends an abstract button to a div
 function appendAbstractButton(div, publication) {
-  if (publication.abstract) {
+  if (publication.fields.abstract) {
     let abstractButton = createButton("ABS");
-    let indicator = createIndicator("absIndicator" + publication.bibtexKey); // Pass a unique id
+    let indicator = createIndicator("absIndicator" + publication.entryKey); // Pass a unique id
 
     abstractButton.addEventListener("click", function () {
-      let infoBox = createInfoBox(publication.abstract);
+      let infoBox = createInfoBox(publication.fields.abstract);
       toggleInfoBox(div, infoBox);
       indicator.textContent = indicator.textContent === "▼" ? "▲" : "▼"; // Toggle the indicator
 
       // Reset the other button's indicator
       let otherIndicator = document.getElementById(
-        "bibIndicator" + publication.bibtexKey
+        "bibIndicator" + publication.entryKey
       );
       if (otherIndicator) {
         otherIndicator.textContent = "▼";
