@@ -24,7 +24,6 @@ function handleFetchError(error) {
   // Display an error message to the user or take appropriate action
 }
 
-// Handles the fetch response
 function handleFetchResponse(response) {
   if (!response.ok) {
     throw new Error("HTTP error " + response.status);
@@ -41,35 +40,69 @@ function initializeData(data) {
 }
 
 function parseBibtexData(bibtexString) {
-  const entries = bibtexString.split('@');
-  const parsedEntries = [];
+  try {
+    const entries = bibtexString.split('@');
+    const parsedEntries = [];
 
-  for (let i = 1; i < entries.length; i++) {
-    const entry = entries[i].trim();
-    if (entry) {
-      const [entryType, entryContent] = entry.split('{', 2);
-      const [entryKey, entryFields] = entryContent.split(',', 2);
+    for (let i = 1; i < entries.length; i++) {
+      const entry = entries[i].trim();
+      if (entry) {
+        const [entryType, entryContent] = entry.split(/\{(.*)/s);
+        const [entryKey, ...entryFields] = entryContent.split(/,\s*(?![^{}]*\})/);
 
-      const fields = {};
+        const fields = {};
+        let currentField = '';
+        let key = '';
 
-      if (entryFields) {
-        const fieldPairs = entryFields.split(',');
+        for (let j = 0; j < entryFields.length; j++) {
+          const line = entryFields[j].trim();
 
-        for (let j = 0; j < fieldPairs.length; j++) {
-          const [key, value] = fieldPairs[j].split('=');
-          fields[key.trim()] = value.trim().replace(/[{}]/g, '');
+          if (line.endsWith('},') || line.endsWith('}')) {
+            currentField += line.slice(0, -1).trim();
+            if (key) {
+              fields[key.trim().toLowerCase()] = currentField.trim().replace(/[{}]/g, '');
+            }
+            currentField = '';
+            key = '';
+          } else if (line.includes('=')) {
+            if (key) {
+              fields[key.trim().toLowerCase()] = currentField.trim().replace(/[{}]/g, '');
+            }
+            [key, currentField] = line.split(/\s*=\s*/);
+          } else {
+            currentField += line + ',';
+          }
         }
+
+        if (key) {
+          fields[key.trim().toLowerCase()] = currentField.trim().replace(/[{}]/g, '');
+        }
+
+        const parsedEntry = {
+          entryType: entryType.trim().toLowerCase(),
+          entryKey: entryKey.trim(),
+          fields: fields,
+        };
+
+        // Log the parsed entry for debugging
+        console.log("Parsed Entry:");
+        console.log("Entry Type:", parsedEntry.entryType);
+        console.log("Entry Key:", parsedEntry.entryKey);
+        console.log("Fields:");
+        for (let key in parsedEntry.fields) {
+          console.log(`  ${key}: ${parsedEntry.fields[key]}`);
+        }
+        console.log("---");
+
+        parsedEntries.push(parsedEntry);
       }
-
-      parsedEntries.push({
-        entryType: entryType.trim().toLowerCase(),
-        entryKey: entryKey.trim(),
-        fields: fields,
-      });
     }
-  }
 
-  return parsedEntries;
+    return parsedEntries;
+  } catch (error) {
+    console.error("Error parsing BibTeX data:", error);
+    throw error;
+  }
 }
 
 // Generates checkboxes for each year
@@ -384,39 +417,34 @@ function createPublicationDiv(publication) {
 // Appends the publication title to a div
 function appendPublicationTitle(div, publication) {
   let title = document.createElement("h2");
-  title.textContent = publication.entryKey;
+  title.textContent = publication.fields.title || publication.entryKey;
   div.appendChild(title);
 }
 
 // Appends the publication authors to a div
 function appendPublicationAuthors(div, publication) {
   let authors = document.createElement("p");
-  if (publication.fields.author) {
-    authors.textContent = publication.fields.author;
-  } else {
-    authors.textContent = "Authors: N/A";
-  }
+  authors.textContent = publication.fields.author || "Authors: N/A";
   div.appendChild(authors);
 }
 
 // Appends the publication year to a div
 function appendPublicationYear(div, publication) {
   let year = document.createElement("p");
-  year.textContent = publication.fields.year;
+  year.textContent = publication.fields.year || "";
   div.appendChild(year);
 }
 
 // Appends a Bib button to a div
 function appendBibButton(div, publication) {
   let infoButton = createButton("BIB");
-  let indicator = createIndicator("bibIndicator" + publication.entryKey); // Pass a unique id
+  let indicator = createIndicator("bibIndicator" + publication.entryKey);
 
   infoButton.addEventListener("click", function () {
-    let infoBox = createInfoBoxWithButton(publication.bibtex);
+    let infoBox = createInfoBoxWithButton(getBibtexString(publication));
     toggleInfoBox(div, infoBox);
-    indicator.textContent = indicator.textContent === "▼" ? "▲" : "▼"; // Toggle the indicator
+    indicator.textContent = indicator.textContent === "▼" ? "▲" : "▼";
 
-    // Reset the other button's indicator
     let otherIndicator = document.getElementById(
       "absIndicator" + publication.entryKey
     );
@@ -429,12 +457,14 @@ function appendBibButton(div, publication) {
   div.appendChild(indicator);
 }
 
-// Creates a button with the given text
-function createButton(text) {
-  let button = document.createElement("a");
-  button.className = "url-button";
-  button.textContent = text;
-  return button;
+// Generates the BibTeX string for a publication
+function getBibtexString(publication) {
+  let bibtexString = "@" + publication.entryType + "{" + publication.entryKey;
+  for (let key in publication.fields) {
+    bibtexString += ",\n  " + key + " = {" + publication.fields[key] + "}";
+  }
+  bibtexString += "\n}";
+  return bibtexString;
 }
 
 // Appends a URL button to a div
@@ -442,8 +472,16 @@ function appendUrlButton(div, publication, property, text) {
   if (publication.fields[property]) {
     let urlButton = createButton(text);
     urlButton.href = publication.fields[property];
+    urlButton.target = "_blank";
     div.appendChild(urlButton);
   }
+}
+// Creates a button with the given text
+function createButton(text) {
+  let button = document.createElement("a");
+  button.className = "url-button";
+  button.textContent = text;
+  return button;
 }
 
 // Appends an abstract button to a div
