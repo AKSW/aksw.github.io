@@ -41,62 +41,70 @@ function initializeData(data) {
 
 function parseBibtexData(bibtexString) {
   try {
-    const entries = bibtexString.split('@');
+    const entries = bibtexString.split('@').filter(entry => entry.trim() !== '');
+    console.log("Total entries found:", entries.length);
     const parsedEntries = [];
 
-    for (let i = 1; i < entries.length; i++) {
-      const entry = entries[i].trim();
-      if (entry) {
-        const [entryType, entryContent] = entry.split(/\{(.*)/s);
-        const [entryKey, ...entryFields] = entryContent.split(/,\s*(?![^{}]*\})/);
+    entries.forEach(entry => {
+      const entryTrimmed = entry.trim();
+      if (entryTrimmed) {
+        const firstBraceIndex = entryTrimmed.indexOf('{');
+        const entryType = entryTrimmed.substring(0, firstBraceIndex).trim().toLowerCase();
+        const restContent = entryTrimmed.substring(firstBraceIndex + 1, entryTrimmed.lastIndexOf('}')).trim();
+
+        const entryKey = restContent.substring(0, restContent.indexOf(',')).trim();
+        const fieldsContent = restContent.substring(restContent.indexOf(',') + 1).trim();
 
         const fields = {};
-        let currentField = '';
-        let key = '';
+        let currentKey = '';
+        let currentValue = '';
+        let braceLevel = 0;
+        let readingValue = false;
 
-        for (let j = 0; j < entryFields.length; j++) {
-          const line = entryFields[j].trim();
-
-          if (line.endsWith('},') || line.endsWith('}')) {
-            currentField += line.slice(0, -1).trim();
-            if (key) {
-              fields[key.trim().toLowerCase()] = currentField.trim().replace(/[{}]/g, '');
+        for (let i = 0; i < fieldsContent.length; i++) {
+          const char = fieldsContent[i];
+          if (char === '{') {
+            braceLevel++;
+            if (braceLevel === 1 && !readingValue) {
+              readingValue = true;
+              continue;
             }
-            currentField = '';
-            key = '';
-          } else if (line.includes('=')) {
-            if (key) {
-              fields[key.trim().toLowerCase()] = currentField.trim().replace(/[{}]/g, '');
+          } else if (char === '}') {
+            braceLevel--;
+            if (braceLevel === 0 && readingValue) {
+              if (currentKey.trim().toLowerCase() === 'year') {
+                fields[currentKey.trim().toLowerCase()] = parseInt(currentValue.trim().replace(/^{(.*)}$/, '$1'), 10);
+              } else if (currentKey.trim().toLowerCase() === 'url' || currentKey.trim().toLowerCase() === 'ee' || currentKey.trim().toLowerCase() === 'doi') {
+                fields['url'] = currentValue.trim().replace(/^{(.*)}$/, '$1');
+              } else {
+                fields[currentKey.trim().toLowerCase()] = currentValue.trim().replace(/^{(.*)}$/, '$1');
+              }
+              currentKey = '';
+              currentValue = '';
+              readingValue = false;
+              continue;
             }
-            [key, currentField] = line.split(/\s*=\s*/);
-          } else {
-            currentField += line + ',';
+          } else if (char === '=' && braceLevel === 0) {
+            currentKey = currentValue;
+            currentValue = '';
+            continue;
+          } else if (char === ',' && braceLevel === 0) {
+            continue; // Skip the comma at the end of a field
           }
-        }
 
-        if (key) {
-          fields[key.trim().toLowerCase()] = currentField.trim().replace(/[{}]/g, '');
+          currentValue += char;
         }
 
         const parsedEntry = {
-          entryType: entryType.trim().toLowerCase(),
-          entryKey: entryKey.trim(),
-          fields: fields,
+          entryType,
+          entryKey,
+          fields
         };
 
-        // Log the parsed entry for debugging
-        console.log("Parsed Entry:");
-        console.log("Entry Type:", parsedEntry.entryType);
-        console.log("Entry Key:", parsedEntry.entryKey);
-        console.log("Fields:");
-        for (let key in parsedEntry.fields) {
-          console.log(`  ${key}: ${parsedEntry.fields[key]}`);
-        }
-        console.log("---");
-
+        console.log("Parsed Entry:", JSON.stringify(parsedEntry, null, 2));
         parsedEntries.push(parsedEntry);
       }
-    }
+    });
 
     return parsedEntries;
   } catch (error) {
@@ -322,9 +330,17 @@ function updateDOM() {
 
   // Determine sort order
   let sortOrder = document.getElementById("sort").checked ? "asc" : "desc";
+
   // Sort filtered publications
   filteredPublications.sort((a, b) => {
-    return sortOrder === "asc" ? a.fields.year - b.fields.year : b.fields.year - a.fields.year;
+    const yearA = a.fields.year ? parseInt(a.fields.year, 10) : -Infinity; // Handle missing or invalid years
+    const yearB = b.fields.year ? parseInt(b.fields.year, 10) : -Infinity; // Handle missing or invalid years
+
+    if (sortOrder === "asc") {
+      return yearA - yearB;
+    } else {
+      return yearB - yearA;
+    }
   });
 
   let paginatedPublications = paginatePublications(filteredPublications);
@@ -417,7 +433,7 @@ function createPublicationDiv(publication) {
 // Appends the publication title to a div
 function appendPublicationTitle(div, publication) {
   let title = document.createElement("h2");
-  title.textContent = publication.fields.title || publication.entryKey;
+  title.textContent = publication.fields.title || "Title Not Available";
   div.appendChild(title);
 }
 
@@ -431,7 +447,7 @@ function appendPublicationAuthors(div, publication) {
 // Appends the publication year to a div
 function appendPublicationYear(div, publication) {
   let year = document.createElement("p");
-  year.textContent = publication.fields.year || "";
+  year.textContent = publication.fields.year || "Year Not Available";
   div.appendChild(year);
 }
 
@@ -468,14 +484,18 @@ function getBibtexString(publication) {
 }
 
 // Appends a URL button to a div
-function appendUrlButton(div, publication, property, text) {
-  if (publication.fields[property]) {
-    let urlButton = createButton(text);
-    urlButton.href = publication.fields[property];
+function appendUrlButton(div, publication) {
+  // Check for multiple fields that might contain the URL
+  const url = publication.fields.url || publication.fields.ee || publication.fields.doi;
+
+  if (url) {
+    let urlButton = createButton("PDF"); // Assuming you want the button labeled "PDF"
+    urlButton.href = url;
     urlButton.target = "_blank";
     div.appendChild(urlButton);
   }
 }
+
 // Creates a button with the given text
 function createButton(text) {
   let button = document.createElement("a");
