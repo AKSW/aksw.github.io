@@ -11,7 +11,11 @@ layout: base
 <section class="section">
   {% assign groups = page.rdf | rdf_inverse_property: "foaf:member", true %}
   {% for group in groups %}
-  <a class="button is-rounded" href="{{ group.render_path | relativize_url }}">{{ group | rdf_property: "rdfs:label" }}</a>
+  {% assign group_label = group | rdf_property: "skos:prefLabel" %}
+  {% unless group_label %}
+  {% assign group_label = group | rdf_property: "rdfs:label" %}
+  {% endunless %}
+  <a class="button is-rounded" href="{{ group.render_path | relativize_url }}">{{ group_label }}</a>
   {% endfor %}
 </section>
 

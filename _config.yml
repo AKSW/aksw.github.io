@@ -29,6 +29,7 @@ jekyll_rdf:
     restriction: "SELECT ?resourceUri WHERE { ?resourceUri ?p ?o . FILTER regex(str(?resourceUri), \"http://aksw.org/\") }"
     default_template: "default"
     class_template_mappings:
+        "http://xmlns.com/foaf/0.1/Group": "group"
         "http://xmlns.com/foaf/0.1/Organization": "group"
         "http://rdfs.org/ns/void#Dataset": "dataset"
         "http://xmlns.com/foaf/0.1/Person": "person"

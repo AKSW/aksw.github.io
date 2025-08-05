@@ -3,6 +3,11 @@
   object-fit: cover;
 }
 
+.navbar {
+  padding: 0 1em;
+  background-color: #ddd;
+}
+
 @media screen and (max-width: 1023px) {
   .navbar-brand .brand-icon {
     display: block
