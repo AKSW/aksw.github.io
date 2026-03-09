@@ -3,7 +3,7 @@ layout: base
 ---
 
 {% include head.html page=page %}
-<section class="section">
+<section class="section content">
   <h2 class="title is-1">{{ page.rdf | rdf_property: "rdfs:label" }}</h2>
   {% assign abstract = page.rdf | rdf_property: "dct:abstract" %}
   {% assign content = page.rdf | rdf_property: "site:content" %}
